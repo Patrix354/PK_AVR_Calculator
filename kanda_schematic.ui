@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>KANDA_Schematic</class>
+ <widget class="QDialog" name="KANDA_Schematic">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>406</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>406</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1280</width>
+    <height>406</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Standard KANDA -  Bez Problemu</string>
+  </property>
+  <property name="whatsThis">
+   <string>Prosta grafika ułatwiająca podłączenie programatora z interfejsem KANDA</string>
+  </property>
+  <widget class="QLabel" name="Schematic">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1280</width>
+     <height>406</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

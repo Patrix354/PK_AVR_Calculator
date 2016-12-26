@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/FOTO">
+        <file>FOTO/Help_KANDA.png</file>
+        <file>FOTO/LPT_Schematic.png</file>
+        <file>FOTO/ATtiny10-TPI-Prog.png</file>
+    </qresource>
+</RCC>
