@@ -53,56 +53,6 @@ void UBRR_Calculator::on_F_OSC_list_activated(int index)
     UBRR_0X_PREV = 1;
     UBRR_2X_PREV = 1;
 
-    ui->UBRR_2400_0X->setText("");
-    ui->UBRR_2400_2X->setText("");
-    ui->UBRR_4800_0X->setText("");
-    ui->UBRR_4800_2X->setText("");
-    ui->UBRR_9600_0X->setText("");
-    ui->UBRR_9600_2X->setText("");
-    ui->UBRR_14400_0X->setText("");
-    ui->UBRR_14400_2X->setText("");
-    ui->UBRR_19200_0X->setText("");
-    ui->UBRR_19200_2X->setText("");
-    ui->UBRR_28800_0X->setText("");
-    ui->UBRR_28800_2X->setText("");
-    ui->UBRR_38400_0X->setText("");
-    ui->UBRR_38400_2X->setText("");
-    ui->UBRR_57600_0X->setText("");
-    ui->UBRR_57600_2X->setText("");
-    ui->UBRR_76800_0X->setText("");
-    ui->UBRR_76800_2X->setText("");
-    ui->UBRR_115200_0X->setText("");
-    ui->UBRR_115200_2X->setText("");
-    ui->UBRR_230400_0X->setText("");
-    ui->UBRR_230400_2X->setText("");
-    ui->UBRR_250000_0X->setText("");
-    ui->UBRR_250000_2X->setText("");
-
-    ui->error_2400_0X->setText("");
-    ui->error_2400_2X->setText("");
-    ui->error_4800_0X->setText("");
-    ui->error_4800_2X->setText("");
-    ui->error_9600_0X->setText("");
-    ui->error_9600_2X->setText("");
-    ui->error_14400_0X->setText("");
-    ui->error_14400_2X->setText("");
-    ui->error_19200_0X->setText("");
-    ui->error_19200_2X->setText("");
-    ui->error_28800_0X->setText("");
-    ui->error_28800_2X->setText("");
-    ui->error_38400_0X->setText("");
-    ui->error_38400_2X->setText("");
-    ui->error_57600_0X->setText("");
-    ui->error_57600_2X->setText("");
-    ui->error_76800_0X->setText("");
-    ui->error_76800_2X->setText("");
-    ui->error_115200_0X->setText("");
-    ui->error_115200_2X->setText("");
-    ui->error_230400_0X->setText("");
-    ui->error_230400_2X->setText("");
-    ui->error_250000_0X->setText("");
-    ui->error_250000_2X->setText("");
-
     set_line(2400, F_OSC_Speed[index], ui->UBRR_2400_0X, ui->UBRR_2400_2X, ui->error_2400_0X, ui->error_2400_2X);
     set_line(4800, F_OSC_Speed[index], ui->UBRR_4800_0X, ui->UBRR_4800_2X, ui->error_4800_0X, ui->error_4800_2X);
     set_line(9600, F_OSC_Speed[index], ui->UBRR_9600_0X, ui->UBRR_9600_2X, ui->error_9600_0X, ui->error_9600_2X);
@@ -111,15 +61,10 @@ void UBRR_Calculator::on_F_OSC_list_activated(int index)
     set_line(28800, F_OSC_Speed[index], ui->UBRR_28800_0X, ui->UBRR_28800_2X, ui->error_28800_0X, ui->error_28800_2X);
     set_line(38400, F_OSC_Speed[index], ui->UBRR_38400_0X, ui->UBRR_38400_2X, ui->error_38400_0X, ui->error_38400_2X);
     set_line(57600, F_OSC_Speed[index], ui->UBRR_57600_0X, ui->UBRR_57600_2X, ui->error_57600_0X, ui->error_57600_2X);
-
-    if(index > 0)
-        set_line(76800, F_OSC_Speed[index], ui->UBRR_76800_0X, ui->UBRR_76800_2X, ui->error_76800_0X, ui->error_76800_2X);
-    if(index > 0)
-        set_line(115200, F_OSC_Speed[index], ui->UBRR_115200_0X, ui->UBRR_115200_2X, ui->error_115200_0X, ui->error_115200_2X);
-    if(index > 2)
-        set_line(230400, F_OSC_Speed[index], ui->UBRR_230400_0X, ui->UBRR_230400_2X, ui->error_230400_0X, ui->error_230400_2X);
-    if(index > 3)
-         set_line(250000, F_OSC_Speed[index], ui->UBRR_250000_0X, ui->UBRR_250000_2X, ui->error_250000_0X, ui->error_250000_2X);
+    set_line(76800, F_OSC_Speed[index], ui->UBRR_76800_0X, ui->UBRR_76800_2X, ui->error_76800_0X, ui->error_76800_2X);
+    set_line(115200, F_OSC_Speed[index], ui->UBRR_115200_0X, ui->UBRR_115200_2X, ui->error_115200_0X, ui->error_115200_2X);
+    set_line(230400, F_OSC_Speed[index], ui->UBRR_230400_0X, ui->UBRR_230400_2X, ui->error_230400_0X, ui->error_230400_2X);
+    set_line(250000, F_OSC_Speed[index], ui->UBRR_250000_0X, ui->UBRR_250000_2X, ui->error_250000_0X, ui->error_250000_2X);
 }
 
 //
@@ -142,9 +87,8 @@ void UBRR_Calculator::set_line(int baud, int F_OSC, QLabel* _UBRR_0X, QLabel* _U
     if(UBRR_0X_PREV == 0)
     {
         output = "";
-        _UBRR_0X->setText("");
-        _error_0X->setText("");
-        return;
+        _UBRR_0X->setText(output);
+        _error_0X->setText(output);
 
     }
     else
@@ -171,8 +115,8 @@ void UBRR_Calculator::set_line(int baud, int F_OSC, QLabel* _UBRR_0X, QLabel* _U
     if(UBRR_2X_PREV == 0)
     {
         output = "";
-        _UBRR_2X->setText("");
-        _error_2X->setText("");
+        _UBRR_2X->setText(output);
+        _error_2X->setText(output);
         return;
 
     }
