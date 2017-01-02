@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>516</width>
-    <height>357</height>
+    <width>640</width>
+    <height>419</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>491</width>
-      <height>241</height>
+      <width>601</width>
+      <height>321</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -35,6 +35,146 @@
     <property name="tabsClosable">
      <bool>false</bool>
     </property>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Fusy uproszczone</string>
+     </attribute>
+     <widget class="QCheckBox" name="CKDIV8">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>191</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CKDIV8 - podzielnik zegara przez 8</string>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>131</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Wew. oscylator</string>
+      </property>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>13</x>
+         <y>30</y>
+         <width>111</width>
+         <height>80</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QRadioButton" name="OSC_1">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="OSC_2">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="OSC_3">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="OSC_4">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>50</y>
+        <width>261</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Zew. oscylatyor</string>
+      </property>
+      <widget class="QCheckBox" name="CKOPT">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>140</y>
+         <width>72</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>CKOPT</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>11</x>
+         <y>22</y>
+         <width>256</width>
+         <height>96</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QRadioButton" name="EXT_OSC_1">
+          <property name="text">
+           <string>0.4 MHz - 0.9 MHz - Tylko rezonator ceramiczny</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="EXT_OSC_2">
+          <property name="text">
+           <string>0.9 MHz - 3.0 MHz</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="EXT_OSC_3">
+          <property name="text">
+           <string>3.0 MHz - 8.0 MHz</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="EXT_OSC_4">
+          <property name="text">
+           <string>&gt; 8.0 MHz</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>Programator AVR</string>
@@ -42,8 +182,8 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>80</y>
+        <x>20</x>
+        <y>50</y>
         <width>391</width>
         <height>61</height>
        </rect>
@@ -57,9 +197,9 @@
       <widget class="QLabel" name="ERR_Main_Label">
        <property name="geometry">
         <rect>
-         <x>200</x>
+         <x>180</x>
          <y>20</y>
-         <width>171</width>
+         <width>191</width>
          <height>20</height>
         </rect>
        </property>
@@ -72,25 +212,25 @@ font-weight: bold;</string>
         <string/>
        </property>
       </widget>
-     </widget>
-     <widget class="QPushButton" name="Main_button">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>100</y>
-        <width>151</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>Sprawdź podłączony AVR</string>
-      </property>
+      <widget class="QPushButton" name="Main_button">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>151</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Sprawdź podłączony AVR</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QComboBox" name="SCK_list">
       <property name="enabled">
@@ -98,9 +238,9 @@ font-weight: bold;</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>360</x>
         <y>10</y>
-        <width>151</width>
+        <width>191</width>
         <height>22</height>
        </rect>
       </property>
@@ -118,6 +258,117 @@ font-weight: bold;</string>
        </rect>
       </property>
      </widget>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>120</y>
+        <width>191</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Operacja</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QRadioButton" name="Read">
+           <property name="text">
+            <string>Odczyt</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="Save">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Zapis</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>120</y>
+        <width>331</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Rodzaj pamięci</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QRadioButton" name="Flash">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Flash</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="EEPROM">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>EEPROM</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="Fuse_bits">
+           <property name="text">
+            <string>Fuse bity</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="Lock_bits">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Lock bity</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>190</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Wykonaj</string>
+      </property>
+     </widget>
+     <zorder>groupBox_2</zorder>
+     <zorder>groupBox_3</zorder>
+     <zorder>groupBox</zorder>
+     <zorder>SCK_list</zorder>
+     <zorder>Prog_list</zorder>
+     <zorder>pushButton</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -196,7 +447,7 @@ font-weight: bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>516</width>
+     <width>640</width>
      <height>20</height>
     </rect>
    </property>

@@ -4,8 +4,8 @@
 
 #include <QMessageBox>
 #include <QProcess>
-#include <QSound>
-#include <QSysInfo>
+#include <QRadioButton>
+#include <QCheckBox>
 
 #include <fstream>
 #include <string>
@@ -20,23 +20,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QString uc_codes[uC_AMOUNT] =
     {
-        "m6450", "m3250", "m645", "usb1287", "usb1286", "usb647", "usb646", "t84", "t44",
-        "t24", "m2561", "m2560", "m1281", "m1280", "m640", "t85", "t45", "t25", "pwm3",
-        "pwm2", "t2313", "m168", "m88", "m48", "t861", "t461", "t261", "t26", "m8535",
-        "m8515", "m8", "m161", "m32", "m6490", "m649", "m3290", "m329", "m169", "m163",
-        "m162", "m644", "m324", "m328p", "m164", "m16", "c128", "m128","m64","m103","8535","8515",
-        "4434","4433","2343","2333","2313","4414","1200","t15", "t13", "t12", "t11"
+        "usb82" "usb162", "usb1287", "usb1286","usb647","usb676",
+        "pwm3b", "pwm3", "pwm2b", "pwm2", "c32", "c64", "c128", "8535", "8515", "4434", "4433", "2343",
+        "2333", "2313", "4414", "1200", "m640", "m1280", "m1281", "m1284p", "m2560", "m2561", "m8",
+        "m48", "m88", "m168", "m328p", "m161", "m8535", "m8515", "m6490", "m164p", "m324p", "m644",
+        "m644p", "m16", "m32", "m32u4", "m64", "m128", "m325", "m3250","m645", "m6450",
+        "m103", "m163", "m162", "m169", "m329","m329p", "m649", "m3290", "m3290p", "t84", "t44",
+        "t24", "t85", "t45", "t25", "t88", "t2313", "t864", "t461", "t261", "t26", "t15", "t14", "t12", "t11"
     };
 
     QString uc_names[uC_AMOUNT] =
     {
-        "ATmega6450", "ATmega3250", "ATmega645", "AT90USB1287", "AT90USB1286", "AT90USB647", "AT90USB646", "ATtiny84",
-        "ATtiny44", "ATtiny24", "ATmega2561", "ATmega2560", "ATmega1281", "ATmega1280", "ATmega640", "ATtiny85",
-        "ATtiny45", "ATtiny25", "AT90PWM3", "AT90PWM2", "ATtiny2313", "ATmega168", "ATmega88", "ATmega48", "ATtiny861",
-        "ATtiny461", "ATtiny261", "ATtiny26", "ATmega8535", "ATmega8515", "ATmega8", "ATmega161", "ATmega32", "ATmega6490",
-        "ATmega649", "ATmega3290", "ATmega329", "ATmega169", "ATmega163", "ATmega162", "ATmega644", "ATmega324", "ATmega328P",
-        "ATmega164","ATmega16", "AT90CAN128", "ATmega128", "ATmega64", "ATmega103", "AT90S8535", "AT90S8515", "AT90S4434", "AT90S4433",
-        "AT90S2343", "AT90S2333", "AT90S2313", "AT90S4414", "AT90S1200", "ATtiny15", "ATtiny13", "ATtiny12", "ATtiny11"
+        "AT90USB82", "AT90USB162", "AT90USB1287", "AT90USB1286", "AT90USB647", "AT90USB676", "AT90PWM3b",
+        "AT90PWM3", "AT90PWM2b", "AT90PWM2", "AT90CAN32", "AT90CAN64", "AT90CAN128", "AT90S8535", "AT90S8515",
+        "AT90S4434", "AT90S4433", "AT90S2343", "AT90S2333", "AT90S2313", "AT90S4414", "AT90S1200", "ATmega640",
+        "ATmega1280", "ATmega1281", "ATmega1284p", "ATmega2560", "ATmega2561", "ATmega8", "ATmega48", "ATmega88",
+        "ATmega168", "ATmega328p", "ATmega161", "ATmega8535", "ATmega8515", "ATmega6490", "ATmega164p", "ATmega324p",
+        "ATmega644", "ATmega644p", "ATmega16", "ATmega32", "ATmega32u4", "ATmega64", "ATmega128",
+        "ATmega325", "ATmega3250", "ATmega645", "ATmega6450", "ATmega103", "ATmega163", "ATmega162", "ATmega169",
+        "ATmega329", "ATmega329p", "ATmega649", "ATmega3290", "ATmega3290p", "ATtiny84", "ATtiny44", "ATtiny24",
+        "ATtiny85", "ATtiny45", "ATtiny25", "ATtiny88", "ATtiny2313", "ATtiny864", "ATtiny461", "ATtiny261", "ATtiny26",
+        "ATtiny15", "ATtiny14", "ATtiny12", "ATtiny11",
     };
 
     QString prog_names[PROG_AMOUNT] =
@@ -104,6 +108,9 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ERR_names[i] = err_names[i];
     }
+
+    Clear_fuses();
+    Set_fuses();
 }
 
 MainWindow::~MainWindow()
@@ -129,6 +136,8 @@ void MainWindow::on_Prog_list_activated(const QString &arg1)
             ui->SCK_list->setVisible(false);
         }
     }
+
+    Set_fuses();
 }
 
 void MainWindow::on_Main_button_clicked()
@@ -187,6 +196,82 @@ void MainWindow::on_UART_CALC_clicked()
 {
     UART_Calculator = new UBRR_Calculator(this);
     UART_Calculator->show();
+}
+
+void MainWindow::on_EXT_OSC_1_clicked()
+{
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+}
+
+void MainWindow::on_EXT_OSC_2_clicked()
+{
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+}
+
+void MainWindow::on_EXT_OSC_3_clicked()
+{
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+}
+
+void MainWindow::on_EXT_OSC_4_clicked()
+{
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+}
+
+void MainWindow::on_CKOPT_clicked()
+{
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+}
+
+void MainWindow::on_OSC_1_clicked()
+{
+    Check(ui->EXT_OSC_1, false);
+    Check(ui->EXT_OSC_2, false);
+    Check(ui->EXT_OSC_3, false);
+    Check(ui->EXT_OSC_4, false);
+    Check(ui->CKOPT, false);
+}
+
+void MainWindow::on_OSC_2_clicked()
+{
+    Check(ui->EXT_OSC_1, false);
+    Check(ui->EXT_OSC_2, false);
+    Check(ui->EXT_OSC_3, false);
+    Check(ui->EXT_OSC_4, false);
+    Check(ui->CKOPT, false);
+}
+
+void MainWindow::on_OSC_3_clicked()
+{
+    Check(ui->EXT_OSC_1, false);
+    Check(ui->EXT_OSC_2, false);
+    Check(ui->EXT_OSC_3, false);
+    Check(ui->EXT_OSC_4, false);
+    Check(ui->CKOPT, false);
+}
+
+void MainWindow::on_OSC_4_clicked()
+{
+    Check(ui->EXT_OSC_1, false);
+    Check(ui->EXT_OSC_2, false);
+    Check(ui->EXT_OSC_3, false);
+    Check(ui->EXT_OSC_4, false);
+    Check(ui->CKOPT, false);
 }
 
 //
@@ -279,4 +364,102 @@ int MainWindow::Search_uC(string path_to_file)
     file.close();
     file.clear();
     return line_num;
+}
+
+void MainWindow::Check(QRadioButton* button, bool pos)
+{
+    button->setAutoExclusive(false);
+    button->setChecked(pos);
+    button->setAutoExclusive(true);
+}
+
+void MainWindow::Check(QCheckBox* button, bool pos)
+{
+    button->setAutoExclusive(false);
+    button->setChecked(pos);
+    button->setAutoExclusive(true);
+}
+
+void MainWindow::Set_fuses()
+{
+    Clear_fuses();
+
+    switch(ui->uC_list->currentIndex())
+    {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 22:
+        case 23:
+        case 24:
+        case 25:
+        case 26:
+        case 27:
+        case 36:
+        case 37:
+        case 38:
+        case 39:
+        case 40:
+        case 47:
+        case 48:
+        case 49:
+        case 50:
+        case 53:
+        case 54:
+        case 55:
+        case 56:
+        case 57:
+        case 58:
+        case 59:
+        {
+            ui->OSC_1->setVisible(true);
+            ui->OSC_1->setText("8 MHz");
+            Set_EXT_fuses(true);
+            break;
+        }
+    }
+}
+
+void MainWindow::Clear_fuses()
+{
+    ui->OSC_1->setVisible(false);
+    ui->OSC_2->setVisible(false);
+    ui->OSC_3->setVisible(false);
+    ui->OSC_4->setVisible(false);
+    ui->CKOPT->setVisible(false);
+    ui->EXT_OSC_1->setVisible(false);
+    ui->EXT_OSC_2->setVisible(false);
+    ui->EXT_OSC_3->setVisible(false);
+    ui->EXT_OSC_4->setVisible(false);
+
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+
+    Check(ui->CKDIV8, false);
+    Check(ui->CKOPT, false);
+
+    Check(ui->EXT_OSC_1, false);
+    Check(ui->EXT_OSC_2, false);
+    Check(ui->EXT_OSC_3, false);
+    Check(ui->EXT_OSC_4, false);
+}
+
+void MainWindow::Set_EXT_fuses(bool pos)
+{
+    ui->EXT_OSC_1->setVisible(pos);
+    ui->EXT_OSC_2->setVisible(pos);
+    ui->EXT_OSC_3->setVisible(pos);
+    ui->EXT_OSC_4->setVisible(pos);
 }

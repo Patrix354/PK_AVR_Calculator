@@ -2,14 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QSound>
+#include <QString>
+#include <QRadioButton>
+#include <QCheckBox>
 
 #include "lpt_schematic.h"
 #include "kanda_schematic.h"
 #include "attiny_con_schematic.h"
 #include "ubrr_calculator.h"
 
-#define uC_AMOUNT 62
+#define uC_AMOUNT 76
 #define PROG_AMOUNT 3
 #define SCK_AMOUNT 13
 #define ERR_AMOUNT 3
@@ -37,16 +39,20 @@ public:
 
 private slots:
     void on_Prog_list_activated(const QString &arg1);
-
     void on_Main_button_clicked();
-
     void on_LPT_Prog_Schem_Butt_clicked();
-
     void on_KANDA_help_clicked();
-
     void on_ATtiny_CON_clicked();
-
     void on_UART_CALC_clicked();
+    void on_EXT_OSC_1_clicked();
+    void on_EXT_OSC_2_clicked();
+    void on_EXT_OSC_3_clicked();
+    void on_EXT_OSC_4_clicked();
+    void on_CKOPT_clicked();
+    void on_OSC_1_clicked();
+    void on_OSC_2_clicked();
+    void on_OSC_3_clicked();
+    void on_OSC_4_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -70,6 +76,11 @@ private:
     void Safe_to_file(QString exec, QStringList params, string path_to_file);
     int Search_ERR(string path_to_file);
     int Search_uC(string path_to_file);
+    void Check(QRadioButton* button, bool pos);
+    void Check(QCheckBox* button, bool pos);
+    void Set_fuses();
+    void Set_EXT_fuses(bool pos);
+    void Clear_fuses();
 };
 
 #endif // MAINWINDOW_H

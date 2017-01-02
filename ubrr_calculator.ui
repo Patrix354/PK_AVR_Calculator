@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>331</width>
-    <height>498</height>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,7 @@
      <x>78</x>
      <y>30</y>
      <width>20</width>
-     <height>381</height>
+     <height>431</height>
     </rect>
    </property>
    <property name="orientation">
@@ -64,7 +64,7 @@
      <x>278</x>
      <y>30</y>
      <width>20</width>
-     <height>381</height>
+     <height>431</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -93,7 +93,7 @@
      <x>98</x>
      <y>60</y>
      <width>191</width>
-     <height>351</height>
+     <height>401</height>
     </rect>
    </property>
    <property name="orientation">
@@ -106,7 +106,7 @@
      <x>28</x>
      <y>80</y>
      <width>21</width>
-     <height>331</height>
+     <height>381</height>
     </rect>
    </property>
    <property name="orientation">
@@ -119,7 +119,7 @@
      <x>90</x>
      <y>80</y>
      <width>101</width>
-     <height>331</height>
+     <height>381</height>
     </rect>
    </property>
    <property name="orientation">
@@ -132,7 +132,7 @@
      <x>190</x>
      <y>80</y>
      <width>101</width>
-     <height>331</height>
+     <height>381</height>
     </rect>
    </property>
    <property name="orientation">
@@ -292,7 +292,7 @@ color: blue;</string>
      <x>38</x>
      <y>100</y>
      <width>251</width>
-     <height>365</height>
+     <height>361</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">

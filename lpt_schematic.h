@@ -1,4 +1,3 @@
-
 #ifndef LPT_SCHEMATIC_H
 #define LPT_SCHEMATIC_H
 
