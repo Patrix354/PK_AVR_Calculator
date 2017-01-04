@@ -26,21 +26,21 @@ MainWindow::MainWindow(QWidget *parent) :
         "m48", "m88", "m168", "m328p", "m161", "m8535", "m8515", "m6490", "m164p", "m324p", "m644",
         "m644p", "m16", "m32", "m32u4", "m64", "m128", "m325", "m3250","m645", "m6450",
         "m103", "m163", "m162", "m169", "m329","m329p", "m649", "m3290", "m3290p", "t84", "t44",
-        "t24", "t85", "t45", "t25", "t88", "t2313", "t864", "t461", "t261", "t26", "t15", "t14", "t12", "t11"
+        "t24", "t85", "t45", "t25", "t88", "t2313", "t861", "t461", "t261", "t26", "t15", "t12", "t11"
     };
 
     QString uc_names[uC_AMOUNT] =
     {
-        "AT90USB82", "AT90USB162", "AT90USB1287", "AT90USB1286", "AT90USB647", "AT90USB676", "AT90PWM3b",
-        "AT90PWM3", "AT90PWM2b", "AT90PWM2", "AT90CAN32", "AT90CAN64", "AT90CAN128", "AT90S8535", "AT90S8515",
+        "AT90USB82", "AT90USB162", "AT90USB1287", "AT90USB1286", "AT90USB647", "AT90USB676", "AT90PWM3B",
+        "AT90PWM3", "AT90PWM2B", "AT90PWM2", "AT90CAN32", "AT90CAN64", "AT90CAN128", "AT90S8535", "AT90S8515",
         "AT90S4434", "AT90S4433", "AT90S2343", "AT90S2333", "AT90S2313", "AT90S4414", "AT90S1200", "ATmega640",
         "ATmega1280", "ATmega1281", "ATmega1284p", "ATmega2560", "ATmega2561", "ATmega8", "ATmega48", "ATmega88",
         "ATmega168", "ATmega328p", "ATmega161", "ATmega8535", "ATmega8515", "ATmega6490", "ATmega164p", "ATmega324p",
         "ATmega644", "ATmega644p", "ATmega16", "ATmega32", "ATmega32u4", "ATmega64", "ATmega128",
         "ATmega325", "ATmega3250", "ATmega645", "ATmega6450", "ATmega103", "ATmega163", "ATmega162", "ATmega169",
         "ATmega329", "ATmega329p", "ATmega649", "ATmega3290", "ATmega3290p", "ATtiny84", "ATtiny44", "ATtiny24",
-        "ATtiny85", "ATtiny45", "ATtiny25", "ATtiny88", "ATtiny2313", "ATtiny864", "ATtiny461", "ATtiny261", "ATtiny26",
-        "ATtiny15", "ATtiny14", "ATtiny12", "ATtiny11",
+        "ATtiny85", "ATtiny45", "ATtiny25", "ATtiny88", "ATtiny2313", "ATtiny861", "ATtiny461", "ATtiny261", "ATtiny26",
+        "ATtiny15", "ATtiny12", "ATtiny11",
     };
 
     QString prog_names[PROG_AMOUNT] =
@@ -121,6 +121,11 @@ MainWindow::~MainWindow()
 //
 //  Slots
 //
+
+void MainWindow::on_uC_list_activated(const QString &arg1)
+{
+    Set_fuses();
+}
 
 void MainWindow::on_Prog_list_activated(const QString &arg1)
 {
@@ -278,24 +283,17 @@ void MainWindow::on_OSC_4_clicked()
 //  Other Methods
 //
 
-void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_file)
+int MainWindow::Search_in_array(QString search, QString* tab, int len)
 {
-    QObject parent;
-    QProcess* AVRProcess;
-    std::fstream file;
+    for(int i = 0; i < len; i++)
+    {
+        if(search == tab[i])
+        {
+            return i;
+        }
+    }
 
-    AVRProcess = new QProcess(&parent);
-    AVRProcess->start(exec, params);
-    AVRProcess->waitForFinished();
-    QString Qoutput(AVRProcess->readAllStandardError());
-    AVRProcess->close();
-
-    std::string output = Qoutput.toLocal8Bit().constData();
-
-    file.open(path_to_file.c_str(), ios::out);
-    file << output;
-    file.close();
-    file.clear();
+    return -1;
 }
 
 int MainWindow::Search_ERR(string path_to_file)
@@ -366,6 +364,26 @@ int MainWindow::Search_uC(string path_to_file)
     return line_num;
 }
 
+void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_file)
+{
+    QObject parent;
+    QProcess* AVRProcess;
+    std::fstream file;
+
+    AVRProcess = new QProcess(&parent);
+    AVRProcess->start(exec, params);
+    AVRProcess->waitForFinished();
+    QString Qoutput(AVRProcess->readAllStandardError());
+    AVRProcess->close();
+
+    std::string output = Qoutput.toLocal8Bit().constData();
+
+    file.open(path_to_file.c_str(), ios::out);
+    file << output;
+    file.close();
+    file.clear();
+}
+
 void MainWindow::Check(QRadioButton* button, bool pos)
 {
     button->setAutoExclusive(false);
@@ -382,70 +400,84 @@ void MainWindow::Check(QCheckBox* button, bool pos)
 
 void MainWindow::Set_fuses()
 {
-    Clear_fuses();
-
-    switch(ui->uC_list->currentIndex())
+    switch(Search_in_array(ui->uC_list->currentText(), uC_names, uC_AMOUNT))
     {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-        case 22:
-        case 23:
-        case 24:
-        case 25:
-        case 26:
-        case 27:
-        case 36:
-        case 37:
-        case 38:
-        case 39:
-        case 40:
-        case 47:
-        case 48:
-        case 49:
-        case 50:
-        case 53:
-        case 54:
-        case 55:
-        case 56:
-        case 57:
-        case 58:
-        case 59:
+        case AT90USB82:
+        case AT90USB162:
+        case AT90USB1287:
+        case AT90USB1286:
+        case AT90USB647:
+        case AT90USB676:
+        case AT90PWM3B:
+        case AT90PWM3:
+        case AT90PWM2B:
+        case AT90PWM2:
+        case AT90CAN32:
+        case AT90CAN64:
+        case AT90CAN128:
+        case ATmega640:
+        case ATmega1280:
+        case ATmega1281:
+        case ATmega1284p:
+        case ATmega2560:
+        case ATmega2561:
+        case ATmega6490:
+        case ATmega164p:
+        case ATmega324p:
+        case ATmega644:
+        case ATmega644p:
+        case ATmega3250:
+        case ATmega645:
+        case ATmega6450:
+        case ATmega169:
+        case ATmega329:
+        case ATmega329p:
+        case ATmega649:
+        case ATmega3290:
+        case ATmega3290p:
+        case ATtiny84:
+        case ATtiny44:
+        case ATtiny24:
+        case ATtiny861:
+        case ATtiny461:
+        case ATtiny261:
         {
+            Clear_fuses();
+            ui->CKDIV8->setVisible(true);
             ui->OSC_1->setVisible(true);
             ui->OSC_1->setText("8 MHz");
             Set_EXT_fuses(true);
             break;
+        }
+        case AT90S8535:
+        case AT90S8515:
+        case AT90S4434:
+        case AT90S4433:
+        case AT90S2343:
+        case AT90S2333:
+        case AT90S2313:
+        case AT90S4414:
+        case AT90S1200:
+        case ATmega161:
+        case ATmega163:
+        case ATmega103:
+        case ATtiny11:
+        case ATtiny12:
+        case ATtiny15:
+        {
+            Clear_fuses();
+            ui->OSC_1->setText("");
         }
     }
 }
 
 void MainWindow::Clear_fuses()
 {
-    ui->OSC_1->setVisible(false);
-    ui->OSC_2->setVisible(false);
-    ui->OSC_3->setVisible(false);
-    ui->OSC_4->setVisible(false);
-    ui->CKOPT->setVisible(false);
-    ui->EXT_OSC_1->setVisible(false);
-    ui->EXT_OSC_2->setVisible(false);
-    ui->EXT_OSC_3->setVisible(false);
-    ui->EXT_OSC_4->setVisible(false);
-
     Check(ui->OSC_1, false);
     Check(ui->OSC_2, false);
     Check(ui->OSC_3, false);
     Check(ui->OSC_4, false);
+
 
     Check(ui->CKDIV8, false);
     Check(ui->CKOPT, false);
@@ -454,6 +486,18 @@ void MainWindow::Clear_fuses()
     Check(ui->EXT_OSC_2, false);
     Check(ui->EXT_OSC_3, false);
     Check(ui->EXT_OSC_4, false);
+
+    ui->OSC_1->setVisible(false);
+    ui->OSC_2->setVisible(false);
+    ui->OSC_3->setVisible(false);
+    ui->OSC_4->setVisible(false);
+    ui->CKDIV8->setVisible(false);
+    ui->CKOPT->setVisible(false);
+    ui->EXT_OSC_1->setVisible(false);
+    ui->EXT_OSC_2->setVisible(false);
+    ui->EXT_OSC_3->setVisible(false);
+    ui->EXT_OSC_4->setVisible(false);
+
 }
 
 void MainWindow::Set_EXT_fuses(bool pos)
