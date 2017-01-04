@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="documentMode">
      <bool>false</bool>
@@ -64,7 +64,7 @@
       <property name="title">
        <string>Wew. oscylator</string>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>13</x>
@@ -133,7 +133,7 @@
         <string>CKOPT</string>
        </property>
       </widget>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>11</x>
@@ -275,6 +275,9 @@ font-weight: bold;</string>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QRadioButton" name="Read">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Odczyt</string>
            </property>
@@ -331,6 +334,9 @@ font-weight: bold;</string>
          </item>
          <item>
           <widget class="QRadioButton" name="Fuse_bits">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Fuse bity</string>
            </property>
@@ -351,6 +357,9 @@ font-weight: bold;</string>
       </layout>
      </widget>
      <widget class="QPushButton" name="pushButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>20</x>
