@@ -33,9 +33,7 @@ UBRR_Calculator::UBRR_Calculator(QWidget *parent) :
     for(int i = 0; i < F_OSC_AMOUNT; i++)
     {
         ui->F_OSC_list->addItem(QString::number(F_OSC_speed[i]));
-        //F_OSC_speed[i] = F_OSC_speed[i].replace(" ", " ");
-
-        F_OSC_Speed[i] = F_OSC_speed[i];    //Tu jest jakiś problem
+        F_OSC_Speed[i] = F_OSC_speed[i];
     }
 
 

@@ -57,55 +57,67 @@
        <rect>
         <x>20</x>
         <y>50</y>
-        <width>131</width>
-        <height>111</height>
+        <width>151</width>
+        <height>121</height>
        </rect>
       </property>
       <property name="title">
        <string>Wew. oscylator</string>
       </property>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QRadioButton" name="OSC_2">
+       <property name="geometry">
+        <rect>
+         <x>13</x>
+         <y>51</y>
+         <width>131</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="OSC_1">
        <property name="geometry">
         <rect>
          <x>13</x>
          <y>30</y>
-         <width>111</width>
-         <height>80</height>
+         <width>131</width>
+         <height>16</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QRadioButton" name="OSC_1">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="OSC_2">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="OSC_3">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="OSC_4">
-          <property name="text">
-           <string/>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="OSC_3">
+       <property name="geometry">
+        <rect>
+         <x>13</x>
+         <y>72</y>
+         <width>131</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="OSC_4">
+       <property name="geometry">
+        <rect>
+         <x>13</x>
+         <y>93</y>
+         <width>131</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_5">
@@ -123,14 +135,14 @@
       <widget class="QCheckBox" name="CKOPT">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>60</x>
          <y>140</y>
-         <width>72</width>
+         <width>151</width>
          <height>19</height>
         </rect>
        </property>
        <property name="text">
-        <string>CKOPT</string>
+        <string>CKOPT - opcja oscylatora</string>
        </property>
       </widget>
       <widget class="QWidget" name="layoutWidget">
@@ -276,7 +288,7 @@ font-weight: bold;</string>
          <item>
           <widget class="QRadioButton" name="Read">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>Odczyt</string>
@@ -335,7 +347,7 @@ font-weight: bold;</string>
          <item>
           <widget class="QRadioButton" name="Fuse_bits">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>Fuse bity</string>
@@ -356,9 +368,9 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="Command_exec">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -377,7 +389,7 @@ font-weight: bold;</string>
      <zorder>groupBox</zorder>
      <zorder>SCK_list</zorder>
      <zorder>Prog_list</zorder>
-     <zorder>pushButton</zorder>
+     <zorder>Command_exec</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -449,6 +461,115 @@ font-weight: bold;</string>
     <property name="maxVisibleItems">
      <number>20</number>
     </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>10</y>
+      <width>121</width>
+      <height>47</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>lfuse</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>hfuse</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>efuse</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLineEdit" name="lfuse_lbl">
+         <property name="styleSheet">
+          <string notr="true">color: green;
+font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="hfuse_lbl">
+         <property name="styleSheet">
+          <string notr="true">color: green;
+font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>38</width>
+           <height>18</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="efuse_lbl">
+         <property name="styleSheet">
+          <string notr="true">color: green;
+font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

@@ -6,9 +6,13 @@
 #include <QProcess>
 #include <QRadioButton>
 #include <QCheckBox>
+#include <QLabel>
+#include <QApplication>
+#include <QDebug>
 
 #include <fstream>
 #include <string>
+#include <cstdlib>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,13 +24,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QString uc_codes[uC_AMOUNT] =
     {
-        "usb82" "usb162", "usb1287", "usb1286","usb647","usb676",
+        "usb82", "usb162", "usb1287", "usb1286", "usb647","usb676",
         "pwm3b", "pwm3", "pwm2b", "pwm2", "c32", "c64", "c128", "8535", "8515", "4434", "4433", "2343",
         "2333", "2313", "4414", "1200", "m640", "m1280", "m1281", "m1284p", "m2560", "m2561", "m8",
         "m48", "m88", "m168", "m328p", "m161", "m8535", "m8515", "m6490", "m164p", "m324p", "m644",
-        "m644p", "m16", "m32", "m32u4", "m64", "m128", "m325", "m3250","m645", "m6450",
-        "m103", "m163", "m162", "m169", "m329","m329p", "m649", "m3290", "m3290p", "t84", "t44",
-        "t24", "t85", "t45", "t25", "t88", "t2313", "t861", "t461", "t261", "t26", "t15", "t12", "t11"
+        "m644p", "m16", "m32", "m32u4", "m64", "m128", "m325", "m3250", "m645", "m6450",
+        "m103", "m163", "m162", "m169", "m329", "m329p", "m649", "m3290", "m3290p", "t84", "t44",
+        "t24", "t85", "t45", "t25", "t88", "t2313", "t861", "t461", "t261", "t26", "t15", "t13", "t12", "t11"
     };
 
     QString uc_names[uC_AMOUNT] =
@@ -40,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
         "ATmega325", "ATmega3250", "ATmega645", "ATmega6450", "ATmega103", "ATmega163", "ATmega162", "ATmega169",
         "ATmega329", "ATmega329p", "ATmega649", "ATmega3290", "ATmega3290p", "ATtiny84", "ATtiny44", "ATtiny24",
         "ATtiny85", "ATtiny45", "ATtiny25", "ATtiny88", "ATtiny2313", "ATtiny861", "ATtiny461", "ATtiny261", "ATtiny26",
-        "ATtiny15", "ATtiny12", "ATtiny11",
+        "ATtiny15", "ATtiny13", "ATtiny12", "ATtiny11"
     };
 
     QString prog_names[PROG_AMOUNT] =
@@ -72,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QString err_names[ERR_AMOUNT]
     {
-        "avrdude: AVR device initialized", "avrdude: error: programm enable", "avrdude: error: could not find "
+        "avrdude: AVR device initialized", "avrdude: error: programm enable"
     };
 
     for(int i = 0; i < uC_AMOUNT; i++)
@@ -110,7 +114,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     Clear_fuses();
-    Set_fuses();
+    Set_ui_fuses(ui->uC_list->currentText());
 }
 
 MainWindow::~MainWindow()
@@ -124,7 +128,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_uC_list_activated(const QString &arg1)
 {
-    Set_fuses();
+    Set_ui_fuses(arg1);
 }
 
 void MainWindow::on_Prog_list_activated(const QString &arg1)
@@ -142,7 +146,7 @@ void MainWindow::on_Prog_list_activated(const QString &arg1)
         }
     }
 
-    Set_fuses();
+    Set_ui_fuses(ui->uC_list->currentText());
 }
 
 void MainWindow::on_Main_button_clicked()
@@ -150,32 +154,94 @@ void MainWindow::on_Main_button_clicked()
     QString exec = "avrdude";
     QStringList params;
 
-    int uc_index = ui->uC_list->currentIndex();
-    int prog_index = ui->Prog_list->currentIndex();
-    int sck_index = ui->SCK_list->currentIndex();
-    int err_value = 0;
-    int search_value = 0;
+    ui->ERR_Main_Label->clear();
+    ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
+    QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
 
-    ui->ERR_Main_Label->setText("Odczyt");
+    params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
 
-    params << uC_codes[uc_index] << Prog_codes[prog_index] << SCK_codes[sck_index];
+    Safe_to_file(exec, params, FILE_PATH, 1);
 
-    Safe_to_file(exec, params, FILE_PATH);
-    err_value = Search_ERR(FILE_PATH);
-    search_value = Search_uC(FILE_PATH);
-
-    if(search_value >= 7)
+    if(Search_uC(FILE_PATH) >= 7)
     {
         ui->ERR_Main_Label->setText(AVRDUDE_ERR);
         return;
     }
 
-    switch (err_value)
+    switch(Search_ERR(FILE_PATH))
     {
+        case -1:    ui->ERR_Main_Label->setText(AVRDUDE_ERR);          break;
         case 0:     ui->ERR_Main_Label->setText(OK);                break;
         case 1:     ui->ERR_Main_Label->setText(AVRDUDE_ERR);       break;
-        case 2:     ui->ERR_Main_Label->setText(PROG_ERR);          break;
         default:    ui->ERR_Main_Label->setText(UNKNOWN_ERR);       break;
+    }
+}
+
+void MainWindow::on_Command_exec_clicked()
+{
+    if(ui->Fuse_bits->isChecked())
+    {
+        if(ui->Read->isChecked())
+        {
+            QObject parent;
+            QString exec = "avrdude";
+            QStringList params;
+            QStringList lfuse_params;
+            QStringList hfuse_params;
+            QStringList efuse_params;
+
+            lfuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Ulfuse:r:-:h";
+            hfuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Uhfuse:r:-:h";
+            efuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Uefuse:r:-:h";
+
+            params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+
+            Safe_to_file(exec, params, FILE_PATH, 1);
+
+            if(Search_uC(FILE_PATH) >= 7)
+            {
+                QMessageBox::critical(this, "AVRDUDE_ERR", AVRDUDE_ERR);
+                return;
+            }
+
+            switch(Search_ERR(FILE_PATH))
+            {
+                case 0:
+                {
+                    ;
+                    break;
+                }
+                case 1:
+                {
+                    QMessageBox::critical(this, "AVRDUDE_ERR", AVRDUDE_ERR);
+                    return;
+                    break;
+                }
+                case 2:
+                {
+                    QMessageBox::critical(this, "PROG_ERR", PROG_ERR);
+                    return;
+                    break;
+                }
+                default:
+                {
+                    QMessageBox::critical(this, "???", UNKNOWN_ERR);
+                    return;
+                    break;
+                }
+            }
+
+            Safe_to_file(exec, lfuse_params, FILE_PATH, 0);
+            lfuse_Qstr = Search_fuse(FILE_PATH);
+            Safe_to_file(exec, hfuse_params, FILE_PATH, 0);
+            hfuse_Qstr = Search_fuse(FILE_PATH);
+            Safe_to_file(exec, efuse_params, FILE_PATH, 0);
+            efuse_Qstr = Search_fuse(FILE_PATH);
+
+            ui->lfuse_lbl->setText(lfuse_Qstr);
+            ui->hfuse_lbl->setText(hfuse_Qstr);
+            ui->efuse_lbl->setText(efuse_Qstr);
+        }
     }
 }
 
@@ -300,15 +366,17 @@ int MainWindow::Search_ERR(string path_to_file)
 {
     std::fstream file;
     std::string line;
-    std::string sub_line;
 
     file.open(path_to_file.c_str(), ios::in);
 
     if(file.good() == false)
     {
-        file_flag = false;
-        QMessageBox::critical(this, "LOG ERR", "Can't open log file");
-        return -1;
+        if(file_flag == false)
+        {
+            file_flag = true;
+            QMessageBox::critical(this, "LOG ERR", "Can't open log file");
+        }
+        return 2;
     }
 
     while(getline(file, line))
@@ -319,10 +387,9 @@ int MainWindow::Search_ERR(string path_to_file)
         }
         else
         {
-            sub_line =  line.substr(0,31);
             for(int i = 0; i < ERR_AMOUNT; i++)
             {
-                if(sub_line == ERR_names[0].toLocal8Bit().constData())
+                if(line.substr(0,31) == ERR_names[0].toLocal8Bit().constData())
                 {
                     return i;
                 }
@@ -364,22 +431,48 @@ int MainWindow::Search_uC(string path_to_file)
     return line_num;
 }
 
-void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_file)
+QString MainWindow::Search_fuse(string path_to_file)
+{
+    std::string line;
+    std::fstream file;
+
+    file.open(path_to_file.c_str(), ios::in);
+
+    if(file.good() == false)
+    {
+        if(file_flag == false)
+        {
+            file_flag = true;
+            QMessageBox::critical(this, "LOG ERR", "Can't open log file");
+        }
+        return "ERR";
+    }
+    getline(file, line);
+    return QString::fromStdString(line);
+}
+
+void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_file, int mode)
 {
     QObject parent;
     QProcess* AVRProcess;
+    QString output;
     std::fstream file;
 
     AVRProcess = new QProcess(&parent);
     AVRProcess->start(exec, params);
     AVRProcess->waitForFinished();
-    QString Qoutput(AVRProcess->readAllStandardError());
+    if(mode == 1)
+    {
+        output = AVRProcess->readAllStandardError();
+    }
+    else if(mode == 0)
+    {
+        output = AVRProcess->readAllStandardOutput();
+    }
     AVRProcess->close();
 
-    std::string output = Qoutput.toLocal8Bit().constData();
-
     file.open(path_to_file.c_str(), ios::out);
-    file << output;
+    file << output.toLocal8Bit().constData();
     file.close();
     file.clear();
 }
@@ -398,9 +491,9 @@ void MainWindow::Check(QCheckBox* button, bool pos)
     button->setAutoExclusive(true);
 }
 
-void MainWindow::Set_fuses()
+void MainWindow::Set_ui_fuses(const QString &arg)
 {
-    switch(Search_in_array(ui->uC_list->currentText(), uC_names, uC_AMOUNT))
+    switch(Search_in_array(arg, uC_names, uC_AMOUNT))
     {
         case AT90USB82:
         case AT90USB162:
@@ -415,6 +508,7 @@ void MainWindow::Set_fuses()
         case AT90CAN32:
         case AT90CAN64:
         case AT90CAN128:
+        case ATmega32u4:
         case ATmega640:
         case ATmega1280:
         case ATmega1281:
@@ -427,9 +521,11 @@ void MainWindow::Set_fuses()
         case ATmega644:
         case ATmega644p:
         case ATmega3250:
+        case ATmega325:
         case ATmega645:
         case ATmega6450:
         case ATmega169:
+        case ATmega162:
         case ATmega329:
         case ATmega329p:
         case ATmega649:
@@ -444,6 +540,7 @@ void MainWindow::Set_fuses()
         {
             Clear_fuses();
             ui->CKDIV8->setVisible(true);
+
             ui->OSC_1->setVisible(true);
             ui->OSC_1->setText("8 MHz");
             Set_EXT_fuses(true);
@@ -466,7 +563,111 @@ void MainWindow::Set_fuses()
         case ATtiny15:
         {
             Clear_fuses();
-            ui->OSC_1->setText("");
+            break;
+        }
+        case ATtiny26:
+        {
+            Clear_fuses();
+            ui->CKDIV8->setVisible(true);
+
+            ui->OSC_1->setVisible(true);
+            ui->OSC_2->setVisible(true);
+            ui->OSC_3->setVisible(true);
+            ui->OSC_4->setVisible(true);
+
+            ui->OSC_1->setText("1 MHz");
+            ui->OSC_2->setText("2 MHz");
+            ui->OSC_3->setText("4 MHz");
+            ui->OSC_4->setText("8 MHz");
+            Set_EXT_fuses(true);
+            break;
+        }
+        case ATmega8:
+        case ATmega16:
+        case ATmega32:
+        case ATmega64:
+        case ATmega128:
+        case ATmega8535:
+        case ATmega8515:
+        {
+            Clear_fuses();
+            ui->CKDIV8->setVisible(true);
+            ui->CKOPT->setVisible(true);
+
+            ui->OSC_1->setVisible(true);
+            ui->OSC_2->setVisible(true);
+            ui->OSC_3->setVisible(true);
+            ui->OSC_4->setVisible(true);
+
+            ui->OSC_1->setText("1 MHz");
+            ui->OSC_2->setText("2 MHz");
+            ui->OSC_3->setText("4 MHz");
+            ui->OSC_4->setText("8 MHz");
+            Set_EXT_fuses(true);
+            break;
+        }
+        case ATmega48:
+        case ATmega88:
+        case ATmega168:
+        case ATmega328p:
+        case ATtiny88:
+        {
+            Clear_fuses();
+            ui->CKDIV8->setVisible(true);
+
+            ui->OSC_1->setVisible(true);
+            ui->OSC_2->setVisible(true);
+
+            ui->OSC_1->setText("128 kHz");
+            ui->OSC_2->setText("8 MHz");
+            Set_EXT_fuses(true);
+            break;
+        }
+        case ATtiny13:
+        {
+            Clear_fuses();
+            ui->CKDIV8->setVisible(true);
+
+            ui->OSC_1->setVisible(true);
+            ui->OSC_2->setVisible(true);
+            ui->OSC_3->setVisible(true);
+
+            ui->OSC_1->setText("128 kHz");
+            ui->OSC_2->setText("4.8 MHz");
+            ui->OSC_3->setText("9.6 MHz");
+            Set_EXT_fuses(true);
+            break;
+        }
+        case ATtiny2313:
+        {
+            Clear_fuses();
+            ui->CKDIV8->setVisible(true);
+
+            ui->OSC_1->setVisible(true);
+            ui->OSC_2->setVisible(true);
+            ui->OSC_3->setVisible(true);
+
+            ui->OSC_1->setText("128 kHz");
+            ui->OSC_2->setText("4 MHz");
+            ui->OSC_3->setText("8 MHz");
+            Set_EXT_fuses(true);
+            break;
+        }
+        case ATtiny25:
+        case ATtiny45:
+        case ATtiny85:
+        {
+            Clear_fuses();
+            ui->CKDIV8->setVisible(true);
+
+            ui->OSC_1->setVisible(true);
+            ui->OSC_2->setVisible(true);
+
+            ui->OSC_1->setText("6.4 MHz");
+            ui->OSC_2->setText("8 MHz");
+
+            Set_EXT_fuses(true);
+            break;
         }
     }
 }
@@ -477,15 +678,17 @@ void MainWindow::Clear_fuses()
     Check(ui->OSC_2, false);
     Check(ui->OSC_3, false);
     Check(ui->OSC_4, false);
-
-
     Check(ui->CKDIV8, false);
     Check(ui->CKOPT, false);
-
     Check(ui->EXT_OSC_1, false);
     Check(ui->EXT_OSC_2, false);
     Check(ui->EXT_OSC_3, false);
     Check(ui->EXT_OSC_4, false);
+
+    ui->OSC_1->setText("");
+    ui->OSC_2->setText("");
+    ui->OSC_3->setText("");
+    ui->OSC_4->setText("");
 
     ui->OSC_1->setVisible(false);
     ui->OSC_2->setVisible(false);
@@ -493,10 +696,7 @@ void MainWindow::Clear_fuses()
     ui->OSC_4->setVisible(false);
     ui->CKDIV8->setVisible(false);
     ui->CKOPT->setVisible(false);
-    ui->EXT_OSC_1->setVisible(false);
-    ui->EXT_OSC_2->setVisible(false);
-    ui->EXT_OSC_3->setVisible(false);
-    ui->EXT_OSC_4->setVisible(false);
+    Set_EXT_fuses(false);
 
 }
 

@@ -89,17 +89,19 @@
 #define ATtiny261 69
 #define ATtiny26 70
 #define ATtiny15 71
-#define ATtiny12 72
-#define ATtiny11 73
+#define ATtiny13 72
+#define ATtiny12 73
+#define ATtiny11 74
 
 
-#define uC_AMOUNT 74
+#define uC_AMOUNT 75
 #define PROG_AMOUNT 3
 #define SCK_AMOUNT 13
-#define ERR_AMOUNT 3
+#define ERR_AMOUNT 2
 #define SCK_SPECIALS 2
 #define FILE_PATH "C:/Program Files/PK_AVR_Calculator/command.log"
 
+#define READ "Odczyt"
 #define AVRDUDE_ERR "Błąd AVRDUDE!"
 #define PROG_ERR "Błąd Programatora!"
 #define UNKNOWN_ERR "???"
@@ -135,8 +137,8 @@ private slots:
     void on_OSC_2_clicked();
     void on_OSC_3_clicked();
     void on_OSC_4_clicked();
-
     void on_uC_list_activated(const QString &arg1);
+    void on_Command_exec_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -152,6 +154,10 @@ private:
     QString SCK_special[SCK_SPECIALS];
     QString ERR_names[ERR_AMOUNT];
 
+    QString lfuse_Qstr;
+    QString hfuse_Qstr;
+    QString efuse_Qstr;
+
     LPT_Schematic* Prog_Dialog;
     KANDA_Schematic* KANDA_Dialog;
     ATtiny_CON_Schematic* ATtiny_CON_Dialog;
@@ -160,10 +166,11 @@ private:
     int Search_in_array(QString search, QString* tab, int len);
     int Search_ERR(string path_to_file);
     int Search_uC(string path_to_file);
-    void Safe_to_file(QString exec, QStringList params, string path_to_file);
+    QString Search_fuse(string path_to_file);
+    void Safe_to_file(QString exec, QStringList params, string path_to_file, int mode);
     void Check(QRadioButton* button, bool pos);
     void Check(QCheckBox* button, bool pos);
-    void Set_fuses();
+    void Set_ui_fuses(const QString &arg);
     void Set_EXT_fuses(bool pos);
     void Clear_fuses();
 };
