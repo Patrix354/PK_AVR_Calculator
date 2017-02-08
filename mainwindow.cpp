@@ -170,10 +170,10 @@ void MainWindow::on_Main_button_clicked()
 
     switch(Search_ERR(FILE_PATH))
     {
-        case -1:    ui->ERR_Main_Label->setText(AVRDUDE_ERR);          break;
+        case -1:    ui->ERR_Main_Label->setText(AVRDUDE_ERR);       break;
         case 0:     ui->ERR_Main_Label->setText(OK);                break;
         case 1:     ui->ERR_Main_Label->setText(AVRDUDE_ERR);       break;
-        default:    ui->ERR_Main_Label->setText(UNKNOWN_ERR);       break;
+        default:    ui->ERR_Main_Label->setText(AVRDUDE_ERR);       break;
     }
 }
 
@@ -212,20 +212,10 @@ void MainWindow::on_Command_exec_clicked()
                     break;
                 }
                 case 1:
-                {
-                    QMessageBox::critical(this, "AVRDUDE_ERR", AVRDUDE_ERR);
-                    return;
-                    break;
-                }
                 case 2:
-                {
-                    QMessageBox::critical(this, "PROG_ERR", PROG_ERR);
-                    return;
-                    break;
-                }
                 default:
                 {
-                    QMessageBox::critical(this, "???", UNKNOWN_ERR);
+                    ui->ERR_Main_Label->setText(AVRDUDE_ERR);
                     return;
                     break;
                 }
@@ -493,7 +483,7 @@ void MainWindow::Check(QCheckBox* button, bool pos)
 
 void MainWindow::Set_ui_fuses(const QString &arg)
 {
-    switch(Search_in_array(arg, uC_names, uC_AMOUNT))
+    switch(Search_in_array(ui->uC_list->currentText(), uC_names, uC_AMOUNT))
     {
         case AT90USB82:
         case AT90USB162:

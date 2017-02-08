@@ -101,10 +101,7 @@
 #define SCK_SPECIALS 2
 #define FILE_PATH "C:/Program Files/PK_AVR_Calculator/command.log"
 
-#define READ "Odczyt"
 #define AVRDUDE_ERR "Błąd AVRDUDE!"
-#define PROG_ERR "Błąd Programatora!"
-#define UNKNOWN_ERR "???"
 #define OK "OK"
 
 using namespace std;

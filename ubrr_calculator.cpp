@@ -2,7 +2,6 @@
 #include "ui_ubrr_calculator.h"
 
 #include <QString>
-#include <QDebug>
 
 UBRR_Calculator::UBRR_Calculator(QWidget *parent) :
     QDialog(parent),

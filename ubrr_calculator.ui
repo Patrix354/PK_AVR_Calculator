@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>UART/USART Calculator</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -292,7 +292,7 @@ color: blue;</string>
      <x>38</x>
      <y>100</y>
      <width>251</width>
-     <height>361</height>
+     <height>365</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
