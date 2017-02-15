@@ -17,7 +17,7 @@
 #define AT90USB1287 2
 #define AT90USB1286 3
 #define AT90USB647 4
-#define AT90USB676 5
+#define AT90USB646 5
 
 #define AT90PWM3B 6
 #define AT90PWM3 7
@@ -99,7 +99,7 @@
 #define SCK_AMOUNT 13
 #define ERR_AMOUNT 2
 #define SCK_SPECIALS 2
-#define FILE_PATH "C:/Program Files/PK_AVR_Calculator/command.log"
+#define FILE_PATH "C:/PK_AVR_Calculator/command.log"
 
 #define AVRDUDE_ERR "Błąd AVRDUDE!"
 #define OK "OK"
@@ -142,6 +142,10 @@ private:
 
     bool file_flag;
 
+    uint8_t lfuse;
+    uint8_t hfuse;
+    uint8_t efuse;
+
     QString uC_codes[uC_AMOUNT];
     QString uC_names[uC_AMOUNT];
     QString Prog_names[PROG_AMOUNT];
@@ -167,9 +171,12 @@ private:
     void Safe_to_file(QString exec, QStringList params, string path_to_file, int mode);
     void Check(QRadioButton* button, bool pos);
     void Check(QCheckBox* button, bool pos);
-    void Set_ui_fuses(const QString &arg);
-    void Set_EXT_fuses(bool pos);
-    void Clear_fuses();
+    void Set_ui_fuses(const QString &Current_uC);
+    void Count_ui_fuses(const QString &Current_uC, uint8_t fuse_byte);
+    void Set_enabled_EXT_fuses(bool pos);
+    void Clear_int_osc_fuses();
+    void Clear_ext_osc_fuses();
+    void Clear_fuses(bool visible);
 };
 
 #endif // MAINWINDOW_H
