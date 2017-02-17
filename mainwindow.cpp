@@ -655,6 +655,13 @@ void MainWindow::Count_ui_fuses(const QString &Current_uC, uint8_t fuse_byte)
         case AT90USB1286:
         case AT90USB646:
         case AT90USB647:
+        case AT90PWM2:
+        case AT90PWM3:
+        case AT90PWM2B:
+        case AT90PWM3B:
+        case AT90CAN32:
+        case AT90CAN64:
+        case AT90CAN128:
         {
            Clear_fuses(true);
 
@@ -667,11 +674,38 @@ void MainWindow::Count_ui_fuses(const QString &Current_uC, uint8_t fuse_byte)
            switch(fuse_byte & 0x0F)
            {
                case 0x0F:
-               case 0x0E: Check(ui->EXT_OSC_4, true);     break;
+               case 0x0E:
+               {
+                   Clear_int_osc_fuses();
+                   Check(ui->EXT_OSC_4, true);
+                   break;
+               }
                case 0x0D:
-               case 0x0C: Check(ui->EXT_OSC_3, true);     break;
-               case 0x0B: Check(ui->EXT_OSC_2, true);     break;
-               case 0x09: Check(ui->EXT_OSC_1, true);     break;
+               case 0x0C:
+               {
+                   Clear_int_osc_fuses();
+                   Check(ui->EXT_OSC_3, true);
+                   break;
+               }
+               case 0x0A:
+               case 0x0B:
+               {
+                   Clear_int_osc_fuses();
+                   Check(ui->EXT_OSC_2, true);
+                   break;
+               }
+               case 0x08:
+               case 0x09:
+               {
+                   Clear_int_osc_fuses();
+                   Check(ui->EXT_OSC_1, true);
+                   break;
+               }
+               case 0x02:
+               {
+                   Clear_ext_osc_fuses();
+                   Check(ui->OSC_1, true);
+               }
            }
         }
     }
@@ -705,12 +739,12 @@ void MainWindow::Clear_fuses(bool visible)
 
 }
 
-void MainWindow::Set_enabled_EXT_fuses(bool pos)
+void MainWindow::Set_enabled_EXT_fuses(bool visible)
 {
-    ui->EXT_OSC_1->setVisible(pos);
-    ui->EXT_OSC_2->setVisible(pos);
-    ui->EXT_OSC_3->setVisible(pos);
-    ui->EXT_OSC_4->setVisible(pos);
+    ui->EXT_OSC_1->setVisible(visible);
+    ui->EXT_OSC_2->setVisible(visible);
+    ui->EXT_OSC_3->setVisible(visible);
+    ui->EXT_OSC_4->setVisible(visible);
 }
 
 void MainWindow::Clear_int_osc_fuses()

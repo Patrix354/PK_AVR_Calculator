@@ -35,7 +35,6 @@ UBRR_Calculator::UBRR_Calculator(QWidget *parent) :
         F_OSC_Speed[i] = F_OSC_speed[i];
     }
 
-
     UBRR_0X_PREV = 1;
     UBRR_2X_PREV = 1;
 }

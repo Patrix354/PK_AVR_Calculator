@@ -173,7 +173,7 @@ private:
     void Check(QCheckBox* button, bool pos);
     void Set_ui_fuses(const QString &Current_uC);
     void Count_ui_fuses(const QString &Current_uC, uint8_t fuse_byte);
-    void Set_enabled_EXT_fuses(bool pos);
+    void Set_enabled_EXT_fuses(bool visible);
     void Clear_int_osc_fuses();
     void Clear_ext_osc_fuses();
     void Clear_fuses(bool visible);
