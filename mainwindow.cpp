@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 #include <QMessageBox>
 #include <QProcess>
 #include <QRadioButton>
@@ -19,8 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    file_flag = true;
 
     QString uc_codes[uC_AMOUNT] =
     {
@@ -69,16 +66,6 @@ MainWindow::MainWindow(QWidget *parent) :
         "", "1", "2", "4", "8", "20", "46", "93", "187", "375", "750", "1500", "2000"
     };
 
-    QString sck_special[SCK_SPECIALS] =
-    {
-        "USBasp", "USBtiny"
-    };
-
-    QString err_names[ERR_AMOUNT]
-    {
-        "avrdude: AVR device initialized", "avrdude: error: programm enable"
-    };
-
     for(int i = 0; i < uC_AMOUNT; i++)
     {
         ui->uC_list->addItem(uc_names[i]);
@@ -103,18 +90,8 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
-    for(int i = 0; i < SCK_SPECIALS; i++)
-    {
-        SCK_special[i] = sck_special[i];
-    }
-
-    for(int i = 0; i < ERR_AMOUNT; i++)
-    {
-        ERR_names[i] = err_names[i];
-    }
-
     Clear_fuses(false);
-    Set_ui_fuses(ui->uC_list->currentText());
+    Set_ui_fuses();
 }
 
 MainWindow::~MainWindow()
@@ -128,25 +105,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_uC_list_activated(const QString &arg1)
 {
-    Set_ui_fuses(arg1);
+    Set_ui_fuses();
 }
 
 void MainWindow::on_Prog_list_activated(const QString &arg1)
 {
-    for(int i = 0; i <= SCK_SPECIALS; i++)
+    if(arg1 == "USBtiny" || arg1 == "USBasp")
     {
-        if(arg1 == SCK_special[i])
-        {
-           ui->SCK_list->setVisible(true);
-           break;
-        }
-        else
-        {
-            ui->SCK_list->setVisible(false);
-        }
+        ui->SCK_list->setVisible(true);
+    }
+    else
+    {
+        ui->SCK_list->setVisible(false);
     }
 
-    Set_ui_fuses(ui->uC_list->currentText());
+    Set_ui_fuses();
 }
 
 void MainWindow::on_Main_button_clicked()
@@ -159,21 +132,18 @@ void MainWindow::on_Main_button_clicked()
     QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
 
     params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
-
     Safe_to_file(exec, params, FILE_PATH, 1);
 
-    if(Search_uC(FILE_PATH) >= 7)
+    params << "-Usignature:r:-:h";
+    Safe_to_file(exec, params, SIGNATURE_FILE_PATH, 0);
+
+    if(Search_ERR(SIGNATURE_FILE_PATH) == true)
+    {
+        ui->ERR_Main_Label->setText(OK);
+    }
+    else
     {
         ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-        return;
-    }
-
-    switch(Search_ERR(FILE_PATH))
-    {
-        case -1:    ui->ERR_Main_Label->setText(AVRDUDE_ERR);       break;
-        case 0:     ui->ERR_Main_Label->setText(OK);                break;
-        case 1:     ui->ERR_Main_Label->setText(AVRDUDE_ERR);       break;
-        default:    ui->ERR_Main_Label->setText(AVRDUDE_ERR);       break;
     }
 }
 
@@ -195,33 +165,22 @@ void MainWindow::on_Command_exec_clicked()
             efuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Uefuse:r:-:h";
 
             params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
-
             Safe_to_file(exec, params, FILE_PATH, 1);
 
-            if(Search_uC(FILE_PATH) >= 7)
-            {
-                ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-                ui->lfuse_lbl->clear();
-                ui->hfuse_lbl->clear();
-                ui->efuse_lbl->clear();
-                return;
-            }
+            params << "-Usignature:r:-:h";
+            Safe_to_file(exec, params, SIGNATURE_FILE_PATH, 0);
 
-            switch(Search_ERR(FILE_PATH))
+            if(Search_ERR(SIGNATURE_FILE_PATH) == false)
             {
-                case 0:
-                {
-                    ;
-                    break;
-                }
-                case 1:
-                case 2:
-                default:
-                {
-                    ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-                    return;
-                    break;
-                }
+                  ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+                  ui->lfuse_lbl->clear();
+                  ui->hfuse_lbl->clear();
+                  ui->efuse_lbl->clear();
+                  return;
+            }
+            else
+            {
+                  ui->ERR_Main_Label->setText(OK);
             }
 
             Safe_to_file(exec, lfuse_params, FILE_PATH, 0);
@@ -240,7 +199,7 @@ void MainWindow::on_Command_exec_clicked()
             hfuse = hfuse_Qstr.toInt(nullptr, 16);
             efuse = efuse_Qstr.toInt(nullptr, 16);
 
-            Count_ui_fuses(ui->uC_list->currentText(), lfuse);
+            //Count_ui_fuses(lfuse);
         }
     }
 }
@@ -322,86 +281,22 @@ void MainWindow::on_OSC_4_clicked()
 //  Other Methods
 //
 
-int MainWindow::Search_in_array(QString search, QString* tab, int len)
-{
-    for(int i = 0; i < len; i++)
-    {
-        if(search == tab[i])
-        {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-int MainWindow::Search_ERR(string path_to_file)
+bool MainWindow::Search_ERR(string path_to_file)
 {
     std::fstream file;
     std::string line;
 
     file.open(path_to_file.c_str(), ios::in);
 
-    if(file.good() == false)
+    getline(file, line);
+    if(line.length() == 0)
     {
-        if(file_flag == true)
-        {
-            file_flag = false;
-            QMessageBox::critical(this, "LOG ERR", "Can't open log file");
-        }
-        return 2;
+        return false;
     }
 
-    while(getline(file, line))
-    {
-        if(line.length() <= 2)
-        {
-            continue;
-        }
-        else
-        {
-            for(int i = 0; i < ERR_AMOUNT; i++)
-            {
-                if(line.substr(0,31) == ERR_names[0].toLocal8Bit().constData())
-                {
-                    return i;
-                }
-            }
-        }
-    }
     file.close();
     file.clear();
-    return -1;
-}
-
-int MainWindow::Search_uC(string path_to_file)
-{
-    std::fstream file;
-    std::string line;
-    int line_num = 1;
-
-    file.open(path_to_file.c_str(), ios::in);
-
-    if(file.good() == false)
-    {
-        if(file_flag == false)
-        {
-            file_flag = true;
-        }
-        return -1;
-    }
-
-    while(getline(file, line))
-    {
-        if(line.length() > 5)
-        {
-            line_num++;
-        }
-
-    }
-    file.close();
-    file.clear();
-    return line_num;
+    return true;
 }
 
 QString MainWindow::Search_fuse(string path_to_file)
@@ -411,15 +306,6 @@ QString MainWindow::Search_fuse(string path_to_file)
 
     file.open(path_to_file.c_str(), ios::in);
 
-    if(file.good() == false)
-    {
-        if(file_flag == false)
-        {
-            file_flag = true;
-            QMessageBox::critical(this, "LOG ERR", "Can't open log file");
-        }
-        return "ERR";
-    }
     getline(file, line);
     return QString::fromStdString(line);
 }
@@ -436,11 +322,11 @@ void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_f
     AVRProcess->waitForFinished();
     if(mode == 1)
     {
-        output = AVRProcess->readAllStandardError();
+        output = QString::fromLatin1(AVRProcess->readAllStandardError());
     }
     else if(mode == 0)
     {
-        output = AVRProcess->readAllStandardOutput();
+        output = QString::fromLatin1(AVRProcess->readAllStandardOutput());
     }
     AVRProcess->close();
 
@@ -448,6 +334,8 @@ void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_f
     file << output.toLocal8Bit().constData();
     file.close();
     file.clear();
+
+    delete AVRProcess;
 }
 
 void MainWindow::Check(QRadioButton* button, bool pos)
@@ -464,9 +352,9 @@ void MainWindow::Check(QCheckBox* button, bool pos)
     button->setAutoExclusive(true);
 }
 
-void MainWindow::Set_ui_fuses(const QString &Current_uC)
+void MainWindow::Set_ui_fuses()
 {
-    switch(Search_in_array(Current_uC, uC_names, uC_AMOUNT))
+    switch(ui->uC_list->currentIndex())
     {
         case AT90USB82:
         case AT90USB162:
@@ -645,9 +533,9 @@ void MainWindow::Set_ui_fuses(const QString &Current_uC)
     }
 }
 
-void MainWindow::Count_ui_fuses(const QString &Current_uC, uint8_t fuse_byte)
+void MainWindow::Count_ui_fuses(uint8_t fuse_byte)
 {
-    switch(Search_in_array(Current_uC, uC_names, uC_AMOUNT))
+    switch(ui->uC_list->currentIndex())
     {
         case AT90USB82:
         case AT90USB162:

@@ -100,6 +100,7 @@
 #define ERR_AMOUNT 2
 #define SCK_SPECIALS 2
 #define FILE_PATH "C:/PK_AVR_Calculator/command.log"
+#define SIGNATURE_FILE_PATH "C:/PK_AVR_Calculator/signature.log"
 
 #define AVRDUDE_ERR "Błąd AVRDUDE!"
 #define OK "OK"
@@ -140,8 +141,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    bool file_flag;
-
     uint8_t lfuse;
     uint8_t hfuse;
     uint8_t efuse;
@@ -152,8 +151,6 @@ private:
     QString Prog_codes[PROG_AMOUNT];
     QString SCK_names[SCK_AMOUNT];
     QString SCK_codes[SCK_AMOUNT];
-    QString SCK_special[SCK_SPECIALS];
-    QString ERR_names[ERR_AMOUNT];
 
     QString lfuse_Qstr;
     QString hfuse_Qstr;
@@ -164,15 +161,13 @@ private:
     ATtiny_CON_Schematic* ATtiny_CON_Dialog;
     UBRR_Calculator* UART_Calculator;
 
-    int Search_in_array(QString search, QString* tab, int len);
-    int Search_ERR(string path_to_file);
-    int Search_uC(string path_to_file);
+    bool Search_ERR(string path_to_file);
     QString Search_fuse(string path_to_file);
     void Safe_to_file(QString exec, QStringList params, string path_to_file, int mode);
     void Check(QRadioButton* button, bool pos);
     void Check(QCheckBox* button, bool pos);
-    void Set_ui_fuses(const QString &Current_uC);
-    void Count_ui_fuses(const QString &Current_uC, uint8_t fuse_byte);
+    void Set_ui_fuses();
+    void Count_ui_fuses(uint8_t fuse_byte);
     void Set_enabled_EXT_fuses(bool visible);
     void Clear_int_osc_fuses();
     void Clear_ext_osc_fuses();
