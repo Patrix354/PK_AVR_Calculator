@@ -11,7 +11,6 @@
 #include "attiny_con_schematic.h"
 #include "ubrr_calculator.h"
 
-
 #define AT90USB82 0
 #define AT90USB162 1
 #define AT90USB1287 2
@@ -98,7 +97,7 @@
 #define PROG_AMOUNT 3
 #define SCK_AMOUNT 13
 #define ERR_AMOUNT 2
-#define SCK_SPECIALS 2
+
 #define FILE_PATH "C:/PK_AVR_Calculator/command.log"
 #define SIGNATURE_FILE_PATH "C:/PK_AVR_Calculator/signature.log"
 
@@ -164,6 +163,7 @@ private:
     bool Search_ERR(string path_to_file);
     QString Search_fuse(string path_to_file);
     void Safe_to_file(QString exec, QStringList params, string path_to_file, int mode);
+    void Print_ERR(string path_to_file);
     void Check(QRadioButton* button, bool pos);
     void Check(QCheckBox* button, bool pos);
     void Set_ui_fuses();

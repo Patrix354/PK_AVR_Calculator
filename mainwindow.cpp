@@ -7,8 +7,9 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QApplication>
-#include <QDebug>
+//#include <QDebug>
 
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <cstdlib>
@@ -144,6 +145,7 @@ void MainWindow::on_Main_button_clicked()
     else
     {
         ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+        Print_ERR(FILE_PATH);
     }
 }
 
@@ -173,6 +175,7 @@ void MainWindow::on_Command_exec_clicked()
             if(Search_ERR(SIGNATURE_FILE_PATH) == false)
             {
                   ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+                  Print_ERR(FILE_PATH);
                   ui->lfuse_lbl->clear();
                   ui->hfuse_lbl->clear();
                   ui->efuse_lbl->clear();
@@ -320,6 +323,7 @@ void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_f
     AVRProcess = new QProcess(&parent);
     AVRProcess->start(exec, params);
     AVRProcess->waitForFinished();
+
     if(mode == 1)
     {
         output = QString::fromLatin1(AVRProcess->readAllStandardError());
@@ -328,6 +332,7 @@ void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_f
     {
         output = QString::fromLatin1(AVRProcess->readAllStandardOutput());
     }
+
     AVRProcess->close();
 
     file.open(path_to_file.c_str(), ios::out);
@@ -336,6 +341,22 @@ void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_f
     file.clear();
 
     delete AVRProcess;
+}
+
+void MainWindow::Print_ERR(string path_to_file)
+{
+    std::string line;
+    std::fstream file;
+
+    file.open(path_to_file.c_str(), ios::in);
+
+    while(getline(file, line))
+    {
+        cerr << line << endl;
+    }
+
+    file.close();
+    file.clear();
 }
 
 void MainWindow::Check(QRadioButton* button, bool pos)
