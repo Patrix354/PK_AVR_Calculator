@@ -7,7 +7,6 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QApplication>
-//#include <QDebug>
 
 #include <iostream>
 #include <fstream>
@@ -348,6 +347,7 @@ void MainWindow::Print_ERR(string path_to_file)
     std::string line;
     std::fstream file;
 
+    system("cls");
     file.open(path_to_file.c_str(), ios::in);
 
     while(getline(file, line))
@@ -586,6 +586,7 @@ void MainWindow::Count_ui_fuses(uint8_t fuse_byte)
                case 0x0E:
                {
                    Clear_int_osc_fuses();
+                   Clear_ext_osc_fuses();
                    Check(ui->EXT_OSC_4, true);
                    break;
                }
@@ -593,6 +594,7 @@ void MainWindow::Count_ui_fuses(uint8_t fuse_byte)
                case 0x0C:
                {
                    Clear_int_osc_fuses();
+                   Clear_ext_osc_fuses();
                    Check(ui->EXT_OSC_3, true);
                    break;
                }
@@ -600,6 +602,7 @@ void MainWindow::Count_ui_fuses(uint8_t fuse_byte)
                case 0x0B:
                {
                    Clear_int_osc_fuses();
+                   Clear_ext_osc_fuses();
                    Check(ui->EXT_OSC_2, true);
                    break;
                }
@@ -607,11 +610,13 @@ void MainWindow::Count_ui_fuses(uint8_t fuse_byte)
                case 0x09:
                {
                    Clear_int_osc_fuses();
+                   Clear_ext_osc_fuses();
                    Check(ui->EXT_OSC_1, true);
                    break;
                }
                case 0x02:
                {
+                   Clear_int_osc_fuses();
                    Clear_ext_osc_fuses();
                    Check(ui->OSC_1, true);
                }

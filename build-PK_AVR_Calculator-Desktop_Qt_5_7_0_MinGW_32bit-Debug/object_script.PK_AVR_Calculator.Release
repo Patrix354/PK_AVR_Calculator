@@ -1,0 +1,14 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\lpt_schematic.o
+./release\kanda_schematic.o
+./release\attiny_con_schematic.o
+./release\ubrr_calculator.o
+./release\qrc_resources.o
+./release\moc_mainwindow.o
+./release\moc_lpt_schematic.o
+./release\moc_kanda_schematic.o
+./release\moc_attiny_con_schematic.o
+./release\moc_ubrr_calculator.o
+);

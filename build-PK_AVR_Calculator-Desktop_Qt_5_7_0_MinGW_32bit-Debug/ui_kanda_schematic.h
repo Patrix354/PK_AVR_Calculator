@@ -42,7 +42,10 @@ public:
 
     void retranslateUi(QDialog *KANDA_Schematic)
     {
-        KANDA_Schematic->setWindowTitle(QApplication::translate("KANDA_Schematic", "Dialog", 0));
+        KANDA_Schematic->setWindowTitle(QApplication::translate("KANDA_Schematic", "Standard KANDA -  Bez Problemu", 0));
+#ifndef QT_NO_WHATSTHIS
+        KANDA_Schematic->setWhatsThis(QApplication::translate("KANDA_Schematic", "Prosta grafika u\305\202atwiaj\304\205ca pod\305\202\304\205czenie programatora z interfejsem KANDA", 0));
+#endif // QT_NO_WHATSTHIS
         Schematic->setText(QString());
     } // retranslateUi
 

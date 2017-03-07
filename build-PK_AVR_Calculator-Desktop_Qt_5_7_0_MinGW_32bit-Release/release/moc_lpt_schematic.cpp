@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../PK_AVR_Calculator/lpt_schematic.h"
+#include "../../Qt_Projects/AVR_Calc/PK_AVR_Calculator/lpt_schematic.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
