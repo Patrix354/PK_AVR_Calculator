@@ -124,7 +124,7 @@ void MainWindow::on_Prog_list_activated(const QString &arg1)
 
 void MainWindow::on_Main_button_clicked()
 {
-    QString exec = "avrdude";
+    QString exec = "C:\\AVRDUDE\\avrdude.exe";
     QStringList params;
 
     ui->ERR_Main_Label->clear();
@@ -155,7 +155,7 @@ void MainWindow::on_Command_exec_clicked()
         if(ui->Read->isChecked())
         {
             QObject parent;
-            QString exec = "avrdude";
+            QString exec = "C:\\AVRDUDE\\avrdude.exe";
             QStringList params;
             QStringList lfuse_params;
             QStringList hfuse_params;
@@ -187,10 +187,18 @@ void MainWindow::on_Command_exec_clicked()
 
             Safe_to_file(exec, lfuse_params, FILE_PATH, 0);
             lfuse_Qstr = Search_fuse(FILE_PATH);
+            lfuse_Qstr.remove(0, 2);
+            lfuse_Qstr = lfuse_Qstr.toUpper();
+
             Safe_to_file(exec, hfuse_params, FILE_PATH, 0);
             hfuse_Qstr = Search_fuse(FILE_PATH);
+            hfuse_Qstr.remove(0, 2);
+            hfuse_Qstr = hfuse_Qstr.toUpper();
+
             Safe_to_file(exec, efuse_params, FILE_PATH, 0);
             efuse_Qstr = Search_fuse(FILE_PATH);
+            efuse_Qstr.remove(0, 2);
+            efuse_Qstr = efuse_Qstr.toUpper();
 
             ui->lfuse_lbl->setText(lfuse_Qstr);
             ui->hfuse_lbl->setText(hfuse_Qstr);
@@ -201,7 +209,7 @@ void MainWindow::on_Command_exec_clicked()
             hfuse = hfuse_Qstr.toInt(nullptr, 16);
             efuse = efuse_Qstr.toInt(nullptr, 16);
 
-            //Count_ui_fuses(lfuse);
+            Count_ui_fuses(lfuse, hfuse);
         }
     }
 }
@@ -283,6 +291,78 @@ void MainWindow::on_OSC_4_clicked()
 //  Other Methods
 //
 
+void MainWindow::Check(QRadioButton* button, bool pos)
+{
+    button->setAutoExclusive(false);
+    button->setChecked(pos);
+    button->setAutoExclusive(true);
+}
+
+void MainWindow::Check(QCheckBox* button, bool pos)
+{
+    button->setAutoExclusive(false);
+    button->setChecked(pos);
+    button->setAutoExclusive(true);
+}
+
+void MainWindow::Clear_fuses(bool visible)
+{
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+    Check(ui->CKDIV8, false);
+    Check(ui->CKOPT, false);
+    Check(ui->EXT_OSC_1, false);
+    Check(ui->EXT_OSC_2, false);
+    Check(ui->EXT_OSC_3, false);
+    Check(ui->EXT_OSC_4, false);
+
+    ui->OSC_1->setText("");
+    ui->OSC_2->setText("");
+    ui->OSC_3->setText("");
+    ui->OSC_4->setText("");
+
+    ui->CKDIV8->setVisible(visible);
+    ui->CKOPT->setVisible(visible);
+    Set_enabled_INT_fuses(visible);
+    Set_enabled_EXT_fuses(visible);
+
+}
+
+void MainWindow::Set_enabled_EXT_fuses(bool visible)
+{
+    ui->EXT_OSC_1->setVisible(visible);
+    ui->EXT_OSC_2->setVisible(visible);
+    ui->EXT_OSC_3->setVisible(visible);
+    ui->EXT_OSC_4->setVisible(visible);
+}
+
+void MainWindow::Set_enabled_INT_fuses(bool visible)
+{
+    ui->OSC_1->setVisible(visible);
+    ui->OSC_2->setVisible(visible);
+    ui->OSC_3->setVisible(visible);
+    ui->OSC_4->setVisible(visible);
+}
+
+void MainWindow::Clear_int_osc_fuses()
+{
+    Check(ui->OSC_1, false);
+    Check(ui->OSC_2, false);
+    Check(ui->OSC_3, false);
+    Check(ui->OSC_4, false);
+}
+
+void MainWindow::Clear_ext_osc_fuses()
+{
+    Check(ui->EXT_OSC_1, false);
+    Check(ui->EXT_OSC_2, false);
+    Check(ui->EXT_OSC_3, false);
+    Check(ui->EXT_OSC_4, false);
+}
+
+
 bool MainWindow::Search_ERR(string path_to_file)
 {
     std::fstream file;
@@ -359,22 +439,13 @@ void MainWindow::Print_ERR(string path_to_file)
     file.clear();
 }
 
-void MainWindow::Check(QRadioButton* button, bool pos)
-{
-    button->setAutoExclusive(false);
-    button->setChecked(pos);
-    button->setAutoExclusive(true);
-}
-
-void MainWindow::Check(QCheckBox* button, bool pos)
-{
-    button->setAutoExclusive(false);
-    button->setChecked(pos);
-    button->setAutoExclusive(true);
-}
-
 void MainWindow::Set_ui_fuses()
 {
+    //uC's without CKSEL fusebits: AT90S8535 AT90S8515 AT90S4434 AT90S4433 AT90S2343 AT90S2333 AT90S2313
+    //                             AT90S4414 AT90S1200 ATmega161 ATmega163 ATmega103 ATtiny11 ATtiny12 ATtiny15
+
+    Clear_fuses(false);
+
     switch(ui->uC_list->currentIndex())
     {
         case AT90USB82:
@@ -391,12 +462,7 @@ void MainWindow::Set_ui_fuses()
         case AT90CAN64:
         case AT90CAN128:
         case ATmega32u4:
-        case ATmega640:
-        case ATmega1280:
-        case ATmega1281:
         case ATmega1284p:
-        case ATmega2560:
-        case ATmega2561:
         case ATmega6490:
         case ATmega164p:
         case ATmega324p:
@@ -420,47 +486,10 @@ void MainWindow::Set_ui_fuses()
         case ATtiny461:
         case ATtiny261:
         {
-            Clear_fuses(false);
             ui->CKDIV8->setVisible(true);
 
             ui->OSC_1->setVisible(true);
             ui->OSC_1->setText("8 MHz");
-            Set_enabled_EXT_fuses(true);
-            break;
-        }
-        case AT90S8535:
-        case AT90S8515:
-        case AT90S4434:
-        case AT90S4433:
-        case AT90S2343:
-        case AT90S2333:
-        case AT90S2313:
-        case AT90S4414:
-        case AT90S1200:
-        case ATmega161:
-        case ATmega163:
-        case ATmega103:
-        case ATtiny11:
-        case ATtiny12:
-        case ATtiny15:
-        {
-            Clear_fuses(false);
-            break;
-        }
-        case ATtiny26:
-        {
-            Clear_fuses(false);
-            ui->CKDIV8->setVisible(true);
-
-            ui->OSC_1->setVisible(true);
-            ui->OSC_2->setVisible(true);
-            ui->OSC_3->setVisible(true);
-            ui->OSC_4->setVisible(true);
-
-            ui->OSC_1->setText("1 MHz");
-            ui->OSC_2->setText("2 MHz");
-            ui->OSC_3->setText("4 MHz");
-            ui->OSC_4->setText("8 MHz");
             Set_enabled_EXT_fuses(true);
             break;
         }
@@ -473,7 +502,7 @@ void MainWindow::Set_ui_fuses()
         case ATmega8515:
         {
             Clear_fuses(false);
-            ui->CKDIV8->setVisible(true);
+
             ui->CKOPT->setVisible(true);
 
             ui->OSC_1->setVisible(true);
@@ -486,8 +515,15 @@ void MainWindow::Set_ui_fuses()
             ui->OSC_3->setText("4 MHz");
             ui->OSC_4->setText("8 MHz");
             Set_enabled_EXT_fuses(true);
+
+            ui->EXT_OSC_4->setVisible(false);
             break;
         }
+        case ATmega640:
+        case ATmega1280:
+        case ATmega1281:
+        case ATmega2560:
+        case ATmega2561:
         case ATmega48:
         case ATmega88:
         case ATmega168:
@@ -507,7 +543,6 @@ void MainWindow::Set_ui_fuses()
         }
         case ATtiny13:
         {
-            Clear_fuses(false);
             ui->CKDIV8->setVisible(true);
 
             ui->OSC_1->setVisible(true);
@@ -517,7 +552,7 @@ void MainWindow::Set_ui_fuses()
             ui->OSC_1->setText("128 kHz");
             ui->OSC_2->setText("4.8 MHz");
             ui->OSC_3->setText("9.6 MHz");
-            Set_enabled_EXT_fuses(true);
+            Set_enabled_EXT_fuses(false);
             break;
         }
         case ATtiny2313:
@@ -532,6 +567,7 @@ void MainWindow::Set_ui_fuses()
             ui->OSC_1->setText("128 kHz");
             ui->OSC_2->setText("4 MHz");
             ui->OSC_3->setText("8 MHz");
+
             Set_enabled_EXT_fuses(true);
             break;
         }
@@ -554,8 +590,17 @@ void MainWindow::Set_ui_fuses()
     }
 }
 
-void MainWindow::Count_ui_fuses(uint8_t fuse_byte)
+void MainWindow::Count_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte)
 {
+    //uC's without CKSEL fusebits: AT90S8535 AT90S8515 AT90S4434 AT90S4433 AT90S2343 AT90S2333 AT90S2313
+    //                             AT90S4414 AT90S1200 ATmega161 ATmega163 ATmega103 ATtiny11 ATtiny12 ATtiny15
+
+    Check(ui->CKDIV8, false);
+    Check(ui->CKOPT, false);
+
+    Clear_int_osc_fuses();
+    Clear_ext_osc_fuses();
+
     switch(ui->uC_list->currentIndex())
     {
         case AT90USB82:
@@ -572,107 +617,136 @@ void MainWindow::Count_ui_fuses(uint8_t fuse_byte)
         case AT90CAN64:
         case AT90CAN128:
         {
-           Clear_fuses(true);
+           if(~low_fuse_byte & 0x80)
+               Check(ui->CKDIV8, true);
 
-           switch(fuse_byte & 0x80)
-           {
-               case 0x80: Check(ui->CKDIV8, false);        break;
-               case 0x00: Check(ui->CKDIV8, true);         break;
-           }
-
-           switch(fuse_byte & 0x0F)
+           switch(low_fuse_byte & 0x0F)
            {
                case 0x0F:
-               case 0x0E:
-               {
-                   Clear_int_osc_fuses();
-                   Clear_ext_osc_fuses();
-                   Check(ui->EXT_OSC_4, true);
-                   break;
-               }
+               case 0x0E: Check(ui->EXT_OSC_4, true);   break;
                case 0x0D:
-               case 0x0C:
-               {
-                   Clear_int_osc_fuses();
-                   Clear_ext_osc_fuses();
-                   Check(ui->EXT_OSC_3, true);
-                   break;
-               }
+               case 0x0C: Check(ui->EXT_OSC_3, true);   break;
                case 0x0A:
-               case 0x0B:
-               {
-                   Clear_int_osc_fuses();
-                   Clear_ext_osc_fuses();
-                   Check(ui->EXT_OSC_2, true);
-                   break;
-               }
+               case 0x0B: Check(ui->EXT_OSC_2, true);   break;
                case 0x08:
-               case 0x09:
-               {
-                   Clear_int_osc_fuses();
-                   Clear_ext_osc_fuses();
-                   Check(ui->EXT_OSC_1, true);
-                   break;
-               }
-               case 0x02:
-               {
-                   Clear_int_osc_fuses();
-                   Clear_ext_osc_fuses();
-                   Check(ui->OSC_1, true);
-               }
+               case 0x09: Check(ui->EXT_OSC_1, true);   break;
+               case 0x02: Check(ui->OSC_1, true);       break;
            }
+           break;
+        }
+        case ATmega8:
+        case ATmega16:
+        case ATmega32:
+        case ATmega64:
+        case ATmega128:
+        case ATmega8535:
+        case ATmega8515:
+        case ATtiny26:
+        {
+            if(~high_fuse_byte & 0x08)
+                Check(ui->CKOPT, true);
+
+            switch(low_fuse_byte & 0x0F)
+            {
+                case 0x0F:
+                case 0x0E: Check(ui->EXT_OSC_3, true);  break;
+                case 0x0D:
+                case 0x0C: Check(ui->EXT_OSC_2, true);  break;
+                case 0x0B:
+                case 0x0A: Check(ui->EXT_OSC_1, true);  break;
+                case 0x01: Check(ui->OSC_1, true);      break;
+                case 0x02: Check(ui->OSC_2, true);      break;
+                case 0x03: Check(ui->OSC_3, true);      break;
+                case 0x04: Check(ui->OSC_4, true);      break;
+            }
+            break;
+        }
+        case ATmega640:
+        case ATmega1280:
+        case ATmega1281:
+        case ATmega2560:
+        case ATmega2561:
+        case ATmega1284p:
+        case ATmega48:
+        case ATmega88:
+        case ATmega168:
+        case ATmega328p:
+        case ATtiny88:
+        {
+            if(~low_fuse_byte & 0x80)
+                Check(ui->CKDIV8, true);
+
+            switch(low_fuse_byte & 0x0F)
+            {
+                case 0x0F:
+                case 0x0E: Check(ui->EXT_OSC_4, true);  break;
+                case 0x0D:
+                case 0x0C: Check(ui->EXT_OSC_3, true);  break;
+                case 0x0B:
+                case 0x0A: Check(ui->EXT_OSC_2, true);  break;
+                case 0x09:
+                case 0x08: Check(ui->EXT_OSC_1, true);  break;
+                case 0x03: Check(ui->OSC_1, true);      break;
+                case 0x02: Check(ui->OSC_2, true);      break;
+            }
+            break;
+        }
+        case ATtiny13:
+        {
+            if(~low_fuse_byte & 0x80)
+                Check(ui->CKDIV8, true);
+
+            switch(low_fuse_byte & 0x03)
+            {
+                case 0x03: Check(ui->OSC_3, true);  break;
+                case 0x02: Check(ui->OSC_2, true);  break;
+                case 0x01: Check(ui->OSC_1, true);  break;
+            }
+            break;
+        }
+        case ATtiny2313:
+        {
+            if(~low_fuse_byte & 0x80)
+                Check(ui->CKDIV8, true);
+
+            switch(low_fuse_byte & 0x0F)
+            {
+                case 0x0F:
+                case 0x0E: Check(ui->EXT_OSC_4, true);  break;
+                case 0x0D:
+                case 0x0C: Check(ui->EXT_OSC_3, true);  break;
+                case 0x0B:
+                case 0x0A: Check(ui->EXT_OSC_2, true);  break;
+                case 0x09:
+                case 0x08: Check(ui->EXT_OSC_1, true);  break;
+                case 0x06: Check(ui->OSC_1, true);      break;
+                case 0x02: Check(ui->OSC_2, true);      break;
+                case 0x04: Check(ui->OSC_3, true);      break;
+            }
+            break;
+        }
+        case ATtiny25:
+        case ATtiny45:
+        case ATtiny85:
+        {
+            if(~low_fuse_byte & 0x80)
+                Check(ui->CKDIV8, true);
+
+            switch(low_fuse_byte & 0x0F)
+            {
+                case 0x0F:
+                case 0x0E: Check(ui->EXT_OSC_4, true);  break;
+                case 0x0D:
+                case 0x0C: Check(ui->EXT_OSC_3, true);  break;
+                case 0x0B:
+                case 0x0A: Check(ui->EXT_OSC_2, true);  break;
+                case 0x09:
+                case 0x08: Check(ui->EXT_OSC_1, true);  break;
+                case 0x04: Check(ui->OSC_1, true);      break;
+                case 0x03: Check(ui->OSC_2, true);      break;
+                case 0x02: Check(ui->OSC_3, true);      break;
+            }
+            break;
         }
     }
-}
-
-void MainWindow::Clear_fuses(bool visible)
-{
-    Check(ui->OSC_1, false);
-    Check(ui->OSC_2, false);
-    Check(ui->OSC_3, false);
-    Check(ui->OSC_4, false);
-    Check(ui->CKDIV8, false);
-    Check(ui->CKOPT, false);
-    Check(ui->EXT_OSC_1, false);
-    Check(ui->EXT_OSC_2, false);
-    Check(ui->EXT_OSC_3, false);
-    Check(ui->EXT_OSC_4, false);
-
-    ui->OSC_1->setText("");
-    ui->OSC_2->setText("");
-    ui->OSC_3->setText("");
-    ui->OSC_4->setText("");
-
-    ui->OSC_1->setVisible(visible);
-    ui->OSC_2->setVisible(visible);
-    ui->OSC_3->setVisible(visible);
-    ui->OSC_4->setVisible(visible);
-    ui->CKDIV8->setVisible(visible);
-    ui->CKOPT->setVisible(visible);
-    Set_enabled_EXT_fuses(visible);
-
-}
-
-void MainWindow::Set_enabled_EXT_fuses(bool visible)
-{
-    ui->EXT_OSC_1->setVisible(visible);
-    ui->EXT_OSC_2->setVisible(visible);
-    ui->EXT_OSC_3->setVisible(visible);
-    ui->EXT_OSC_4->setVisible(visible);
-}
-
-void MainWindow::Clear_int_osc_fuses()
-{
-    Check(ui->OSC_1, false);
-    Check(ui->OSC_2, false);
-    Check(ui->OSC_3, false);
-    Check(ui->OSC_4, false);
-}
-
-void MainWindow::Clear_ext_osc_fuses()
-{
-    Check(ui->EXT_OSC_1, false);
-    Check(ui->EXT_OSC_2, false);
-    Check(ui->EXT_OSC_3, false);
-    Check(ui->EXT_OSC_4, false);
 }

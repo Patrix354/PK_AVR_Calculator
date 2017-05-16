@@ -167,8 +167,9 @@ private:
     void Check(QRadioButton* button, bool pos);
     void Check(QCheckBox* button, bool pos);
     void Set_ui_fuses();
-    void Count_ui_fuses(uint8_t fuse_byte);
+    void Count_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte);
     void Set_enabled_EXT_fuses(bool visible);
+    void Set_enabled_INT_fuses(bool visible);
     void Clear_int_osc_fuses();
     void Clear_ext_osc_fuses();
     void Clear_fuses(bool visible);

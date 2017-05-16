@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>419</height>
+    <width>641</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -195,7 +195,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>50</y>
+        <y>60</y>
         <width>391</width>
         <height>61</height>
        </rect>
@@ -251,7 +251,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>360</x>
-        <y>10</y>
+        <y>20</y>
         <width>191</width>
         <height>22</height>
        </rect>
@@ -264,7 +264,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
+        <y>20</y>
         <width>141</width>
         <height>22</height>
        </rect>
@@ -274,7 +274,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>120</y>
+        <y>130</y>
         <width>191</width>
         <height>51</height>
        </rect>
@@ -313,7 +313,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>120</y>
+        <y>130</y>
         <width>331</width>
         <height>51</height>
        </rect>
@@ -375,7 +375,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>190</y>
+        <y>200</y>
         <width>80</width>
         <height>21</height>
        </rect>
@@ -465,120 +465,208 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>430</x>
       <y>10</y>
-      <width>121</width>
-      <height>47</height>
+      <width>181</width>
+      <height>41</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QLabel" name="label">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>9</height>
+          </size>
+         </property>
          <property name="text">
           <string>lfuse</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>hfuse</string>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>efuse</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="font">
+            <font>
+             <family>Dotum</family>
+             <pointsize>7</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>0x</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lfuse_lbl">
+           <property name="styleSheet">
+            <string notr="true">color: green;
+font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLineEdit" name="lfuse_lbl">
-         <property name="styleSheet">
-          <string notr="true">color: green;
-font-weight: bold;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
+        <widget class="QLabel" name="label_2">
+         <property name="maximumSize">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>16777215</width>
+           <height>9</height>
           </size>
          </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="hfuse_lbl">
-         <property name="styleSheet">
-          <string notr="true">color: green;
-font-weight: bold;</string>
-         </property>
          <property name="text">
-          <string/>
+          <string>hfuse</string>
          </property>
-         <property name="readOnly">
-          <bool>true</bool>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="font">
+            <font>
+             <family>Dotum</family>
+             <pointsize>7</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>0x</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="hfuse_lbl">
+           <property name="styleSheet">
+            <string notr="true">color: green;
+font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="maximumSize">
           <size>
-           <width>38</width>
-           <height>18</height>
+           <width>16777215</width>
+           <height>9</height>
           </size>
          </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="efuse_lbl">
-         <property name="styleSheet">
-          <string notr="true">color: green;
-font-weight: bold;</string>
-         </property>
          <property name="text">
-          <string/>
+          <string>efuse</string>
          </property>
-         <property name="readOnly">
-          <bool>true</bool>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="font">
+            <font>
+             <family>Dotum</family>
+             <pointsize>7</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>0x</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="efuse_lbl">
+           <property name="styleSheet">
+            <string notr="true">color: green;
+font-weight: bold;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
     </layout>
    </widget>
+   <zorder>uC_list</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>tabWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
-     <height>20</height>
+     <width>641</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
