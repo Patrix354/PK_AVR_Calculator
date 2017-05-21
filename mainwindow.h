@@ -94,12 +94,14 @@
 
 
 #define uC_AMOUNT 75
-#define PROG_AMOUNT 3
+#define PROG_AMOUNT 2
 #define SCK_AMOUNT 13
 #define ERR_AMOUNT 2
 
-#define FILE_PATH "C:/PK_AVR_Calculator/command.log"
-#define SIGNATURE_FILE_PATH "C:/PK_AVR_Calculator/signature.log"
+#define AVRDUDE_FILE "C://AVRDUDE//avrdude.exe"
+#define OUTPUT_FILE "C://PK_AVR_Calculator//command.log"
+#define SIGNATURE_FILE "C://PK_AVR_Calculator//signature.log"
+#define PATH_FILE "C://PK_AVR_Calculator//path.log"
 
 #define AVRDUDE_ERR "Błąd AVRDUDE!"
 #define OK "OK"
@@ -137,12 +139,16 @@ private slots:
     void on_uC_list_activated(const QString &arg1);
     void on_Command_exec_clicked();
 
+    void on_Set_AVRDUDE_path_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     uint8_t lfuse;
     uint8_t hfuse;
     uint8_t efuse;
+    uint8_t lock;
+    QString AVRDUDE;
 
     QString uC_codes[uC_AMOUNT];
     QString uC_names[uC_AMOUNT];
@@ -151,10 +157,6 @@ private:
     QString SCK_names[SCK_AMOUNT];
     QString SCK_codes[SCK_AMOUNT];
 
-    QString lfuse_Qstr;
-    QString hfuse_Qstr;
-    QString efuse_Qstr;
-
     LPT_Schematic* Prog_Dialog;
     KANDA_Schematic* KANDA_Dialog;
     ATtiny_CON_Schematic* ATtiny_CON_Dialog;
@@ -162,7 +164,7 @@ private:
 
     bool Search_ERR(string path_to_file);
     QString Search_fuse(string path_to_file);
-    void Safe_to_file(QString exec, QStringList params, string path_to_file, int mode);
+    void Safe_output_to_file(QString exec, QStringList params, string path_to_file, int mode);
     void Print_ERR(string path_to_file);
     void Check(QRadioButton* button, bool pos);
     void Check(QCheckBox* button, bool pos);

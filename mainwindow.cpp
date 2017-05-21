@@ -7,6 +7,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QApplication>
+#include <QFileDialog>
 
 #include <iostream>
 #include <fstream>
@@ -18,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    std::fstream file;
+    std::string avrdude;
 
     QString uc_codes[uC_AMOUNT] =
     {
@@ -46,12 +50,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QString prog_names[PROG_AMOUNT] =
     {
-        "USBasp", "USBtiny", "AVRisp"
+        "USBasp", "USBtiny"
     };
 
     QString prog_codes[PROG_AMOUNT] =
     {
-        "usbasp", "usbtiny", "avrisp"
+        "usbasp", "usbtiny"
     };
 
     QString sck_names[SCK_AMOUNT] =
@@ -90,6 +94,16 @@ MainWindow::MainWindow(QWidget *parent) :
         }
     }
 
+    file.open(PATH_FILE, ios::in);
+    if(file.good())
+    {
+        getline(file, avrdude);
+        ui->AVRDUDE_path->setText(QString::fromStdString(avrdude));
+        AVRDUDE = QString::fromStdString(avrdude);
+    }
+    file.close();
+    file.clear();
+
     Clear_fuses(false);
     Set_ui_fuses();
 }
@@ -124,7 +138,7 @@ void MainWindow::on_Prog_list_activated(const QString &arg1)
 
 void MainWindow::on_Main_button_clicked()
 {
-    QString exec = "C:\\AVRDUDE\\avrdude.exe";
+    QString exec = AVRDUDE;
     QStringList params;
 
     ui->ERR_Main_Label->clear();
@@ -132,31 +146,53 @@ void MainWindow::on_Main_button_clicked()
     QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
 
     params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
-    Safe_to_file(exec, params, FILE_PATH, 1);
+    Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
 
     params << "-Usignature:r:-:h";
-    Safe_to_file(exec, params, SIGNATURE_FILE_PATH, 0);
+    Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
 
-    if(Search_ERR(SIGNATURE_FILE_PATH) == true)
+    if(Search_ERR(SIGNATURE_FILE) == true)
     {
         ui->ERR_Main_Label->setText(OK);
     }
     else
     {
         ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-        Print_ERR(FILE_PATH);
+        Print_ERR(OUTPUT_FILE);
     }
 }
 
 void MainWindow::on_Command_exec_clicked()
 {
+    QObject parent;
+    QString exec = AVRDUDE;
+    QStringList params;
+
+    params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+    Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
+
+    params << "-Usignature:r:-:h";
+    Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
+
+    if(Search_ERR(SIGNATURE_FILE) == false)
+    {
+          ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+          Print_ERR(OUTPUT_FILE);
+          ui->lock_lbl->clear();
+          return;
+    }
+    else
+    {
+          ui->ERR_Main_Label->setText(OK);
+    }
+
     if(ui->Fuse_bits->isChecked())
     {
         if(ui->Read->isChecked())
         {
-            QObject parent;
-            QString exec = "C:\\AVRDUDE\\avrdude.exe";
-            QStringList params;
+            QString lfuse_Qstr;
+            QString hfuse_Qstr;
+            QString efuse_Qstr;
             QStringList lfuse_params;
             QStringList hfuse_params;
             QStringList efuse_params;
@@ -165,38 +201,18 @@ void MainWindow::on_Command_exec_clicked()
             hfuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Uhfuse:r:-:h";
             efuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Uefuse:r:-:h";
 
-            params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
-            Safe_to_file(exec, params, FILE_PATH, 1);
-
-            params << "-Usignature:r:-:h";
-            Safe_to_file(exec, params, SIGNATURE_FILE_PATH, 0);
-
-            if(Search_ERR(SIGNATURE_FILE_PATH) == false)
-            {
-                  ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-                  Print_ERR(FILE_PATH);
-                  ui->lfuse_lbl->clear();
-                  ui->hfuse_lbl->clear();
-                  ui->efuse_lbl->clear();
-                  return;
-            }
-            else
-            {
-                  ui->ERR_Main_Label->setText(OK);
-            }
-
-            Safe_to_file(exec, lfuse_params, FILE_PATH, 0);
-            lfuse_Qstr = Search_fuse(FILE_PATH);
+            Safe_output_to_file(exec, lfuse_params, OUTPUT_FILE, 0);
+            lfuse_Qstr = Search_fuse(OUTPUT_FILE);
             lfuse_Qstr.remove(0, 2);
             lfuse_Qstr = lfuse_Qstr.toUpper();
 
-            Safe_to_file(exec, hfuse_params, FILE_PATH, 0);
-            hfuse_Qstr = Search_fuse(FILE_PATH);
+            Safe_output_to_file(exec, hfuse_params, OUTPUT_FILE, 0);
+            hfuse_Qstr = Search_fuse(OUTPUT_FILE);
             hfuse_Qstr.remove(0, 2);
             hfuse_Qstr = hfuse_Qstr.toUpper();
 
-            Safe_to_file(exec, efuse_params, FILE_PATH, 0);
-            efuse_Qstr = Search_fuse(FILE_PATH);
+            Safe_output_to_file(exec, efuse_params, OUTPUT_FILE, 0);
+            efuse_Qstr = Search_fuse(OUTPUT_FILE);
             efuse_Qstr.remove(0, 2);
             efuse_Qstr = efuse_Qstr.toUpper();
 
@@ -210,6 +226,26 @@ void MainWindow::on_Command_exec_clicked()
             efuse = efuse_Qstr.toInt(nullptr, 16);
 
             Count_ui_fuses(lfuse, hfuse);
+        }
+    }
+    else if(ui->Lock_bits->isChecked())
+    {
+        if(ui->Read->isChecked())
+        {
+            QString lock_Qstr;
+            QStringList lock_params;
+
+            lock_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Ulock:r:-:h";
+
+            Safe_output_to_file(exec, lock_params, OUTPUT_FILE, 0);
+            lock_Qstr = Search_fuse(OUTPUT_FILE);
+            lock_Qstr.remove(0, 2);
+            lock_Qstr = lock_Qstr.toUpper();
+
+            ui->lock_lbl->setText(lock_Qstr);
+            ui->ERR_Main_Label->setText(OK);
+
+            lock = lock_Qstr.toInt(nullptr, 16);
         }
     }
 }
@@ -285,6 +321,29 @@ void MainWindow::on_OSC_4_clicked()
 {
     Clear_ext_osc_fuses();
     Check(ui->CKOPT, false);
+}
+
+void MainWindow::on_Set_AVRDUDE_path_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Otwórz plik AVRDUDE.exe"), "C://", tr("Executable files (*.exe)"));
+    std::string avrdude;
+    std::fstream file;
+
+    ui->AVRDUDE_path->setText(fileName);
+    file.open(PATH_FILE, ios::out);
+    file << fileName.toLocal8Bit().constData();
+    file.close();
+    file.clear();
+
+    file.open(PATH_FILE, ios::in);
+    if(file.good())
+    {
+        getline(file, avrdude);
+        ui->AVRDUDE_path->setText(QString::fromStdString(avrdude));
+        AVRDUDE = QString::fromStdString(avrdude);
+    }
+    file.close();
+    file.clear();
 }
 
 //
@@ -392,7 +451,7 @@ QString MainWindow::Search_fuse(string path_to_file)
     return QString::fromStdString(line);
 }
 
-void MainWindow::Safe_to_file(QString exec, QStringList params, string path_to_file, int mode)
+void MainWindow::Safe_output_to_file(QString exec, QStringList params, string path_to_file, int mode)
 {
     QObject parent;
     QProcess* AVRProcess;
