@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>641</width>
-    <height>420</height>
+    <width>741</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PK AVR Calculator     ver. Alpha</string>
+   <string>PKAVRCalculator ver. Alpha</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -22,17 +25,47 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>601</width>
-      <height>321</height>
+      <width>711</width>
+      <height>371</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+     </font>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
+    </property>
+    <property name="acceptDrops">
+     <bool>false</bool>
+    </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::North</enum>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
+    </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
+    </property>
+    <property name="usesScrollButtons">
+     <bool>true</bool>
     </property>
     <property name="documentMode">
      <bool>false</bool>
     </property>
     <property name="tabsClosable">
+     <bool>false</bool>
+    </property>
+    <property name="movable">
+     <bool>false</bool>
+    </property>
+    <property name="tabBarAutoHide">
      <bool>false</bool>
     </property>
     <widget class="QWidget" name="tab_3">
@@ -125,66 +158,102 @@
        <rect>
         <x>320</x>
         <y>50</y>
-        <width>261</width>
-        <height>171</height>
+        <width>381</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="title">
        <string>Zew. oscylatyor</string>
       </property>
-      <widget class="QCheckBox" name="CKOPT">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>140</y>
-         <width>151</width>
-         <height>19</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>CKOPT - opcja oscylatora</string>
-       </property>
-      </widget>
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>11</x>
          <y>22</y>
-         <width>256</width>
-         <height>96</height>
+         <width>351</width>
+         <height>113</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QRadioButton" name="EXT_OSC_1">
-          <property name="text">
-           <string>0.4 MHz - 0.9 MHz - Tylko rezonator ceramiczny</string>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QRadioButton" name="EXT_OSC_1">
+            <property name="text">
+             <string>0.4 MHz - 0.9 MHz - Tylko rezonator ceramiczny</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="EXT_OSC_2">
+            <property name="text">
+             <string>0.9 MHz - 3.0 MHz</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="EXT_OSC_3">
+            <property name="text">
+             <string>3.0 MHz - 8.0 MHz</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="EXT_OSC_4">
+            <property name="text">
+             <string>&gt; 8.0 MHz</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item>
-         <widget class="QRadioButton" name="EXT_OSC_2">
+        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QCheckBox" name="CKOPT">
           <property name="text">
-           <string>0.9 MHz - 3.0 MHz</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="EXT_OSC_3">
-          <property name="text">
-           <string>3.0 MHz - 8.0 MHz</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="EXT_OSC_4">
-          <property name="text">
-           <string>&gt; 8.0 MHz</string>
+           <string>CKOPT - opcja oscylatora</string>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Lock bity</string>
+     </attribute>
+     <widget class="QComboBox" name="LockLB_list">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>421</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="LockBLB0_list">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>421</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="LockBLB1_list">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>130</y>
+        <width>421</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -250,7 +319,7 @@ font-weight: bold;</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>490</x>
         <y>20</y>
         <width>191</width>
         <height>22</height>
@@ -509,9 +578,9 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>474</x>
       <y>10</y>
-      <width>221</width>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
@@ -772,7 +841,7 @@ font-weight: bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>641</width>
+     <width>741</width>
      <height>21</height>
     </rect>
    </property>

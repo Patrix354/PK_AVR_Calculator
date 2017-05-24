@@ -22,6 +22,8 @@ private slots:
 
     void on_F_OSC_list_activated(int index);
 
+    void on_baud_edit_textChanged(const QString &arg1);
+
 private:
     Ui::UBRR_Calculator *ui;
 

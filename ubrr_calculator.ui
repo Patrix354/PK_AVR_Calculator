@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>331</width>
-    <height>495</height>
+    <width>360</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,10 +19,10 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>88</x>
+     <x>78</x>
      <y>20</y>
-     <width>201</width>
-     <height>16</height>
+     <width>200</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -35,10 +35,10 @@
   <widget class="Line" name="line_2">
    <property name="geometry">
     <rect>
-     <x>78</x>
+     <x>68</x>
      <y>30</y>
      <width>20</width>
-     <height>431</height>
+     <height>401</height>
     </rect>
    </property>
    <property name="orientation">
@@ -48,7 +48,7 @@
   <widget class="Line" name="line_3">
    <property name="geometry">
     <rect>
-     <x>88</x>
+     <x>78</x>
      <y>50</y>
      <width>201</width>
      <height>16</height>
@@ -61,10 +61,10 @@
   <widget class="Line" name="line_4">
    <property name="geometry">
     <rect>
-     <x>278</x>
+     <x>268</x>
      <y>30</y>
      <width>20</width>
-     <height>431</height>
+     <height>401</height>
     </rect>
    </property>
    <property name="frameShadow">
@@ -77,7 +77,7 @@
   <widget class="Line" name="line_6">
    <property name="geometry">
     <rect>
-     <x>38</x>
+     <x>28</x>
      <y>70</y>
      <width>251</width>
      <height>20</height>
@@ -90,10 +90,10 @@
   <widget class="Line" name="line_7">
    <property name="geometry">
     <rect>
-     <x>98</x>
+     <x>88</x>
      <y>60</y>
      <width>191</width>
-     <height>401</height>
+     <height>371</height>
     </rect>
    </property>
    <property name="orientation">
@@ -103,10 +103,10 @@
   <widget class="Line" name="line_9">
    <property name="geometry">
     <rect>
-     <x>28</x>
+     <x>18</x>
      <y>80</y>
      <width>21</width>
-     <height>381</height>
+     <height>351</height>
     </rect>
    </property>
    <property name="orientation">
@@ -116,10 +116,10 @@
   <widget class="Line" name="line_5">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>80</x>
      <y>80</y>
      <width>101</width>
-     <height>381</height>
+     <height>351</height>
     </rect>
    </property>
    <property name="orientation">
@@ -129,10 +129,10 @@
   <widget class="Line" name="line_8">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>180</x>
      <y>80</y>
      <width>101</width>
-     <height>381</height>
+     <height>351</height>
     </rect>
    </property>
    <property name="orientation">
@@ -142,7 +142,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>98</x>
+     <x>88</x>
      <y>30</y>
      <width>181</width>
      <height>24</height>
@@ -195,7 +195,7 @@ color: blue;</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>38</x>
+     <x>28</x>
      <y>80</y>
      <width>251</width>
      <height>16</height>
@@ -257,7 +257,7 @@ color: blue;</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>94</x>
+     <x>84</x>
      <y>60</y>
      <width>191</width>
      <height>16</height>
@@ -266,6 +266,10 @@ color: blue;</string>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <widget class="QLabel" name="U2X_0">
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;
+color: red;</string>
+      </property>
       <property name="text">
        <string>U2X = 0</string>
       </property>
@@ -276,6 +280,10 @@ color: blue;</string>
     </item>
     <item>
      <widget class="QLabel" name="U2X_1">
+      <property name="styleSheet">
+       <string notr="true">font-weight: bold;
+color: red;</string>
+      </property>
       <property name="text">
        <string>U2X = 1</string>
       </property>
@@ -289,10 +297,10 @@ color: blue;</string>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>38</x>
+     <x>28</x>
      <y>100</y>
      <width>251</width>
-     <height>365</height>
+     <height>331</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -318,7 +326,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_2400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -328,7 +336,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_2400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -338,7 +346,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_2400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -348,7 +356,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_2400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -379,7 +387,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_4800_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -389,7 +397,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_4800_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -399,7 +407,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_4800_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -409,7 +417,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_4800_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -440,7 +448,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_9600_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -450,7 +458,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_9600_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -460,7 +468,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_9600_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -470,7 +478,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_9600_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -501,7 +509,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_14400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -511,7 +519,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_14400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -521,7 +529,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_14400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -531,7 +539,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_14400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -562,7 +570,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_19200_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -572,7 +580,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_19200_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -582,7 +590,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_19200_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -592,7 +600,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_19200_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -623,7 +631,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_28800_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -633,7 +641,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_28800_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -643,7 +651,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_28800_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -653,7 +661,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_28800_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -684,7 +692,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_38400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -694,7 +702,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_38400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -704,7 +712,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_38400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -714,7 +722,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_38400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -745,7 +753,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_57600_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -755,7 +763,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_57600_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -765,7 +773,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_57600_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -775,7 +783,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_57600_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -806,7 +814,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_76800_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -816,7 +824,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_76800_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -826,7 +834,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_76800_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -836,7 +844,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_76800_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -867,7 +875,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_115200_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -877,7 +885,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_115200_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -887,7 +895,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_115200_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -897,7 +905,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_115200_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -928,7 +936,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_230400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -938,7 +946,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_230400_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -948,7 +956,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_230400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -958,7 +966,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_230400_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -989,7 +997,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_250000_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -999,7 +1007,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_250000_0X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1009,7 +1017,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="UBRR_250000_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1019,7 +1027,7 @@ color: blue;</string>
       <item>
        <widget class="QLabel" name="error_250000_2X">
         <property name="text">
-         <string>????</string>
+         <string/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -1032,6 +1040,191 @@ color: blue;</string>
      <widget class="Line" name="line_21">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>450</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font-weight: bold;
+color: blue;</string>
+   </property>
+   <property name="text">
+    <string>Get Baudrate:</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line_29">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>490</y>
+     <width>199</width>
+     <height>5</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_30">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>470</y>
+     <width>199</width>
+     <height>5</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="baud_edit">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>470</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>7</number>
+   </property>
+   <property name="frame">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="UBRR_unknow_0X">
+   <property name="geometry">
+    <rect>
+     <x>83</x>
+     <y>470</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="error_unknow_0X">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>470</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="UBRR_unknow_2X">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>470</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="error_unknow_2X">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>470</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>470</y>
+     <width>281</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <item>
+     <widget class="Line" name="line_23">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="line_24">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="line_25">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="line_26">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="Line" name="line_28">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>

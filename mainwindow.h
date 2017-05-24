@@ -96,6 +96,9 @@
 #define uC_AMOUNT 75
 #define PROG_AMOUNT 2
 #define SCK_AMOUNT 13
+#define LOCK_LB_AMOUNT 3
+#define LOCK_BLB0_AMOUNT 4
+#define LOCK_BLB1_AMOUNT 4
 #define ERR_AMOUNT 2
 
 #define AVRDUDE_FILE "C://AVRDUDE//avrdude.exe"
@@ -168,8 +171,8 @@ private:
     void Print_ERR(string path_to_file);
     void Check(QRadioButton* button, bool pos);
     void Check(QCheckBox* button, bool pos);
-    void Set_ui_fuses();
-    void Count_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte);
+    void Set_ui_lock(uint8_t lock_byte, uint8_t mode);
+    void Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uint8_t mode);
     void Set_enabled_EXT_fuses(bool visible);
     void Set_enabled_INT_fuses(bool visible);
     void Clear_int_osc_fuses();

@@ -37,6 +37,8 @@ UBRR_Calculator::UBRR_Calculator(QWidget *parent) :
 
     UBRR_0X_PREV = 1;
     UBRR_2X_PREV = 1;
+
+    emit on_F_OSC_list_activated(0);
 }
 
 UBRR_Calculator::~UBRR_Calculator()
@@ -61,6 +63,57 @@ void UBRR_Calculator::on_F_OSC_list_activated(int index)
     set_line(115200, F_OSC_Speed[index], ui->UBRR_115200_0X, ui->UBRR_115200_2X, ui->error_115200_0X, ui->error_115200_2X);
     set_line(230400, F_OSC_Speed[index], ui->UBRR_230400_0X, ui->UBRR_230400_2X, ui->error_230400_0X, ui->error_230400_2X);
     set_line(250000, F_OSC_Speed[index], ui->UBRR_250000_0X, ui->UBRR_250000_2X, ui->error_250000_0X, ui->error_250000_2X);
+
+    emit on_baud_edit_textChanged(ui->baud_edit->text());
+}
+
+void UBRR_Calculator::on_baud_edit_textChanged(const QString &arg1)
+{
+    QString output;
+    int baud = arg1.toInt(nullptr, 10);
+    int F_OSC = F_OSC_Speed[ui->F_OSC_list->currentIndex()];
+
+    for(float i = 1; i <= 2; i+=1)
+    {
+        float UBRR = round(static_cast<float>(F_OSC)/((16.00/i)*baud)-1.00);
+        float baud_cm = static_cast<float>(F_OSC)/((16.00/i)*(UBRR+1.00));
+        float error = (baud_cm/static_cast<float>(baud)-1.00)*100.00;
+        error = round_to(error, 10.00);
+
+        if(i == 1)
+        {
+            if(UBRR > 0xFFF || UBRR < 0)
+            {
+                ui->UBRR_unknow_0X->setText("-");
+                ui->error_unknow_0X->setText("0%");
+
+            }
+            else
+            {
+                output.setNum(static_cast<int>(UBRR), 10);
+                ui->UBRR_unknow_0X->setText(output);
+
+                output.setNum(error, 'g', 2);
+                ui->error_unknow_0X->setText(output + "%");
+            }
+        }
+        else
+        {
+            if(UBRR > 0xFFF || UBRR < 0)
+            {
+                ui->UBRR_unknow_2X->setText("-");
+                ui->error_unknow_2X->setText("0%");
+            }
+            else
+            {
+                output.setNum(static_cast<int>(UBRR), 10);
+                ui->UBRR_unknow_2X->setText(output);
+
+                output.setNum(error, 'g', 2);
+                ui->error_unknow_2X->setText(output + "%");
+            }
+        }
+    }
 }
 
 //
