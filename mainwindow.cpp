@@ -130,13 +130,16 @@ MainWindow::MainWindow(QWidget *parent) :
     if(file.good())
     {
         getline(file, avrdude);
-        ui->AVRDUDE_path->setText(QString::fromStdString(avrdude));
-        AVRDUDE = QString::fromStdString(avrdude);
+        ui->AVRDUDE_path_out->setText(QString::fromStdString(avrdude));
+        AVRDUDE_path = QString::fromStdString(avrdude);
     }
     file.close();
     file.clear();
 
-    Clear_fuses(false);
+    ui->Slow_SCK_Enable_1->setChecked(false);
+    ui->Slow_SCK_Enable_2->setChecked(false);
+    Auto_Slow_SCK = false;
+
     Set_ui_fuses(0, 0, 1);
 }
 
@@ -171,52 +174,83 @@ void MainWindow::on_Prog_list_activated(const QString &arg1)
 
 void MainWindow::on_Main_button_clicked()
 {
-    QString exec = AVRDUDE;
+    QString exec = AVRDUDE_path;
     QStringList params;
+    int i = 0;
 
-    ui->ERR_Main_Label->clear();
-    ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
-    QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
-
-    params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
-    Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
-
-    params << "-Usignature:r:-:h";
-    Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
-
-    if(Search_ERR(SIGNATURE_FILE) == true)
+    for(Auto_Slow_SCK ? i = 0 : i = ui->SCK_list->currentIndex(); Auto_Slow_SCK ? i < 13 : i <= ui->SCK_list->currentIndex(); i++)
     {
-        ui->ERR_Main_Label->setText(OK);
-    }
-    else
-    {
-        ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-        Print_ERR(OUTPUT_FILE);
+        ui->SCK_list->setCurrentIndex(i);
+
+        ui->ERR_Main_Label->clear();
+        ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
+        QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
+
+        params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+        Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
+
+        params << "-Usignature:r:-:h";
+        Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
+
+        if(Search_ERR(SIGNATURE_FILE))
+        {
+            ui->ERR_Main_Label->setText(OK);
+            break;
+        }
+        else
+        {
+            ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+            //Print_ERR(OUTPUT_FILE);
+        }
     }
 }
 
 void MainWindow::on_Command_exec_clicked()
 {
     QObject parent;
-    QString exec = AVRDUDE;
+    QString exec = AVRDUDE_path;
     QStringList params;
+    int i = 0;
 
-    params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
-    Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
-
-    params << "-Usignature:r:-:h";
-    Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
-
-    if(Search_ERR(SIGNATURE_FILE) == false)
+    for(Auto_Slow_SCK ? i = 0 : i = ui->SCK_list->currentIndex(); Auto_Slow_SCK ? i < 13 : i <= ui->SCK_list->currentIndex(); i++)
     {
-          ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-          Print_ERR(OUTPUT_FILE);
-          ui->lock_lbl->clear();
-          return;
-    }
-    else
-    {
-          ui->ERR_Main_Label->setText(OK);
+        ui->SCK_list->setCurrentIndex(i);
+
+        ui->ERR_Main_Label->clear();
+        ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
+        QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
+
+        params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+        Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
+
+        params << "-Usignature:r:-:h";
+        Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
+
+        if(Search_ERR(SIGNATURE_FILE))
+        {
+            //ui->ERR_Main_Label->setText(OK);
+            break;
+        }
+        else
+        {
+            ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+            Print_ERR(OUTPUT_FILE);
+            ui->lfuse_lbl->clear();
+            ui->hfuse_lbl->clear();
+            ui->efuse_lbl->clear();
+            ui->lock_lbl->clear();
+            if(Auto_Slow_SCK)
+            {
+                if(i == 12)
+                {
+                    return;\
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
     }
 
     if(ui->Fuse_bits->isChecked())
@@ -258,6 +292,7 @@ void MainWindow::on_Command_exec_clicked()
             hfuse = hfuse_Qstr.toInt(nullptr, 16);
             efuse = efuse_Qstr.toInt(nullptr, 16);
 
+            Set_ui_fuses(0, 0, 1);
             Set_ui_fuses(lfuse, hfuse, 0);
         }
     }
@@ -279,8 +314,37 @@ void MainWindow::on_Command_exec_clicked()
             ui->ERR_Main_Label->setText(OK);
 
             lock = lock_Qstr.toInt(nullptr, 16);
+            Set_ui_lock(0, 1);
             Set_ui_lock(lock, 0);
         }
+    }
+}
+
+void MainWindow::on_Slow_SCK_Enable_2_clicked()
+{
+    if(ui->Slow_SCK_Enable_2->isChecked())
+    {
+        ui->Slow_SCK_Enable_1->setChecked(true);
+        Auto_Slow_SCK = true;
+    }
+    else
+    {
+        ui->Slow_SCK_Enable_1->setChecked(false);
+        Auto_Slow_SCK = false;
+    }
+}
+
+void MainWindow::on_Slow_SCK_Enable_1_clicked()
+{
+    if(ui->Slow_SCK_Enable_1->isChecked())
+    {
+        ui->Slow_SCK_Enable_2->setChecked(true);
+        Auto_Slow_SCK = true;
+    }
+    else
+    {
+        ui->Slow_SCK_Enable_2->setChecked(false);
+        Auto_Slow_SCK = false;
     }
 }
 
@@ -336,25 +400,25 @@ void MainWindow::on_CKOPT_clicked()
 void MainWindow::on_OSC_1_clicked()
 {
     Clear_ext_osc_fuses();
-    Check(ui->CKOPT, false);
+    ui->CKOPT->setChecked(false);
 }
 
 void MainWindow::on_OSC_2_clicked()
 {
     Clear_ext_osc_fuses();
-    Check(ui->CKOPT, false);
+    ui->CKOPT->setChecked(false);
 }
 
 void MainWindow::on_OSC_3_clicked()
 {
     Clear_ext_osc_fuses();
-    Check(ui->CKOPT, false);
+    ui->CKOPT->setChecked(false);
 }
 
 void MainWindow::on_OSC_4_clicked()
 {
     Clear_ext_osc_fuses();
-    Check(ui->CKOPT, false);
+    ui->CKOPT->setChecked(false);
 }
 
 void MainWindow::on_Set_AVRDUDE_path_clicked()
@@ -363,7 +427,7 @@ void MainWindow::on_Set_AVRDUDE_path_clicked()
     std::string avrdude;
     std::fstream file;
 
-    ui->AVRDUDE_path->setText(fileName);
+    ui->AVRDUDE_path_out->setText(fileName);
     file.open(PATH_FILE, ios::out);
     file << fileName.toLocal8Bit().constData();
     file.close();
@@ -373,8 +437,8 @@ void MainWindow::on_Set_AVRDUDE_path_clicked()
     if(file.good())
     {
         getline(file, avrdude);
-        ui->AVRDUDE_path->setText(QString::fromStdString(avrdude));
-        AVRDUDE = QString::fromStdString(avrdude);
+        ui->AVRDUDE_path_out->setText(QString::fromStdString(avrdude));
+        AVRDUDE_path = QString::fromStdString(avrdude);
     }
     file.close();
     file.clear();
@@ -384,32 +448,12 @@ void MainWindow::on_Set_AVRDUDE_path_clicked()
 //  Other Methods
 //
 
-void MainWindow::Check(QRadioButton* button, bool pos)
-{
-    button->setAutoExclusive(false);
-    button->setChecked(pos);
-    button->setAutoExclusive(true);
-}
-
-void MainWindow::Check(QCheckBox* button, bool pos)
-{
-    button->setAutoExclusive(false);
-    button->setChecked(pos);
-    button->setAutoExclusive(true);
-}
-
 void MainWindow::Clear_fuses(bool visible)
 {
-    Check(ui->OSC_1, false);
-    Check(ui->OSC_2, false);
-    Check(ui->OSC_3, false);
-    Check(ui->OSC_4, false);
-    Check(ui->CKDIV8, false);
-    Check(ui->CKOPT, false);
-    Check(ui->EXT_OSC_1, false);
-    Check(ui->EXT_OSC_2, false);
-    Check(ui->EXT_OSC_3, false);
-    Check(ui->EXT_OSC_4, false);
+    Clear_int_osc_fuses();
+    Clear_ext_osc_fuses();
+    ui->CKDIV8->setChecked(false);
+    ui->CKOPT->setChecked(false);
 
     ui->OSC_1->setText("");
     ui->OSC_2->setText("");
@@ -441,18 +485,18 @@ void MainWindow::Set_enabled_INT_fuses(bool visible)
 
 void MainWindow::Clear_int_osc_fuses()
 {
-    Check(ui->OSC_1, false);
-    Check(ui->OSC_2, false);
-    Check(ui->OSC_3, false);
-    Check(ui->OSC_4, false);
+    ui->OSC_1->setChecked(false);
+    ui->OSC_2->setChecked(false);
+    ui->OSC_3->setChecked(false);
+    ui->OSC_4->setChecked(false);
 }
 
 void MainWindow::Clear_ext_osc_fuses()
 {
-    Check(ui->EXT_OSC_1, false);
-    Check(ui->EXT_OSC_2, false);
-    Check(ui->EXT_OSC_3, false);
-    Check(ui->EXT_OSC_4, false);
+    ui->EXT_OSC_1->setChecked(false);
+    ui->EXT_OSC_2->setChecked(false);
+    ui->EXT_OSC_3->setChecked(false);
+    ui->EXT_OSC_4->setChecked(false);
 }
 
 
@@ -464,13 +508,14 @@ bool MainWindow::Search_ERR(string path_to_file)
     file.open(path_to_file.c_str(), ios::in);
 
     getline(file, line);
-    if(line.length() == 0)
-    {
-        return false;
-    }
 
     file.close();
     file.clear();
+
+    if(line.length() <= 1)
+    {
+        return false;
+    }
     return true;
 }
 
@@ -641,11 +686,6 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
     {
         Clear_fuses(false);
     }
-    Check(ui->CKDIV8, false);
-    Check(ui->CKOPT, false);
-
-    Clear_int_osc_fuses();
-    Clear_ext_osc_fuses();
 
     switch(ui->uC_list->currentIndex())
     {
@@ -698,19 +738,19 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             else
             {
                 if(~low_fuse_byte & 0x80)
-                    Check(ui->CKDIV8, true);
+                    ui->CKDIV8->setChecked(true);
 
                 switch(low_fuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: Check(ui->EXT_OSC_4, true);   break;
+                    case 0x0E: ui->EXT_OSC_4->setChecked(true);   break;
                     case 0x0D:
-                    case 0x0C: Check(ui->EXT_OSC_3, true);   break;
+                    case 0x0C: ui->EXT_OSC_3->setChecked(true);   break;
                     case 0x0A:
-                    case 0x0B: Check(ui->EXT_OSC_2, true);   break;
+                    case 0x0B: ui->EXT_OSC_2->setChecked(true);   break;
                     case 0x08:
-                    case 0x09: Check(ui->EXT_OSC_1, true);   break;
-                    case 0x02: Check(ui->OSC_1, true);       break;
+                    case 0x09: ui->EXT_OSC_1->setChecked(true);   break;
+                    case 0x02: ui->OSC_1->setChecked(true);       break;
                 }
                 break;
             }
@@ -747,26 +787,26 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
                 if(ui->uC_list->currentIndex() == ATtiny26)
                 {
                     if(~low_fuse_byte & 0x40)
-                        Check(ui->CKOPT, true);
+                        ui->CKOPT->setChecked(true);
                 }
                 else
                 {
-                    if(~high_fuse_byte & 0x08)
-                        Check(ui->CKOPT, true);
+                    if(~high_fuse_byte & 0x10)
+                        ui->CKOPT->setChecked(true);
                 }
 
                 switch(low_fuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: Check(ui->EXT_OSC_3, true);  break;
+                    case 0x0E: ui->EXT_OSC_3->setChecked(true);  break;
                     case 0x0D:
-                    case 0x0C: Check(ui->EXT_OSC_2, true);  break;
+                    case 0x0C: ui->EXT_OSC_2->setChecked(true);  break;
                     case 0x0B:
-                    case 0x0A: Check(ui->EXT_OSC_1, true);  break;
-                    case 0x01: Check(ui->OSC_1, true);      break;
-                    case 0x02: Check(ui->OSC_2, true);      break;
-                    case 0x03: Check(ui->OSC_3, true);      break;
-                    case 0x04: Check(ui->OSC_4, true);      break;
+                    case 0x0A: ui->EXT_OSC_1->setChecked(true);  break;
+                    case 0x01: ui->OSC_1->setChecked(true);      break;
+                    case 0x02: ui->OSC_2->setChecked(true);      break;
+                    case 0x03: ui->OSC_3->setChecked(true);      break;
+                    case 0x04: ui->OSC_4->setChecked(true);      break;
                 }
                 break;
             }
@@ -801,20 +841,20 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             else
             {
                 if(~low_fuse_byte & 0x80)
-                    Check(ui->CKDIV8, true);
+                    ui->CKDIV8->setChecked(true);
 
                 switch(low_fuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: Check(ui->EXT_OSC_4, true);  break;
+                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
                     case 0x0D:
-                    case 0x0C: Check(ui->EXT_OSC_3, true);  break;
+                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
                     case 0x0B:
-                    case 0x0A: Check(ui->EXT_OSC_2, true);  break;
+                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
                     case 0x09:
-                    case 0x08: Check(ui->EXT_OSC_1, true);  break;
-                    case 0x03: Check(ui->OSC_1, true);      break;
-                    case 0x02: Check(ui->OSC_2, true);      break;
+                    case 0x08: ui->EXT_OSC_1->setChecked(true);  break;
+                    case 0x03: ui->OSC_1->setChecked(true);      break;
+                    case 0x02: ui->OSC_2->setChecked(true);      break;
                 }
                 break;
             }
@@ -838,13 +878,13 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             else
             {
                 if(~low_fuse_byte & 0x80)
-                    Check(ui->CKDIV8, true);
+                    ui->CKDIV8->setChecked(true);
 
                 switch(low_fuse_byte & 0x03)
                 {
-                    case 0x03: Check(ui->OSC_3, true);  break;
-                    case 0x02: Check(ui->OSC_2, true);  break;
-                    case 0x01: Check(ui->OSC_1, true);  break;
+                    case 0x03: ui->OSC_3->setChecked(true);  break;
+                    case 0x02: ui->OSC_2->setChecked(true);  break;
+                    case 0x01: ui->OSC_1->setChecked(true);  break;
                 }
                 break;
             }
@@ -869,21 +909,21 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             else
             {
                 if(~low_fuse_byte & 0x80)
-                    Check(ui->CKDIV8, true);
+                    ui->CKDIV8->setChecked(true);
 
                 switch(low_fuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: Check(ui->EXT_OSC_4, true);  break;
+                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
                     case 0x0D:
-                    case 0x0C: Check(ui->EXT_OSC_3, true);  break;
+                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
                     case 0x0B:
-                    case 0x0A: Check(ui->EXT_OSC_2, true);  break;
+                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
                     case 0x09:
-                    case 0x08: Check(ui->EXT_OSC_1, true);  break;
-                    case 0x06: Check(ui->OSC_1, true);      break;
-                    case 0x02: Check(ui->OSC_2, true);      break;
-                    case 0x04: Check(ui->OSC_3, true);      break;
+                    case 0x08: ui->EXT_OSC_1->setChecked(true);  break;
+                    case 0x06: ui->OSC_1->setChecked(true);      break;
+                    case 0x02: ui->OSC_2->setChecked(true);      break;
+                    case 0x04: ui->OSC_3->setChecked(true);      break;
                 }
                 break;
             }
@@ -908,21 +948,21 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             else
             {
                 if(~low_fuse_byte & 0x80)
-                    Check(ui->CKDIV8, true);
+                    ui->CKDIV8->setChecked(true);
 
                 switch(low_fuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: Check(ui->EXT_OSC_4, true);  break;
+                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
                     case 0x0D:
-                    case 0x0C: Check(ui->EXT_OSC_3, true);  break;
+                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
                     case 0x0B:
-                    case 0x0A: Check(ui->EXT_OSC_2, true);  break;
+                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
                     case 0x09:
-                    case 0x08: Check(ui->EXT_OSC_1, true);  break;
-                    case 0x04: Check(ui->OSC_1, true);      break;
-                    case 0x03: Check(ui->OSC_2, true);      break;
-                    case 0x02: Check(ui->OSC_3, true);      break;
+                    case 0x08: ui->EXT_OSC_1->setChecked(true);  break;
+                    case 0x04: ui->OSC_1->setChecked(true);      break;
+                    case 0x03: ui->OSC_2->setChecked(true);      break;
+                    case 0x02: ui->OSC_3->setChecked(true);      break;
                 }
                 break;
             }

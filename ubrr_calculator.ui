@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
+    <width>343</width>
     <height>531</height>
    </rect>
   </property>
@@ -300,7 +300,7 @@ color: red;</string>
      <x>28</x>
      <y>100</y>
      <width>251</width>
-     <height>331</height>
+     <height>365</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -1183,7 +1183,7 @@ color: blue;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>40</x>

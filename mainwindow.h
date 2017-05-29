@@ -141,17 +141,25 @@ private slots:
     void on_OSC_4_clicked();
     void on_uC_list_activated(const QString &arg1);
     void on_Command_exec_clicked();
-
     void on_Set_AVRDUDE_path_clicked();
+
+//    void on_Slow_SCK_Enable_1_clicked();
+
+//    void on_Slow_SCK_Enable_2_clicked();
+
+    void on_Slow_SCK_Enable_2_clicked();
+
+    void on_Slow_SCK_Enable_1_clicked();
 
 private:
     Ui::MainWindow *ui;
 
+    bool Auto_Slow_SCK;
     uint8_t lfuse;
     uint8_t hfuse;
     uint8_t efuse;
     uint8_t lock;
-    QString AVRDUDE;
+    QString AVRDUDE_path;
 
     QString uC_codes[uC_AMOUNT];
     QString uC_names[uC_AMOUNT];
@@ -169,8 +177,6 @@ private:
     QString Search_fuse(string path_to_file);
     void Safe_output_to_file(QString exec, QStringList params, string path_to_file, int mode);
     void Print_ERR(string path_to_file);
-    void Check(QRadioButton* button, bool pos);
-    void Check(QCheckBox* button, bool pos);
     void Set_ui_lock(uint8_t lock_byte, uint8_t mode);
     void Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uint8_t mode);
     void Set_enabled_EXT_fuses(bool visible);

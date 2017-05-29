@@ -42,7 +42,7 @@
      <enum>Qt::DefaultContextMenu</enum>
     </property>
     <property name="acceptDrops">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="tabPosition">
      <enum>QTabWidget::North</enum>
@@ -51,7 +51,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
@@ -211,6 +211,9 @@
          <widget class="QCheckBox" name="CKOPT">
           <property name="text">
            <string>CKOPT - opcja oscylatora</string>
+          </property>
+          <property name="autoExclusive">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -453,12 +456,38 @@ font-weight: bold;</string>
        <string>Wykonaj</string>
       </property>
      </widget>
+     <widget class="QCheckBox" name="Slow_SCK_Enable_2">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>50</y>
+        <width>141</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Włącz Auto Slow SCK</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
      <zorder>groupBox_2</zorder>
      <zorder>groupBox_3</zorder>
      <zorder>groupBox</zorder>
      <zorder>SCK_list</zorder>
      <zorder>Prog_list</zorder>
      <zorder>Command_exec</zorder>
+     <zorder>Slow_SCK_Enable_2</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -524,9 +553,9 @@ font-weight: bold;</string>
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>20</y>
-        <width>111</width>
+        <x>21</x>
+        <y>21</y>
+        <width>100</width>
         <height>16</height>
        </rect>
       </property>
@@ -534,30 +563,55 @@ font-weight: bold;</string>
        <string>Ścieżka do AVRDUDE</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="AVRDUDE_path">
+     <widget class="QWidget" name="layoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>21</x>
+        <y>40</y>
+        <width>341</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLineEdit" name="AVRDUDE_path_out">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Set_AVRDUDE_path">
+         <property name="text">
+          <string>Zmień</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QCheckBox" name="Slow_SCK_Enable_1">
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>40</y>
-        <width>231</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Set_AVRDUDE_path">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>40</y>
-        <width>75</width>
-        <height>23</height>
+        <y>80</y>
+        <width>141</width>
+        <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Zmień</string>
+       <string>Włącz Auto Slow SCK</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -578,9 +632,9 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>474</x>
+      <x>459</x>
       <y>10</y>
-      <width>241</width>
+      <width>261</width>
       <height>41</height>
      </rect>
     </property>
@@ -814,13 +868,6 @@ font-weight: bold;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="lock_lbl">
-           <property name="styleSheet">
-            <string notr="true">color: green;
-font-weight: bold;</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
