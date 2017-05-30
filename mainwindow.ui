@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>741</width>
-    <height>478</height>
+    <width>750</width>
+    <height>493</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -397,7 +397,7 @@ font-weight: bold;</string>
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QRadioButton" name="Flash">
+          <widget class="QCheckBox" name="Flash">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -407,7 +407,7 @@ font-weight: bold;</string>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="EEPROM">
+          <widget class="QCheckBox" name="EEPROM">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -417,7 +417,7 @@ font-weight: bold;</string>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="Fuse_bits">
+          <widget class="QCheckBox" name="Fuse_bits">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -427,7 +427,7 @@ font-weight: bold;</string>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="Lock_bits">
+          <widget class="QCheckBox" name="Lock_bits">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -545,6 +545,19 @@ font-weight: bold;</string>
        <string>UART/USART Calculator</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>110</y>
+        <width>191</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Gamma Corection - Korekcja diod LED</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -594,7 +607,7 @@ font-weight: bold;</string>
        <rect>
         <x>20</x>
         <y>80</y>
-        <width>141</width>
+        <width>131</width>
         <height>17</height>
        </rect>
       </property>
@@ -614,6 +627,19 @@ font-weight: bold;</string>
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QCheckBox" name="CheckFuseBits">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>100</y>
+        <width>221</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Odczytuj fusebituy przy sprawdzaniu AVR</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QComboBox" name="uC_list">
@@ -629,10 +655,10 @@ font-weight: bold;</string>
      <number>20</number>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>459</x>
+      <x>460</x>
       <y>10</y>
       <width>261</width>
       <height>41</height>
@@ -868,6 +894,10 @@ font-weight: bold;</string>
          </item>
          <item>
           <widget class="QLineEdit" name="lock_lbl">
+           <property name="styleSheet">
+            <string notr="true">color : green;
+font-weight : bold;</string>
+           </property>
            <property name="readOnly">
             <bool>true</bool>
            </property>
@@ -888,7 +918,7 @@ font-weight: bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>741</width>
+     <width>750</width>
      <height>21</height>
     </rect>
    </property>

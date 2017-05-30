@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
 
     std::fstream file;
     std::string avrdude;
@@ -139,6 +140,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Slow_SCK_Enable_1->setChecked(false);
     ui->Slow_SCK_Enable_2->setChecked(false);
     Auto_Slow_SCK = false;
+    CheckFuses = false;
 
     Set_ui_fuses(0, 0, 1);
 }
@@ -178,29 +180,44 @@ void MainWindow::on_Main_button_clicked()
     QStringList params;
     int i = 0;
 
-    for(Auto_Slow_SCK ? i = 0 : i = ui->SCK_list->currentIndex(); Auto_Slow_SCK ? i < 13 : i <= ui->SCK_list->currentIndex(); i++)
+    if(CheckFuses)
     {
-        ui->SCK_list->setCurrentIndex(i);
+        ui->Fuse_bits->setChecked(true);
+        ui->Lock_bits->setChecked(true);
+        ui->Read->setChecked(true);
 
-        ui->ERR_Main_Label->clear();
-        ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
-        QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
+        emit on_Command_exec_clicked();
 
-        params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
-        Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
-
-        params << "-Usignature:r:-:h";
-        Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
-
-        if(Search_ERR(SIGNATURE_FILE))
+        ui->Fuse_bits->setChecked(false);
+        ui->Lock_bits->setChecked(false);
+        ui->Read->setChecked(false);
+    }
+    else
+    {
+        for(Auto_Slow_SCK ? i = 0 : i = ui->SCK_list->currentIndex(); Auto_Slow_SCK ? i < 13 : i <= ui->SCK_list->currentIndex(); i++)
         {
-            ui->ERR_Main_Label->setText(OK);
-            break;
-        }
-        else
-        {
-            ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-            //Print_ERR(OUTPUT_FILE);
+            ui->SCK_list->setCurrentIndex(i);
+
+            ui->ERR_Main_Label->clear();
+            ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
+            QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
+
+            params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+            Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
+
+            params << "-Usignature:r:-:h";
+            Safe_output_to_file(exec, params, SIGNATURE_FILE, 0);
+
+            if(Search_ERR(SIGNATURE_FILE))
+            {
+                ui->ERR_Main_Label->setText(OK);
+                break;
+            }
+            else
+            {
+                ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+                Print_ERR(OUTPUT_FILE);
+            }
         }
     }
 }
@@ -228,7 +245,6 @@ void MainWindow::on_Command_exec_clicked()
 
         if(Search_ERR(SIGNATURE_FILE))
         {
-            //ui->ERR_Main_Label->setText(OK);
             break;
         }
         else
@@ -296,7 +312,8 @@ void MainWindow::on_Command_exec_clicked()
             Set_ui_fuses(lfuse, hfuse, 0);
         }
     }
-    else if(ui->Lock_bits->isChecked())
+
+    if(ui->Lock_bits->isChecked())
     {
         if(ui->Read->isChecked())
         {
@@ -345,6 +362,19 @@ void MainWindow::on_Slow_SCK_Enable_1_clicked()
     {
         ui->Slow_SCK_Enable_2->setChecked(false);
         Auto_Slow_SCK = false;
+    }
+}
+
+void MainWindow::on_CheckFuseBits_clicked()
+{
+    qDebug("togg");
+    if(ui->CheckFuseBits->isChecked())
+    {
+        CheckFuses = true;
+    }
+    else
+    {
+        CheckFuses = false;
     }
 }
 

@@ -142,19 +142,17 @@ private slots:
     void on_uC_list_activated(const QString &arg1);
     void on_Command_exec_clicked();
     void on_Set_AVRDUDE_path_clicked();
-
-//    void on_Slow_SCK_Enable_1_clicked();
-
-//    void on_Slow_SCK_Enable_2_clicked();
-
     void on_Slow_SCK_Enable_2_clicked();
-
     void on_Slow_SCK_Enable_1_clicked();
+
+
+    void on_CheckFuseBits_clicked();
 
 private:
     Ui::MainWindow *ui;
 
     bool Auto_Slow_SCK;
+    bool CheckFuses;
     uint8_t lfuse;
     uint8_t hfuse;
     uint8_t efuse;
