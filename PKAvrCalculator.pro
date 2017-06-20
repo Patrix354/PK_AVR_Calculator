@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = PKAvrCalculator
 TEMPLATE = app
@@ -28,19 +28,24 @@ SOURCES += main.cpp\
     attiny_con_schematic.cpp \
     kanda_schematic.cpp \
     lpt_schematic.cpp \
-    ubrr_calculator.cpp
+    ubrr_calculator.cpp \
+    gamma_corection.cpp \
+    qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
     attiny_con_schematic.h \
     kanda_schematic.h \
     lpt_schematic.h \
-    ubrr_calculator.h
+    ubrr_calculator.h \
+    gamma_corection.h \
+    qcustomplot.h
 
 FORMS    += mainwindow.ui \
     attiny_con_schematic.ui \
     kanda_schematic.ui \
     lpt_schematic.ui \
-    ubrr_calculator.ui
+    ubrr_calculator.ui \
+    gamma_corection.ui
 
 RESOURCES += \
     resource.qrc

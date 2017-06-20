@@ -10,6 +10,7 @@
 #include "kanda_schematic.h"
 #include "attiny_con_schematic.h"
 #include "ubrr_calculator.h"
+#include "gamma_corection.h"
 
 #define AT90USB82 0
 #define AT90USB162 1
@@ -142,11 +143,10 @@ private slots:
     void on_uC_list_activated(const QString &arg1);
     void on_Command_exec_clicked();
     void on_Set_AVRDUDE_path_clicked();
-    void on_Slow_SCK_Enable_2_clicked();
-    void on_Slow_SCK_Enable_1_clicked();
-
-
-    void on_CheckFuseBits_clicked();
+    void on_Slow_SCK_Enable_1_toggled(bool checked);
+    void on_CheckFuseBits_toggled(bool checked);
+    void on_Slow_SCK_Enable_2_toggled(bool checked);
+    void on_Gamma_Cor_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -170,6 +170,7 @@ private:
     KANDA_Schematic* KANDA_Dialog;
     ATtiny_CON_Schematic* ATtiny_CON_Dialog;
     UBRR_Calculator* UART_Calculator;
+    Gamma_Corection* Corection;
 
     bool Search_ERR(string path_to_file);
     QString Search_fuse(string path_to_file);

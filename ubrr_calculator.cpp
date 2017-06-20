@@ -73,6 +73,12 @@ void UBRR_Calculator::on_baud_edit_textChanged(const QString &arg1)
     int baud = arg1.toInt(nullptr, 10);
     int F_OSC = F_OSC_Speed[ui->F_OSC_list->currentIndex()];
 
+    if(((arg1.toStdString()[(arg1.toStdString().length()) - 1] < 48 ) || (arg1.toStdString()[(arg1.toStdString().length()) - 1] > 57 )) && ( arg1.length() != 0 ))
+    {
+        ui->baud_edit->backspace();
+        return;
+    }
+
     for(float i = 1; i <= 2; i+=1)
     {
         float UBRR = round(static_cast<float>(F_OSC)/((16.00/i)*baud)-1.00);

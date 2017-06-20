@@ -337,45 +337,21 @@ void MainWindow::on_Command_exec_clicked()
     }
 }
 
-void MainWindow::on_Slow_SCK_Enable_2_clicked()
+void MainWindow::on_Slow_SCK_Enable_1_toggled(bool checked)
 {
-    if(ui->Slow_SCK_Enable_2->isChecked())
-    {
-        ui->Slow_SCK_Enable_1->setChecked(true);
-        Auto_Slow_SCK = true;
-    }
-    else
-    {
-        ui->Slow_SCK_Enable_1->setChecked(false);
-        Auto_Slow_SCK = false;
-    }
+    ui->Slow_SCK_Enable_2->setChecked(checked);
+    Auto_Slow_SCK = checked;
 }
 
-void MainWindow::on_Slow_SCK_Enable_1_clicked()
+void MainWindow::on_Slow_SCK_Enable_2_toggled(bool checked)
 {
-    if(ui->Slow_SCK_Enable_1->isChecked())
-    {
-        ui->Slow_SCK_Enable_2->setChecked(true);
-        Auto_Slow_SCK = true;
-    }
-    else
-    {
-        ui->Slow_SCK_Enable_2->setChecked(false);
-        Auto_Slow_SCK = false;
-    }
+    ui->Slow_SCK_Enable_1->setChecked(checked);
+    Auto_Slow_SCK = checked;
 }
 
-void MainWindow::on_CheckFuseBits_clicked()
+void MainWindow::on_CheckFuseBits_toggled(bool checked)
 {
-    qDebug("togg");
-    if(ui->CheckFuseBits->isChecked())
-    {
-        CheckFuses = true;
-    }
-    else
-    {
-        CheckFuses = false;
-    }
+    CheckFuses = checked;
 }
 
 void MainWindow::on_LPT_Prog_Schem_Butt_clicked()
@@ -400,6 +376,12 @@ void MainWindow::on_UART_CALC_clicked()
 {
     UART_Calculator = new UBRR_Calculator(this);
     UART_Calculator->show();
+}
+
+void MainWindow::on_Gamma_Cor_clicked()
+{
+    Corection = new Gamma_Corection(this);
+    Corection->show();
 }
 
 void MainWindow::on_EXT_OSC_1_clicked()

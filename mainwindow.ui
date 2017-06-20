@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>493</height>
+    <width>740</width>
+    <height>474</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -545,7 +545,7 @@ font-weight: bold;</string>
        <string>UART/USART Calculator</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="Gamma_Cor">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -655,10 +655,10 @@ font-weight: bold;</string>
      <number>20</number>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>454</x>
       <y>10</y>
       <width>261</width>
       <height>41</height>
@@ -674,6 +674,11 @@ font-weight: bold;</string>
            <width>16777215</width>
            <height>9</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Consolas</family>
+          </font>
          </property>
          <property name="text">
           <string>lfuse</string>
@@ -738,6 +743,11 @@ font-weight: bold;</string>
            <height>9</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Consolas</family>
+          </font>
+         </property>
          <property name="text">
           <string>hfuse</string>
          </property>
@@ -800,6 +810,11 @@ font-weight: bold;</string>
            <width>16777215</width>
            <height>9</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Consolas</family>
+          </font>
          </property>
          <property name="text">
           <string>efuse</string>
@@ -864,6 +879,11 @@ font-weight: bold;</string>
            <height>9</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Consolas</family>
+          </font>
+         </property>
          <property name="text">
           <string>lock bajt</string>
          </property>
@@ -918,7 +938,7 @@ font-weight : bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>750</width>
+     <width>740</width>
      <height>21</height>
     </rect>
    </property>
