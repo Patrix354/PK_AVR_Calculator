@@ -148,6 +148,8 @@ private slots:
     void on_Slow_SCK_Enable_2_toggled(bool checked);
     void on_Gamma_Cor_clicked();
 
+    void on_Reset_button_clicked();
+
 private:
     Ui::MainWindow *ui;
 

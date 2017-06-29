@@ -140,7 +140,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->Slow_SCK_Enable_1->setChecked(false);
     ui->Slow_SCK_Enable_2->setChecked(false);
     Auto_Slow_SCK = false;
-    CheckFuses = false;
+    CheckFuses = true;
 
     Set_ui_fuses(0, 0, 1);
 }
@@ -259,7 +259,7 @@ void MainWindow::on_Command_exec_clicked()
             {
                 if(i == 12)
                 {
-                    return;\
+                    return;
                 }
             }
             else
@@ -335,6 +335,23 @@ void MainWindow::on_Command_exec_clicked()
             Set_ui_lock(lock, 0);
         }
     }
+}
+
+void MainWindow::on_Reset_button_clicked()
+{
+    QProcess* AVRProcess;
+    QObject parent;
+    QString exec = AVRDUDE_path;
+    QStringList params;
+
+    params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()];
+
+    AVRProcess = new QProcess(&parent);
+    AVRProcess->start(exec, params);
+    AVRProcess->waitForFinished();
+    AVRProcess->close();
+
+    delete AVRProcess;
 }
 
 void MainWindow::on_Slow_SCK_Enable_1_toggled(bool checked)
@@ -791,7 +808,6 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
                 ui->OSC_4->setText("8 MHz");
                 Set_enabled_EXT_fuses(true);
 
-                ui->EXT_OSC_4->setVisible(false);
                 break;
             }
             else
@@ -810,11 +826,13 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
                 switch(low_fuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: ui->EXT_OSC_3->setChecked(true);  break;
+                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
                     case 0x0D:
-                    case 0x0C: ui->EXT_OSC_2->setChecked(true);  break;
+                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
                     case 0x0B:
-                    case 0x0A: ui->EXT_OSC_1->setChecked(true);  break;
+                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
+                    case 0x09:
+                    case 0x08: ui->EXT_OSC_1->setChecked(true); break;
                     case 0x01: ui->OSC_1->setChecked(true);      break;
                     case 0x02: ui->OSC_2->setChecked(true);      break;
                     case 0x03: ui->OSC_3->setChecked(true);      break;

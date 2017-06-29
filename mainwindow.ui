@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>740</width>
-    <height>474</height>
+    <height>453</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
       <x>10</x>
       <y>40</y>
       <width>711</width>
-      <height>371</height>
+      <height>361</height>
      </rect>
     </property>
     <property name="font">
@@ -159,7 +159,7 @@
         <x>320</x>
         <y>50</y>
         <width>381</width>
-        <height>141</height>
+        <height>151</height>
        </rect>
       </property>
       <property name="title">
@@ -171,7 +171,7 @@
          <x>11</x>
          <y>22</y>
          <width>351</width>
-         <height>113</height>
+         <height>122</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -195,6 +195,13 @@
            <widget class="QRadioButton" name="EXT_OSC_3">
             <property name="text">
              <string>3.0 MHz - 8.0 MHz</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -481,6 +488,19 @@ font-weight: bold;</string>
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QPushButton" name="Reset_button">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>300</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reset</string>
+      </property>
+     </widget>
      <zorder>groupBox_2</zorder>
      <zorder>groupBox_3</zorder>
      <zorder>groupBox</zorder>
@@ -488,6 +508,7 @@ font-weight: bold;</string>
      <zorder>Prog_list</zorder>
      <zorder>Command_exec</zorder>
      <zorder>Slow_SCK_Enable_2</zorder>
+     <zorder>Reset_button</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -639,6 +660,9 @@ font-weight: bold;</string>
       <property name="text">
        <string>Odczytuj fusebituy przy sprawdzaniu AVR</string>
       </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -658,9 +682,9 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>454</x>
+      <x>434</x>
       <y>10</y>
-      <width>261</width>
+      <width>281</width>
       <height>41</height>
      </rect>
     </property>
