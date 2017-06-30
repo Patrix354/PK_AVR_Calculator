@@ -246,7 +246,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>80</y>
+        <y>70</y>
         <width>421</width>
         <height>22</height>
        </rect>
@@ -256,7 +256,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>130</y>
+        <y>110</y>
         <width>421</width>
         <height>22</height>
        </rect>
@@ -447,22 +447,6 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
-     <widget class="QPushButton" name="Command_exec">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>200</y>
-        <width>80</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Wykonaj</string>
-      </property>
-     </widget>
      <widget class="QCheckBox" name="Slow_SCK_Enable_2">
       <property name="geometry">
        <rect>
@@ -488,18 +472,80 @@ font-weight: bold;</string>
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="Reset_button">
+     <widget class="QGroupBox" name="groupBox_6">
       <property name="geometry">
        <rect>
-        <x>620</x>
-        <y>300</y>
-        <width>75</width>
-        <height>23</height>
+        <x>20</x>
+        <y>190</y>
+        <width>191</width>
+        <height>91</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Reset</string>
+      <property name="title">
+       <string>Opcje Dodatkowe</string>
       </property>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>175</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QCheckBox" name="Auto_erase_disbl">
+          <property name="text">
+           <string>-D Wyłącz auto kasowanie AVR</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="Chip_erase">
+          <property name="text">
+           <string>-e Wykonaj kasowanie AVR</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="Do_no_write">
+          <property name="text">
+           <string>-n Nie zapisuj do AVR</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>606</x>
+        <y>270</y>
+        <width>91</width>
+        <height>54</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QPushButton" name="Command_exec">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Wykonaj</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Reset_button">
+         <property name="text">
+          <string>Reset</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <zorder>groupBox_2</zorder>
      <zorder>groupBox_3</zorder>
@@ -509,6 +555,7 @@ font-weight: bold;</string>
      <zorder>Command_exec</zorder>
      <zorder>Slow_SCK_Enable_2</zorder>
      <zorder>Reset_button</zorder>
+     <zorder>groupBox_6</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -682,7 +729,7 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>434</x>
+      <x>440</x>
       <y>10</y>
       <width>281</width>
       <height>41</height>

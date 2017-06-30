@@ -203,6 +203,9 @@ void MainWindow::on_Main_button_clicked()
             QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
 
             params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+            if(ui->Auto_erase_disbl->isChecked())   params << "-D";
+            if(ui->Chip_erase->isChecked())         params << "-e";
+            if(ui->Do_no_write->isChecked())        params << "-n";
             Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
 
             params << "-Usignature:r:-:h";
@@ -238,6 +241,9 @@ void MainWindow::on_Command_exec_clicked()
         QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
 
         params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+        if(ui->Auto_erase_disbl->isChecked())   params << "-D";
+        if(ui->Chip_erase->isChecked())         params << "-e";
+        if(ui->Do_no_write->isChecked())        params << "-n";
         Safe_output_to_file(exec, params, OUTPUT_FILE, 1);
 
         params << "-Usignature:r:-:h";
@@ -245,6 +251,7 @@ void MainWindow::on_Command_exec_clicked()
 
         if(Search_ERR(SIGNATURE_FILE))
         {
+            ui->ERR_Main_Label->setText(OK);
             break;
         }
         else
@@ -302,7 +309,6 @@ void MainWindow::on_Command_exec_clicked()
             ui->lfuse_lbl->setText(lfuse_Qstr);
             ui->hfuse_lbl->setText(hfuse_Qstr);
             ui->efuse_lbl->setText(efuse_Qstr);
-            ui->ERR_Main_Label->setText(OK);
 
             lfuse = lfuse_Qstr.toInt(nullptr, 16);
             hfuse = hfuse_Qstr.toInt(nullptr, 16);
@@ -328,7 +334,6 @@ void MainWindow::on_Command_exec_clicked()
             lock_Qstr = lock_Qstr.toUpper();
 
             ui->lock_lbl->setText(lock_Qstr);
-            ui->ERR_Main_Label->setText(OK);
 
             lock = lock_Qstr.toInt(nullptr, 16);
             Set_ui_lock(0, 1);
