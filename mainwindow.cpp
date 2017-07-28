@@ -127,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->LockBLB1_list->addItem(lockBLB1_modes[i]);
     }
 
-    file.open(PATH_FILE, ios::in);
+    file.open(SAVE_FILE, ios::in);
     if(file.good())
     {
         getline(file, avrdude);
@@ -137,9 +137,7 @@ MainWindow::MainWindow(QWidget *parent) :
     file.close();
     file.clear();
 
-    ui->Slow_SCK_Enable_1->setChecked(false);
-    ui->Slow_SCK_Enable_2->setChecked(false);
-    Auto_Slow_SCK = false;
+    Auto_Slow_SCK = true;
     CheckFuses = true;
 
     Set_ui_fuses(0, 0, 1);
@@ -213,13 +211,24 @@ void MainWindow::on_Main_button_clicked()
 
             if(Search_ERR(SIGNATURE_FILE))
             {
+                if(ui->Always_ERR_output->isChecked())
+                {
+                    Print_ERR(OUTPUT_FILE);
+                }
+                else
+                {
+                    system("cls");
+                }
                 ui->ERR_Main_Label->setText(OK);
                 break;
             }
             else
             {
                 ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-                Print_ERR(OUTPUT_FILE);
+                if(ui->Always_ERR_output->isChecked() || ui->Error_ERR_output->isChecked())
+                {
+                    Print_ERR(OUTPUT_FILE);
+                }
             }
         }
     }
@@ -251,13 +260,24 @@ void MainWindow::on_Command_exec_clicked()
 
         if(Search_ERR(SIGNATURE_FILE))
         {
+            if(ui->Always_ERR_output->isChecked())
+            {
+                Print_ERR(OUTPUT_FILE);
+            }
+            else
+            {
+                system("cls");
+            }
             ui->ERR_Main_Label->setText(OK);
             break;
         }
         else
         {
             ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-            Print_ERR(OUTPUT_FILE);
+            if(ui->Always_ERR_output->isChecked() || ui->Error_ERR_output->isChecked())
+            {
+                Print_ERR(OUTPUT_FILE);
+            }
             ui->lfuse_lbl->clear();
             ui->hfuse_lbl->clear();
             ui->efuse_lbl->clear();
@@ -462,12 +482,12 @@ void MainWindow::on_Set_AVRDUDE_path_clicked()
     std::fstream file;
 
     ui->AVRDUDE_path_out->setText(fileName);
-    file.open(PATH_FILE, ios::out);
+    file.open(SAVE_FILE, ios::out);
     file << fileName.toLocal8Bit().constData();
     file.close();
     file.clear();
 
-    file.open(PATH_FILE, ios::in);
+    file.open(SAVE_FILE, ios::in);
     if(file.good())
     {
         getline(file, avrdude);

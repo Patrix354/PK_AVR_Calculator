@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>453</height>
+    <width>725</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
       <x>10</x>
       <y>40</y>
       <width>711</width>
-      <height>361</height>
+      <height>331</height>
      </rect>
     </property>
     <property name="font">
@@ -273,10 +273,10 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>60</y>
         <width>391</width>
-        <height>61</height>
+        <height>41</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -285,42 +285,42 @@
       <property name="title">
        <string/>
       </property>
-      <widget class="QLabel" name="ERR_Main_Label">
-       <property name="geometry">
-        <rect>
-         <x>180</x>
-         <y>20</y>
-         <width>191</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:  #dcdbff;
-color: blue;
-font-weight: bold;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="Main_button">
+      <widget class="QWidget" name="">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>20</y>
-         <width>151</width>
-         <height>21</height>
+         <y>10</y>
+         <width>371</width>
+         <height>25</height>
         </rect>
        </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Sprawdź podłączony AVR</string>
-       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QPushButton" name="Main_button">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="text">
+           <string>Sprawdź podłączony AVR</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="ERR_Main_Label">
+          <property name="styleSheet">
+           <string notr="true">background-color:  #dcdbff;
+color: blue;
+font-weight: bold;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QComboBox" name="SCK_list">
@@ -352,8 +352,8 @@ font-weight: bold;</string>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>130</y>
+        <x>10</x>
+        <y>110</y>
         <width>191</width>
         <height>51</height>
        </rect>
@@ -391,8 +391,8 @@ font-weight: bold;</string>
      <widget class="QGroupBox" name="groupBox_3">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>130</y>
+        <x>210</x>
+        <y>110</y>
         <width>331</width>
         <height>51</height>
        </rect>
@@ -463,7 +463,7 @@ font-weight: bold;</string>
        <bool>true</bool>
       </property>
       <property name="checked">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="autoRepeat">
        <bool>false</bool>
@@ -475,8 +475,8 @@ font-weight: bold;</string>
      <widget class="QGroupBox" name="groupBox_6">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>190</y>
+        <x>10</x>
+        <y>170</y>
         <width>191</width>
         <height>91</height>
        </rect>
@@ -484,13 +484,13 @@ font-weight: bold;</string>
       <property name="title">
        <string>Opcje Dodatkowe</string>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>20</y>
          <width>175</width>
-         <height>61</height>
+         <height>65</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -518,11 +518,11 @@ font-weight: bold;</string>
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>606</x>
-        <y>270</y>
+        <y>250</y>
         <width>91</width>
         <height>54</height>
        </rect>
@@ -547,14 +547,13 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
+     <zorder>layoutWidget</zorder>
      <zorder>groupBox_2</zorder>
      <zorder>groupBox_3</zorder>
      <zorder>groupBox</zorder>
      <zorder>SCK_list</zorder>
      <zorder>Prog_list</zorder>
-     <zorder>Command_exec</zorder>
      <zorder>Slow_SCK_Enable_2</zorder>
-     <zorder>Reset_button</zorder>
      <zorder>groupBox_6</zorder>
     </widget>
     <widget class="QWidget" name="tab">
@@ -686,7 +685,7 @@ font-weight: bold;</string>
        <bool>true</bool>
       </property>
       <property name="checked">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="autoRepeat">
        <bool>false</bool>
@@ -711,6 +710,69 @@ font-weight: bold;</string>
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QGroupBox" name="groupBox_7">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>210</y>
+        <width>131</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>AVRDUDE console</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>230</y>
+        <width>108</width>
+        <height>65</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QRadioButton" name="Never_ERR_output">
+         <property name="text">
+          <string>Nigdy</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="Error_ERR_output">
+         <property name="text">
+          <string>Gdy wystąpi błąd</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="Always_ERR_output">
+         <property name="text">
+          <string>Zawsze</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>Never_ERR_output</zorder>
+      <zorder>Error_ERR_output</zorder>
+      <zorder>Always_ERR_output</zorder>
+     </widget>
+     <zorder>groupBox_7</zorder>
+     <zorder>label_9</zorder>
+     <zorder>layoutWidget</zorder>
+     <zorder>Slow_SCK_Enable_1</zorder>
+     <zorder>CheckFuseBits</zorder>
+     <zorder>Never_ERR_output</zorder>
+     <zorder>Error_ERR_output</zorder>
+     <zorder>Always_ERR_output</zorder>
     </widget>
    </widget>
    <widget class="QComboBox" name="uC_list">
@@ -729,7 +791,7 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>434</x>
       <y>10</y>
       <width>281</width>
       <height>41</height>
@@ -1009,7 +1071,7 @@ font-weight : bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>740</width>
+     <width>725</width>
      <height>21</height>
     </rect>
    </property>

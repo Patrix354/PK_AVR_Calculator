@@ -102,10 +102,9 @@
 #define LOCK_BLB1_AMOUNT 4
 #define ERR_AMOUNT 2
 
-#define AVRDUDE_FILE "C://AVRDUDE//avrdude.exe"
 #define OUTPUT_FILE "C://PK_AVR_Calculator//command.log"
 #define SIGNATURE_FILE "C://PK_AVR_Calculator//signature.log"
-#define PATH_FILE "C://PK_AVR_Calculator//path.log"
+#define SAVE_FILE "C://PK_AVR_Calculator//save.log"
 
 #define AVRDUDE_ERR "Błąd AVRDUDE!"
 #define OK "OK"
