@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>725</width>
-    <height>420</height>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,9 +24,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>60</y>
       <width>711</width>
-      <height>331</height>
+      <height>351</height>
      </rect>
     </property>
     <property name="font">
@@ -274,7 +274,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
+        <y>70</y>
         <width>391</width>
         <height>41</height>
        </rect>
@@ -285,7 +285,7 @@
       <property name="title">
        <string/>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -310,6 +310,12 @@
         </item>
         <item>
          <widget class="QLabel" name="ERR_Main_Label">
+          <property name="minimumSize">
+           <size>
+            <width>181</width>
+            <height>23</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color:  #dcdbff;
 color: blue;
@@ -317,6 +323,9 @@ font-weight: bold;</string>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -343,7 +352,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
+        <y>30</y>
         <width>141</width>
         <height>22</height>
        </rect>
@@ -353,7 +362,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>110</y>
+        <y>120</y>
         <width>191</width>
         <height>51</height>
        </rect>
@@ -392,7 +401,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>110</y>
+        <y>120</y>
         <width>331</width>
         <height>51</height>
        </rect>
@@ -476,7 +485,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>170</y>
+        <y>180</y>
         <width>191</width>
         <height>91</height>
        </rect>
@@ -522,7 +531,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>606</x>
-        <y>250</y>
+        <y>260</y>
         <width>91</width>
         <height>54</height>
        </rect>
@@ -547,6 +556,56 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
+     <widget class="QLabel" name="Prog_lbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Programator:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Port_lbl">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>10</y>
+        <width>47</width>
+        <height>13</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>false</underline>
+        <strikeout>false</strikeout>
+       </font>
+      </property>
+      <property name="text">
+       <string>Port:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="Port_list">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>30</y>
+        <width>91</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
      <zorder>layoutWidget</zorder>
      <zorder>groupBox_2</zorder>
      <zorder>groupBox_3</zorder>
@@ -555,6 +614,9 @@ font-weight: bold;</string>
      <zorder>Prog_list</zorder>
      <zorder>Slow_SCK_Enable_2</zorder>
      <zorder>groupBox_6</zorder>
+     <zorder>Prog_lbl</zorder>
+     <zorder>Port_lbl</zorder>
+     <zorder>Port_list</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -723,7 +785,7 @@ font-weight: bold;</string>
        <string>AVRDUDE console</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>560</x>
@@ -761,25 +823,20 @@ font-weight: bold;</string>
         </widget>
        </item>
       </layout>
-      <zorder>Never_ERR_output</zorder>
-      <zorder>Error_ERR_output</zorder>
-      <zorder>Always_ERR_output</zorder>
      </widget>
+     <zorder>layoutWidget</zorder>
      <zorder>groupBox_7</zorder>
      <zorder>label_9</zorder>
      <zorder>layoutWidget</zorder>
      <zorder>Slow_SCK_Enable_1</zorder>
      <zorder>CheckFuseBits</zorder>
-     <zorder>Never_ERR_output</zorder>
-     <zorder>Error_ERR_output</zorder>
-     <zorder>Always_ERR_output</zorder>
     </widget>
    </widget>
    <widget class="QComboBox" name="uC_list">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>20</x>
+      <y>20</y>
       <width>131</width>
       <height>22</height>
      </rect>
@@ -1062,6 +1119,20 @@ font-weight : bold;</string>
      </item>
     </layout>
    </widget>
+   <widget class="QGroupBox" name="groupBox_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>181</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Wybierz AVR</string>
+    </property>
+   </widget>
+   <zorder>groupBox_8</zorder>
    <zorder>uC_list</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>tabWidget</zorder>

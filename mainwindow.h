@@ -93,7 +93,6 @@
 #define ATtiny12 73
 #define ATtiny11 74
 
-
 #define uC_AMOUNT 75
 #define PROG_AMOUNT 2
 #define SCK_AMOUNT 13
@@ -101,6 +100,7 @@
 #define LOCK_BLB0_AMOUNT 4
 #define LOCK_BLB1_AMOUNT 4
 #define ERR_AMOUNT 2
+#define PORT_AMOUNT 2
 
 #define OUTPUT_FILE "C://PK_AVR_Calculator//command.log"
 #define SIGNATURE_FILE "C://PK_AVR_Calculator//signature.log"
@@ -122,6 +122,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+public slots:
+    void checkPorts(void);
 
 private slots:
     void on_Prog_list_activated(const QString &arg1);
@@ -159,6 +162,7 @@ private:
     uint8_t efuse;
     uint8_t lock;
     QString AVRDUDE_path;
+    QTimer* Port_timer;
 
     QString uC_codes[uC_AMOUNT];
     QString uC_names[uC_AMOUNT];

@@ -24,6 +24,9 @@ Gamma_Corection::Gamma_Corection(QWidget *parent) :
     ui->Gamma_Chart->xAxis->setLabel("Index");
     ui->Gamma_Chart->yAxis->setLabel("PWM");
 
+    ui->Array_width->setValidator( new QIntValidator(0, 65536, this) );
+    ui->PWM_res->setValidator( new QIntValidator(0, 65536, this) );
+
     Only_first_zero = false;
     MakePlot(ui->PWM_res->text().toInt(nullptr, 10), ui->Array_width->text().toInt(nullptr, 10));
 
@@ -42,33 +45,11 @@ Gamma_Corection::~Gamma_Corection()
 
 void Gamma_Corection::on_PWM_res_textChanged(const QString &arg1)
 {
-    if(arg1 == "")
-    {
-        ui->PWM_res->setText("256");
-    }
-    else
-    {
-        if((arg1.toStdString()[(arg1.toStdString().length()) - 1] < 48 ) || (arg1.toStdString()[(arg1.toStdString().length()) - 1] > 57 ))
-        {
-            ui->PWM_res->backspace();
-        }
-    }
     MakePlot(ui->PWM_res->text().toInt(nullptr, 10), ui->Array_width->text().toInt(nullptr, 10));
 }
 
 void Gamma_Corection::on_Array_width_textChanged(const QString &arg1)
 {
-    if(arg1 == "")
-    {
-        ui->Array_width->setText("256");
-    }
-    else
-    {
-        if((arg1.toStdString()[(arg1.toStdString().length()) - 1] < 48 ) || (arg1.toStdString()[(arg1.toStdString().length()) - 1] > 57 ))
-        {
-            ui->Array_width->backspace();
-        }
-    }
     MakePlot(ui->PWM_res->text().toInt(nullptr, 10), ui->Array_width->text().toInt(nullptr, 10));
 }
 
@@ -108,7 +89,7 @@ void Gamma_Corection::MakePlot(int Resolution, int Width)
 {
     QString value;
     QPen pen;
-    QVector<double> x(99999), y(99999);
+    QVector<double> x(65537), y(65537);
 
     switch(ui->Color_box->currentIndex())
     {
@@ -135,7 +116,14 @@ void Gamma_Corection::MakePlot(int Resolution, int Width)
         {
             Print(QString::fromStdString("// ------ gamma  RED  = ") + QString::number(ui->GammaFactor_lbl->text().toFloat(nullptr), 'g', 2), 0x008000, true);
             Print("const ", 0x800080, false);
-            Print("uint8_t Gamma_correctionR", 0x0000ff, false);
+            if(y[Width-1] > 0xff)
+            {
+                Print("uint16_t Gamma_correctionR", 0x0000ff, false);
+            }
+            else
+            {
+                Print("uint8_t Gamma_correctionR", 0x0000ff, false);
+            }
             ui->Source_data->insertHtml("[ ] ");
             Print("PROGMEM ", 0x0000ff, false);
             ui->Source_data->insertHtml(" = { <br>");
@@ -145,7 +133,14 @@ void Gamma_Corection::MakePlot(int Resolution, int Width)
         {
             Print(QString::fromStdString("// ------ gamma  GREEN  = ") + QString::number(ui->GammaFactor_lbl->text().toFloat(nullptr), 'g', 2), 0x008000, true);
             Print("const ", 0x800080, false);
-            Print("uint8_t Gamma_correctionG", 0x0000ff, false);
+            if(y[Width-1] > 0xff)
+            {
+                Print("uint16_t Gamma_correctionG", 0x0000ff, false);
+            }
+            else
+            {
+                Print("uint8_t Gamma_correctionG", 0x0000ff, false);
+            }
             ui->Source_data->insertHtml("[ ] ");
             Print("PROGMEM ", 0x0000ff, false);
             ui->Source_data->insertHtml(" = { <br>");
@@ -157,7 +152,14 @@ void Gamma_Corection::MakePlot(int Resolution, int Width)
             Print(QString::fromStdString("// ------ gamma  BLUE  = ") + QString::number(ui->GammaFactor_lbl->text().toFloat(nullptr), 'g', 2), 0x008000, true);
 
             Print("const ", 0x800080, false);
-            Print("uint8_t Gamma_correctionB", 0x0000ff, false);
+            if(y[Width-1] > 0xff)
+            {
+                Print("uint16_t Gamma_correctionB", 0x0000ff, false);
+            }
+            else
+            {
+                Print("uint8_t Gamma_correctionB", 0x0000ff, false);
+            }
             ui->Source_data->insertHtml("[ ] ");
             Print("PROGMEM ", 0x0000ff, false);
             ui->Source_data->insertHtml(" = { <br>");

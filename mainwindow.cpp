@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QApplication>
 #include <QFileDialog>
+#include <QSerialPortInfo>
+#include <QTimer>
 
 #include <iostream>
 #include <fstream>
@@ -23,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     std::fstream file;
     std::string avrdude;
+
+    Port_timer = new QTimer(this);
+    connect(Port_timer, SIGNAL(timeout()), this, SLOT(checkPorts()));
+    Port_timer->start(2000);
 
     QString uc_codes[uC_AMOUNT] =
     {
@@ -88,6 +94,22 @@ MainWindow::MainWindow(QWidget *parent) :
         "Aplication protection mode 3: SPM and LPM prohibited in Bootloader section.", "Aplication protection mode 4: LPM prohibited in Bootloader section."
     };
 
+    QString ports[PORT_AMOUNT] =
+    {
+        "usb", "lpt1"
+    };
+
+
+    for(int i = 0; i < PORT_AMOUNT; i++)
+    {
+        ui->Port_list->addItem(ports[i]);
+    }
+
+    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts())
+    {
+        ui->Port_list->addItem(port.portName());
+    }
+
     for(int i = 0; i < uC_AMOUNT; i++)
     {
         ui->uC_list->addItem(uc_names[i]);
@@ -152,6 +174,31 @@ MainWindow::~MainWindow()
 //  Slots
 //
 
+void MainWindow::checkPorts()
+{
+    int index;
+    QString ports[PORT_AMOUNT] =
+    {
+        "usb", "lpt1"
+    };
+
+
+    index = ui->Port_list->currentIndex();
+    ui->Port_list->clear();
+
+    for(int i = 0; i < PORT_AMOUNT; i++)
+    {
+        ui->Port_list->addItem(ports[i]);
+    }
+
+    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts())
+    {
+        ui->Port_list->addItem(port.portName());
+    }
+
+    ui->Port_list->setCurrentIndex(index);
+}
+
 void MainWindow::on_uC_list_activated(const QString &arg1)
 {
     Set_ui_fuses(0, 0, 1);
@@ -200,7 +247,7 @@ void MainWindow::on_Main_button_clicked()
             ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
             QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
 
-            params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+            params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText();
             if(ui->Auto_erase_disbl->isChecked())   params << "-D";
             if(ui->Chip_erase->isChecked())         params << "-e";
             if(ui->Do_no_write->isChecked())        params << "-n";
@@ -249,7 +296,7 @@ void MainWindow::on_Command_exec_clicked()
         ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
         QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
 
-        params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()];
+        params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText();
         if(ui->Auto_erase_disbl->isChecked())   params << "-D";
         if(ui->Chip_erase->isChecked())         params << "-e";
         if(ui->Do_no_write->isChecked())        params << "-n";
@@ -307,9 +354,9 @@ void MainWindow::on_Command_exec_clicked()
             QStringList hfuse_params;
             QStringList efuse_params;
 
-            lfuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Ulfuse:r:-:h";
-            hfuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Uhfuse:r:-:h";
-            efuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Uefuse:r:-:h";
+            lfuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText() << "-Ulfuse:r:-:h";
+            hfuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText() << "-Uhfuse:r:-:h";
+            efuse_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText() << "-Uefuse:r:-:h";
 
             Safe_output_to_file(exec, lfuse_params, OUTPUT_FILE, 0);
             lfuse_Qstr = Search_fuse(OUTPUT_FILE);
@@ -346,7 +393,7 @@ void MainWindow::on_Command_exec_clicked()
             QString lock_Qstr;
             QStringList lock_params;
 
-            lock_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-Ulock:r:-:h";
+            lock_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText() << "-Ulock:r:-:h";
 
             Safe_output_to_file(exec, lock_params, OUTPUT_FILE, 0);
             lock_Qstr = Search_fuse(OUTPUT_FILE);
@@ -369,7 +416,7 @@ void MainWindow::on_Reset_button_clicked()
     QString exec = AVRDUDE_path;
     QStringList params;
 
-    params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()];
+    params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << "-P" + ui->Port_list->currentText();
 
     AVRProcess = new QProcess(&parent);
     AVRProcess->start(exec, params);
