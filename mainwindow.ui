@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>725</width>
-    <height>458</height>
+    <width>681</width>
+    <height>473</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,9 +24,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
-      <width>711</width>
-      <height>351</height>
+      <y>50</y>
+      <width>651</width>
+      <height>381</height>
      </rect>
     </property>
     <property name="font">
@@ -156,7 +156,7 @@
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>250</x>
         <y>50</y>
         <width>381</width>
         <height>151</height>
@@ -165,7 +165,7 @@
       <property name="title">
        <string>Zew. oscylatyor</string>
       </property>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget1">
        <property name="geometry">
         <rect>
          <x>11</x>
@@ -232,38 +232,30 @@
      <attribute name="title">
       <string>Lock bity</string>
      </attribute>
-     <widget class="QComboBox" name="LockLB_list">
+     <widget class="QWidget" name="layoutWidget2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>421</width>
-        <height>22</height>
+        <x>10</x>
+        <y>20</y>
+        <width>391</width>
+        <height>171</height>
        </rect>
       </property>
-     </widget>
-     <widget class="QComboBox" name="LockBLB0_list">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>421</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="LockBLB1_list">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>110</y>
-        <width>421</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_13">
+       <item>
+        <widget class="QComboBox" name="LockLB_list"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="LockBLB0_list"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="LockBLB1_list">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -285,7 +277,7 @@
       <property name="title">
        <string/>
       </property>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget3">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -338,8 +330,8 @@ font-weight: bold;</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>20</y>
+        <x>440</x>
+        <y>30</y>
         <width>191</width>
         <height>22</height>
        </rect>
@@ -415,7 +407,7 @@ font-weight: bold;</string>
          <item>
           <widget class="QCheckBox" name="Flash">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>Flash</string>
@@ -425,7 +417,7 @@ font-weight: bold;</string>
          <item>
           <widget class="QCheckBox" name="EEPROM">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string>EEPROM</string>
@@ -459,8 +451,8 @@ font-weight: bold;</string>
      <widget class="QCheckBox" name="Slow_SCK_Enable_2">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>50</y>
+        <x>440</x>
+        <y>60</y>
         <width>141</width>
         <height>17</height>
        </rect>
@@ -485,7 +477,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>180</y>
+        <y>170</y>
         <width>191</width>
         <height>91</height>
        </rect>
@@ -493,7 +485,7 @@ font-weight: bold;</string>
       <property name="title">
        <string>Opcje Dodatkowe</string>
       </property>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="layoutWidget4">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -527,11 +519,11 @@ font-weight: bold;</string>
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="layoutWidget5">
       <property name="geometry">
        <rect>
-        <x>606</x>
-        <y>260</y>
+        <x>550</x>
+        <y>280</y>
         <width>91</width>
         <height>54</height>
        </rect>
@@ -606,7 +598,111 @@ font-weight: bold;</string>
        </rect>
       </property>
      </widget>
-     <zorder>layoutWidget</zorder>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>10</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Auto Slow SCK:</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget6">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>170</y>
+        <width>331</width>
+        <height>94</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_12">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_10">
+         <item>
+          <widget class="QLabel" name="Flash_lbl">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>FLASH:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <widget class="QLineEdit" name="Flash_path">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="set_flash_path">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_11">
+         <item>
+          <widget class="QLabel" name="Eeprom_lbl">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+            </font>
+           </property>
+           <property name="text">
+            <string>EEPROM:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <widget class="QLineEdit" name="Eeprom_path">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="set_eeprom_path">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <zorder>layoutWidget6</zorder>
+     <zorder>layoutWidget5</zorder>
      <zorder>groupBox_2</zorder>
      <zorder>groupBox_3</zorder>
      <zorder>groupBox</zorder>
@@ -617,6 +713,7 @@ font-weight: bold;</string>
      <zorder>Prog_lbl</zorder>
      <zorder>Port_lbl</zorder>
      <zorder>Port_list</zorder>
+     <zorder>label_13</zorder>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -705,12 +802,12 @@ font-weight: bold;</string>
        <string>Ścieżka do AVRDUDE</string>
       </property>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="layoutWidget7">
       <property name="geometry">
        <rect>
         <x>21</x>
         <y>40</y>
-        <width>341</width>
+        <width>261</width>
         <height>25</height>
        </rect>
       </property>
@@ -723,9 +820,9 @@ font-weight: bold;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="Set_AVRDUDE_path">
+        <widget class="QToolButton" name="Set_AVRDUDE_path">
          <property name="text">
-          <string>Zmień</string>
+          <string>...</string>
          </property>
         </widget>
        </item>
@@ -775,8 +872,8 @@ font-weight: bold;</string>
      <widget class="QGroupBox" name="groupBox_7">
       <property name="geometry">
        <rect>
-        <x>550</x>
-        <y>210</y>
+        <x>500</x>
+        <y>240</y>
         <width>131</width>
         <height>91</height>
        </rect>
@@ -785,11 +882,11 @@ font-weight: bold;</string>
        <string>AVRDUDE console</string>
       </property>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="layoutWidget8">
       <property name="geometry">
        <rect>
-        <x>560</x>
-        <y>230</y>
+        <x>510</x>
+        <y>260</y>
         <width>108</width>
         <height>65</height>
        </rect>
@@ -824,10 +921,10 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
-     <zorder>layoutWidget</zorder>
+     <zorder>layoutWidget7</zorder>
+     <zorder>layoutWidget8</zorder>
      <zorder>groupBox_7</zorder>
      <zorder>label_9</zorder>
-     <zorder>layoutWidget</zorder>
      <zorder>Slow_SCK_Enable_1</zorder>
      <zorder>CheckFuseBits</zorder>
     </widget>
@@ -845,12 +942,12 @@ font-weight: bold;</string>
      <number>20</number>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget9">
     <property name="geometry">
      <rect>
-      <x>434</x>
+      <x>430</x>
       <y>10</y>
-      <width>281</width>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
@@ -858,7 +955,7 @@ font-weight: bold;</string>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="lfuse_lbl_2">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -926,7 +1023,7 @@ font-weight: bold;</string>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="hfuse_lbl_2">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -994,7 +1091,7 @@ font-weight: bold;</string>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="efuse_lbl_2">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1062,7 +1159,7 @@ font-weight: bold;</string>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="lock_lbl_2">
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -1075,7 +1172,7 @@ font-weight: bold;</string>
           </font>
          </property>
          <property name="text">
-          <string>lock bajt</string>
+          <string>lock</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -1119,30 +1216,36 @@ font-weight : bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBox_8">
+   <widget class="QLabel" name="Choice_AVR_lbl">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>0</y>
-      <width>181</width>
-      <height>51</height>
+      <width>81</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="title">
-     <string>Wybierz AVR</string>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Wybierz AVR:</string>
     </property>
    </widget>
-   <zorder>groupBox_8</zorder>
+   <zorder>layoutWidget9</zorder>
    <zorder>uC_list</zorder>
-   <zorder>layoutWidget</zorder>
    <zorder>tabWidget</zorder>
+   <zorder>Choice_AVR_lbl</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>725</width>
+     <width>681</width>
      <height>21</height>
     </rect>
    </property>

@@ -35,7 +35,7 @@
    <property name="title">
     <string>Gamma factor</string>
    </property>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget1">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -77,7 +77,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget2">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -137,7 +137,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="layoutWidget3">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -174,7 +174,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget4">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -185,7 +185,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout"/>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget5">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -196,7 +196,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2"/>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget6">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -314,10 +314,10 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
   </widget>
+  <zorder>layoutWidget4</zorder>
+  <zorder>layoutWidget5</zorder>
+  <zorder>layoutWidget5</zorder>
   <zorder>groupBox</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder>layoutWidget</zorder>
-  <zorder>layoutWidget</zorder>
   <zorder>Gamma_Chart</zorder>
   <zorder>Header_data</zorder>
   <zorder>label_3</zorder>

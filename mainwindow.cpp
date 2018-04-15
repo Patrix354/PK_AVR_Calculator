@@ -16,21 +16,23 @@
 #include <string>
 #include <cstdlib>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget *parent) :   //In construktor I initialize tables, window properties and saved values
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);  //Window poerties init
+    this->setMaximumSize(this->size());
+    this->setMinimumSize(this->size());
 
-    std::fstream file;
-    std::string avrdude;
+    fstream file;
+    string avrdude;
 
-    Port_timer = new QTimer(this);
+    Port_timer = new QTimer(this);      //Splash screen
     connect(Port_timer, SIGNAL(timeout()), this, SLOT(checkPorts()));
     Port_timer->start(2000);
 
-    QString uc_codes[uC_AMOUNT] =
+    QString uc_codes[uC_AMOUNT] =   //List of uC's
     {
         "usb82", "usb162", "usb1287", "usb1286", "usb647","usb646",
         "pwm3b", "pwm3", "pwm2b", "pwm2", "c32", "c64", "c128", "8535", "8515", "4434", "4433", "2343",
@@ -55,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
         "ATtiny15", "ATtiny13", "ATtiny12", "ATtiny11"
     };
 
-    QString prog_names[PROG_AMOUNT] =
+    QString prog_names[PROG_AMOUNT] =   //List of programmers (to extended)
     {
         "USBasp", "USBtiny"
     };
@@ -65,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
         "usbasp", "usbtiny"
     };
 
-    QString sck_names[SCK_AMOUNT] =
+    QString sck_names[SCK_AMOUNT] =     //Values of SCK speed
     {
         "None", "0.5 - 1.0 -> 1.5 MHz", "1.0 - 2.0 -> 750 kHz", "2.0 - 4.0 -> 375 kHz", "4.0 - 8.0 -> 187.5 kHz",
         "8.0 - 20.96 -> 93.75 kHz", "20.96 - 46.88 -> 32 kHz", "46.88 - 93.75 -> 16 kHz", "93.75 - 187.5 -> 8 kHz",
@@ -77,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
         "", "1", "2", "4", "8", "20", "46", "93", "187", "375", "750", "1500", "2000"
     };
 
-    QString lockLB_modes[LOCK_LB_AMOUNT] =
+    QString lockLB_modes[LOCK_LB_AMOUNT] =  //Texts for comboboxes in "Lock Bits" card
     {
         "Mode 1: No memory lock features enabled.", "Mode 2: Further programming of is disabled.", "Mode 3: Further programming and verification is disabled."
     };
@@ -94,13 +96,13 @@ MainWindow::MainWindow(QWidget *parent) :
         "Aplication protection mode 3: SPM and LPM prohibited in Bootloader section.", "Aplication protection mode 4: LPM prohibited in Bootloader section."
     };
 
-    QString ports[PORT_AMOUNT] =
+    QString ports[PORT_AMOUNT] =    //Short list of ports
     {
         "usb", "lpt1"
     };
 
 
-    for(int i = 0; i < PORT_AMOUNT; i++)
+    for(int i = 0; i < PORT_AMOUNT; i++)    //Initialzing ports
     {
         ui->Port_list->addItem(ports[i]);
     }
@@ -110,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->Port_list->addItem(port.portName());
     }
 
-    for(int i = 0; i < uC_AMOUNT; i++)
+    for(int i = 0; i < uC_AMOUNT; i++)      //And other comboboxes
     {
         ui->uC_list->addItem(uc_names[i]);
         uC_names[i] = uc_names[i];
@@ -149,7 +151,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->LockBLB1_list->addItem(lockBLB1_modes[i]);
     }
 
-    file.open(SAVE_FILE, ios::in);
+    file.open(SAVE_FILE, ios::in);      //Seting deafult values
     if(file.good())
     {
         getline(file, avrdude);
@@ -181,7 +183,6 @@ void MainWindow::checkPorts()
     {
         "usb", "lpt1"
     };
-
 
     index = ui->Port_list->currentIndex();
     ui->Port_list->clear();
@@ -229,6 +230,8 @@ void MainWindow::on_Main_button_clicked()
     {
         ui->Fuse_bits->setChecked(true);
         ui->Lock_bits->setChecked(true);
+        ui->EEPROM->setChecked(false);
+        ui->Flash->setChecked(false);
         ui->Read->setChecked(true);
 
         emit on_Command_exec_clicked();
@@ -246,6 +249,7 @@ void MainWindow::on_Main_button_clicked()
             ui->ERR_Main_Label->clear();
             ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
             QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
+            ui->ERR_Main_Label->setText(WAIT);
 
             params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText();
             if(ui->Auto_erase_disbl->isChecked())   params << "-D";
@@ -271,10 +275,16 @@ void MainWindow::on_Main_button_clicked()
             }
             else
             {
-                ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-                if(ui->Always_ERR_output->isChecked() || ui->Error_ERR_output->isChecked())
+                if(Auto_Slow_SCK)
                 {
-                    Print_ERR(OUTPUT_FILE);
+                    if(i == 12)
+                    {
+                        ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+                        if(ui->Always_ERR_output->isChecked() || ui->Error_ERR_output->isChecked())
+                        {
+                            Print_ERR(OUTPUT_FILE);
+                        }
+                    }
                 }
             }
         }
@@ -295,6 +305,7 @@ void MainWindow::on_Command_exec_clicked()
         ui->ERR_Main_Label->clear();
         ui->ERR_Main_Label->update();                   // This is "Bandaid solution" ;)
         QApplication::instance()->processEvents();      // http://stackoverflow.com/questions/27884662/cant-change-qlabel-text-twice-in-a-slot
+        ui->ERR_Main_Label->setText(WAIT);
 
         params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText();
         if(ui->Auto_erase_disbl->isChecked())   params << "-D";
@@ -315,29 +326,39 @@ void MainWindow::on_Command_exec_clicked()
             {
                 system("cls");
             }
-            ui->ERR_Main_Label->setText(OK);
             break;
         }
         else
         {
-            ui->ERR_Main_Label->setText(AVRDUDE_ERR);
-            if(ui->Always_ERR_output->isChecked() || ui->Error_ERR_output->isChecked())
-            {
-                Print_ERR(OUTPUT_FILE);
-            }
-            ui->lfuse_lbl->clear();
-            ui->hfuse_lbl->clear();
-            ui->efuse_lbl->clear();
-            ui->lock_lbl->clear();
             if(Auto_Slow_SCK)
             {
                 if(i == 12)
                 {
+                    ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+                    if(ui->Always_ERR_output->isChecked() || ui->Error_ERR_output->isChecked())
+                    {
+                        system("cls");
+                        Print_ERR(OUTPUT_FILE);
+                    }
+                    ui->lfuse_lbl->clear();
+                    ui->hfuse_lbl->clear();
+                    ui->efuse_lbl->clear();
+                    ui->lock_lbl->clear();
                     return;
                 }
             }
             else
             {
+                ui->ERR_Main_Label->setText(AVRDUDE_ERR);
+                if(ui->Always_ERR_output->isChecked() || ui->Error_ERR_output->isChecked())
+                {
+                    system("cls");
+                    Print_ERR(OUTPUT_FILE);
+                }
+                ui->lfuse_lbl->clear();
+                ui->hfuse_lbl->clear();
+                ui->efuse_lbl->clear();
+                ui->lock_lbl->clear();
                 return;
             }
         }
@@ -373,13 +394,34 @@ void MainWindow::on_Command_exec_clicked()
             efuse_Qstr.remove(0, 2);
             efuse_Qstr = efuse_Qstr.toUpper();
 
-            ui->lfuse_lbl->setText(lfuse_Qstr);
-            ui->hfuse_lbl->setText(hfuse_Qstr);
-            ui->efuse_lbl->setText(efuse_Qstr);
-
             lfuse = lfuse_Qstr.toInt(nullptr, 16);
             hfuse = hfuse_Qstr.toInt(nullptr, 16);
             efuse = efuse_Qstr.toInt(nullptr, 16);
+
+            if(lfuse <= 0x0F)
+            {
+                ui->lfuse_lbl->setText("0" + lfuse_Qstr);
+            }
+            else
+            {
+                ui->lfuse_lbl->setText(lfuse_Qstr);
+            }
+            if(hfuse <= 0x0F && hfuse_Qstr.length() != 0)
+            {
+                ui->hfuse_lbl->setText("0" + hfuse_Qstr);
+            }
+            else
+            {
+                ui->hfuse_lbl->setText(hfuse_Qstr);
+            }
+            if(efuse <= 0x0F && efuse_Qstr.length() != 0)
+            {
+                ui->efuse_lbl->setText("0" + efuse_Qstr);
+            }
+            else
+            {
+                ui->efuse_lbl->setText(efuse_Qstr);
+            }
 
             Set_ui_fuses(0, 0, 1);
             Set_ui_fuses(lfuse, hfuse, 0);
@@ -399,14 +441,53 @@ void MainWindow::on_Command_exec_clicked()
             lock_Qstr = Search_fuse(OUTPUT_FILE);
             lock_Qstr.remove(0, 2);
             lock_Qstr = lock_Qstr.toUpper();
-
-            ui->lock_lbl->setText(lock_Qstr);
-
             lock = lock_Qstr.toInt(nullptr, 16);
+
+            if(lock <= 0x0F && lock_Qstr.length() != 0)
+            {
+                ui->lock_lbl->setText("0" + lock_Qstr);
+            }
+            else
+            {
+                ui->lock_lbl->setText(lock_Qstr);
+            }
+
             Set_ui_lock(0, 1);
             Set_ui_lock(lock, 0);
         }
     }
+
+    if(ui->Flash->isChecked())
+    {
+        if(ui->Flash_path->text() == "")
+        {
+            ui->ERR_Main_Label->setText(ERR);
+            return;
+        }
+        if(ui->Read->isChecked())
+        {
+            QString flash_path;
+            QStringList flash_params;
+
+            flash_path = ui->Flash_path->text();
+            flash_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText() << "-Uflash:r:" + flash_path + ":i";
+            Safe_output_to_file(exec, flash_params, OUTPUT_FILE, 1);
+        }
+    }
+
+    if(ui->EEPROM->isChecked())
+    {
+        if(ui->Read->isChecked())
+        {
+            QString eeprom_path;
+            QStringList eeprom_params;
+
+            eeprom_path = ui->Eeprom_path->text();
+            eeprom_params << uC_codes[ui->uC_list->currentIndex()] << Prog_codes[ui->Prog_list->currentIndex()] << SCK_codes[ui->SCK_list->currentIndex()] << "-P" + ui->Port_list->currentText() << "-Ueeprom:r:" + eeprom_path + ":i";
+            Safe_output_to_file(exec, eeprom_params, OUTPUT_FILE, 1);
+        }
+    }
+    ui->ERR_Main_Label->setText(DONE);
 }
 
 void MainWindow::on_Reset_button_clicked()
@@ -525,8 +606,8 @@ void MainWindow::on_OSC_4_clicked()
 void MainWindow::on_Set_AVRDUDE_path_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Otwórz plik AVRDUDE.exe"), "C://", tr("Executable files (*.exe)"));
-    std::string avrdude;
-    std::fstream file;
+    string avrdude;
+    fstream file;
 
     ui->AVRDUDE_path_out->setText(fileName);
     file.open(SAVE_FILE, ios::out);
@@ -543,6 +624,21 @@ void MainWindow::on_Set_AVRDUDE_path_clicked()
     }
     file.close();
     file.clear();
+}
+
+void MainWindow::on_set_eeprom_path_clicked()
+{
+    QString path = QFileDialog::getSaveFileName(this, tr("Otwórz plik *.eep do odczytu lub zapisu"), "C://Users//", tr("*.eep"));
+
+    ui->Eeprom_path->setText(path);
+}
+
+void MainWindow::on_set_flash_path_clicked()
+{
+    QString path = QFileDialog::getSaveFileName(this, tr("Otwórz plik *.hex do odczytu lub zapisu"), "C://Users//", tr("Intel HEX format (*.hex)"));
+
+    ui->Flash_path->setText(path);
+
 }
 
 //
@@ -603,8 +699,8 @@ void MainWindow::Clear_ext_osc_fuses()
 
 bool MainWindow::Search_ERR(string path_to_file)
 {
-    std::fstream file;
-    std::string line;
+    fstream file;
+    string line;
 
     file.open(path_to_file.c_str(), ios::in);
 
@@ -622,8 +718,8 @@ bool MainWindow::Search_ERR(string path_to_file)
 
 QString MainWindow::Search_fuse(string path_to_file)
 {
-    std::string line;
-    std::fstream file;
+    string line;
+    fstream file;
 
     file.open(path_to_file.c_str(), ios::in);
 
@@ -636,11 +732,14 @@ void MainWindow::Safe_output_to_file(QString exec, QStringList params, string pa
     QObject parent;
     QProcess* AVRProcess;
     QString output;
-    std::fstream file;
+    fstream file;
 
     AVRProcess = new QProcess(&parent);
     AVRProcess->start(exec, params);
-    AVRProcess->waitForFinished();
+    while(AVRProcess->state() == QProcess::Running)
+    {
+        QCoreApplication::processEvents();
+    }
 
     if(mode == 1)
     {
@@ -663,8 +762,8 @@ void MainWindow::Safe_output_to_file(QString exec, QStringList params, string pa
 
 void MainWindow::Print_ERR(string path_to_file)
 {
-    std::string line;
-    std::fstream file;
+    string line;
+    fstream file;
 
     system("cls");
     file.open(path_to_file.c_str(), ios::in);
@@ -748,20 +847,20 @@ void MainWindow::Set_ui_lock(uint8_t lock_byte, uint8_t mode)
             }
             else
             {
-                switch (lock_byte & 0x05)
+                switch (lock_byte & 0x0C)
                 {
-                    case 0x05: ui->LockBLB0_list->setCurrentIndex(0); break;
-                    case 0x03: ui->LockBLB0_list->setCurrentIndex(1); break;
-                    case 0x01: ui->LockBLB0_list->setCurrentIndex(4); break;
-                    case 0x00: ui->LockBLB0_list->setCurrentIndex(3); break;
+                    case 0x0C: ui->LockBLB0_list->setCurrentIndex(0); break;
+                    case 0x08: ui->LockBLB0_list->setCurrentIndex(1); break;
+                    case 0x04: ui->LockBLB0_list->setCurrentIndex(3); break;
+                    case 0x00: ui->LockBLB0_list->setCurrentIndex(2); break;
                 }
 
                 switch (lock_byte & 0x30)
                 {
                     case 0x30: ui->LockBLB1_list->setCurrentIndex(0); break;
                     case 0x20: ui->LockBLB1_list->setCurrentIndex(1); break;
-                    case 0x10: ui->LockBLB1_list->setCurrentIndex(4); break;
-                    case 0x00: ui->LockBLB1_list->setCurrentIndex(3); break;
+                    case 0x10: ui->LockBLB1_list->setCurrentIndex(3); break;
+                    case 0x00: ui->LockBLB1_list->setCurrentIndex(2); break;
                 }
             }
             break;

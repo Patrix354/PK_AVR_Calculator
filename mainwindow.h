@@ -107,6 +107,9 @@
 #define SAVE_FILE "C://PK_AVR_Calculator//save.log"
 
 #define AVRDUDE_ERR "Błąd AVRDUDE!"
+#define ERR "Error"
+#define WAIT "Czekaj"
+#define DONE "Done"
 #define OK "OK"
 
 using namespace std;
@@ -151,6 +154,10 @@ private slots:
     void on_Gamma_Cor_clicked();
 
     void on_Reset_button_clicked();
+
+    void on_set_eeprom_path_clicked();
+
+    void on_set_flash_path_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -139,7 +139,7 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget1">
    <property name="geometry">
     <rect>
      <x>88</x>
@@ -192,7 +192,7 @@ color: blue;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget2">
    <property name="geometry">
     <rect>
      <x>28</x>
@@ -254,7 +254,7 @@ color: blue;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget3">
    <property name="geometry">
     <rect>
      <x>84</x>
@@ -294,7 +294,7 @@ color: red;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget4">
    <property name="geometry">
     <rect>
      <x>28</x>
@@ -1183,7 +1183,7 @@ color: blue;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidget5">
    <property name="geometry">
     <rect>
      <x>40</x>

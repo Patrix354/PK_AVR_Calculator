@@ -24,8 +24,8 @@ Gamma_Corection::Gamma_Corection(QWidget *parent) :
     ui->Gamma_Chart->xAxis->setLabel("Index");
     ui->Gamma_Chart->yAxis->setLabel("PWM");
 
-    ui->Array_width->setValidator( new QIntValidator(0, 65536, this) );
-    ui->PWM_res->setValidator( new QIntValidator(0, 65536, this) );
+    ui->Array_width->setValidator( new QIntValidator(0, 65535, this) );
+    ui->PWM_res->setValidator( new QIntValidator(0, 65535, this) );
 
     Only_first_zero = false;
     MakePlot(ui->PWM_res->text().toInt(nullptr, 10), ui->Array_width->text().toInt(nullptr, 10));
@@ -45,12 +45,12 @@ Gamma_Corection::~Gamma_Corection()
 
 void Gamma_Corection::on_PWM_res_textChanged(const QString &arg1)
 {
-    MakePlot(ui->PWM_res->text().toInt(nullptr, 10), ui->Array_width->text().toInt(nullptr, 10));
+    MakePlot(arg1.toInt(nullptr, 10), ui->Array_width->text().toInt(nullptr, 10));
 }
 
 void Gamma_Corection::on_Array_width_textChanged(const QString &arg1)
 {
-    MakePlot(ui->PWM_res->text().toInt(nullptr, 10), ui->Array_width->text().toInt(nullptr, 10));
+    MakePlot(ui->PWM_res->text().toInt(nullptr, 10), arg1.toInt(nullptr, 10));
 }
 
 void Gamma_Corection::on_First_zero_toggled(bool checked)
