@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>681</width>
-    <height>473</height>
+    <height>482</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,7 +51,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="usesScrollButtons">
      <bool>true</bool>
@@ -97,60 +97,48 @@
       <property name="title">
        <string>Wew. oscylator</string>
       </property>
-      <widget class="QRadioButton" name="OSC_2">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>13</x>
-         <y>51</y>
-         <width>131</width>
-         <height>16</height>
+         <y>21</y>
+         <width>121</width>
+         <height>91</height>
         </rect>
        </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="OSC_1">
-       <property name="geometry">
-        <rect>
-         <x>13</x>
-         <y>30</y>
-         <width>131</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="OSC_3">
-       <property name="geometry">
-        <rect>
-         <x>13</x>
-         <y>72</y>
-         <width>131</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="OSC_4">
-       <property name="geometry">
-        <rect>
-         <x>13</x>
-         <y>93</y>
-         <width>131</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <widget class="QRadioButton" name="OSC_1">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="OSC_2">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="OSC_3">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="OSC_4">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_5">
@@ -227,35 +215,82 @@
        </layout>
       </widget>
      </widget>
+     <widget class="QGroupBox" name="JTAG_box">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>240</y>
+        <width>120</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Interfejs JTAG</string>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>21</y>
+         <width>101</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <widget class="QRadioButton" name="JTAG_on">
+          <property name="text">
+           <string>Włączony</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="JTAG_off">
+          <property name="text">
+           <string>Wyłączony</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
       <string>Lock bity</string>
      </attribute>
-     <widget class="QWidget" name="layoutWidget2">
+     <widget class="QComboBox" name="LockLB_list">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>391</width>
-        <height>171</height>
+        <x>11</x>
+        <y>45</y>
+        <width>281</width>
+        <height>20</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_13">
-       <item>
-        <widget class="QComboBox" name="LockLB_list"/>
-       </item>
-       <item>
-        <widget class="QComboBox" name="LockBLB0_list"/>
-       </item>
-       <item>
-        <widget class="QComboBox" name="LockBLB1_list">
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     </widget>
+     <widget class="QComboBox" name="LockBLB1_list">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>145</y>
+        <width>281</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="LockBLB0_list">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>95</y>
+        <width>281</width>
+        <height>20</height>
+       </rect>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -875,7 +910,7 @@ font-weight: bold;</string>
         <x>500</x>
         <y>240</y>
         <width>131</width>
-        <height>91</height>
+        <height>111</height>
        </rect>
       </property>
       <property name="title">
@@ -888,7 +923,7 @@ font-weight: bold;</string>
         <x>510</x>
         <y>260</y>
         <width>108</width>
-        <height>65</height>
+        <height>84</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -921,9 +956,9 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
+     <zorder>groupBox_7</zorder>
      <zorder>layoutWidget7</zorder>
      <zorder>layoutWidget8</zorder>
-     <zorder>groupBox_7</zorder>
      <zorder>label_9</zorder>
      <zorder>Slow_SCK_Enable_1</zorder>
      <zorder>CheckFuseBits</zorder>
@@ -945,13 +980,22 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget9">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>424</x>
       <y>10</y>
-      <width>241</width>
+      <width>251</width>
       <height>41</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <property name="leftMargin">
+      <number>1</number>
+     </property>
+     <property name="topMargin">
+      <number>1</number>
+     </property>
+     <property name="rightMargin">
+      <number>1</number>
+     </property>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>

@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :   //In construktor I initialize tables
     fstream file;
     string avrdude;
 
-    Port_timer = new QTimer(this);      //Splash screen
+    Port_timer = new QTimer(this);
     connect(Port_timer, SIGNAL(timeout()), this, SLOT(checkPorts()));
     Port_timer->start(2000);
 
@@ -36,11 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :   //In construktor I initialize tables
     {
         "usb82", "usb162", "usb1287", "usb1286", "usb647","usb646",
         "pwm3b", "pwm3", "pwm2b", "pwm2", "c32", "c64", "c128", "8535", "8515", "4434", "4433", "2343",
-        "2333", "2313", "4414", "1200", "m640", "m1280", "m1281", "m1284p", "m2560", "m2561", "m8",
-        "m48", "m88", "m168", "m328p", "m161", "m8535", "m8515", "m6490", "m164p", "m324p", "m644",
-        "m644p", "m16", "m32", "m32u4", "m64", "m128", "m325", "m3250", "m645", "m6450",
-        "m103", "m163", "m162", "m169", "m329", "m329p", "m649", "m3290", "m3290p", "t84", "t44",
-        "t24", "t85", "t45", "t25", "t88", "t2313", "t861", "t461", "t261", "t26", "t15", "t13", "t12", "t11"
+        "2333", "2313", "4414", "1200", "m640", "m1280", "m1281", "m1284", "m1284p", "m1284pa", "m2560", "m2561", "m8", "m8a", "m8u2",
+        "m48", "m48p", "m48pa", "m88", "m88p", "m88pa", "m168", "m168p", "m168pa", "m328", "m328p", "m328pa", "m161",
+        "m8535", "m8515", "m6490", "m164p", "m164a", "m324p", "m324pa", "m644", "m644p", "m644pa" "m16", "m16a", "m32", "m32a", "m32u2", "m32u4",
+        "m64", "m128", "m128a", "m325", "m3250", "m645", "m6450","m103", "m163", "m162", "m169", "m329", "m329p", "m649", "m3290",
+        "m3290p", "t84", "t44", "t24", "t85", "t45", "t25", "t88", "t2313", "t861", "t461", "t261", "t26", "t15", "t13", "t12", "t11"
     };
 
     QString uc_names[uC_AMOUNT] =
@@ -48,16 +48,16 @@ MainWindow::MainWindow(QWidget *parent) :   //In construktor I initialize tables
         "AT90USB82", "AT90USB162", "AT90USB1287", "AT90USB1286", "AT90USB647", "AT90USB646", "AT90PWM3B",
         "AT90PWM3", "AT90PWM2B", "AT90PWM2", "AT90CAN32", "AT90CAN64", "AT90CAN128", "AT90S8535", "AT90S8515",
         "AT90S4434", "AT90S4433", "AT90S2343", "AT90S2333", "AT90S2313", "AT90S4414", "AT90S1200", "ATmega640",
-        "ATmega1280", "ATmega1281", "ATmega1284p", "ATmega2560", "ATmega2561", "ATmega8", "ATmega48", "ATmega88",
-        "ATmega168", "ATmega328p", "ATmega161", "ATmega8535", "ATmega8515", "ATmega6490", "ATmega164p", "ATmega324p",
-        "ATmega644", "ATmega644p", "ATmega16", "ATmega32", "ATmega32u4", "ATmega64", "ATmega128",
-        "ATmega325", "ATmega3250", "ATmega645", "ATmega6450", "ATmega103", "ATmega163", "ATmega162", "ATmega169",
-        "ATmega329", "ATmega329p", "ATmega649", "ATmega3290", "ATmega3290p", "ATtiny84", "ATtiny44", "ATtiny24",
-        "ATtiny85", "ATtiny45", "ATtiny25", "ATtiny88", "ATtiny2313", "ATtiny861", "ATtiny461", "ATtiny261", "ATtiny26",
-        "ATtiny15", "ATtiny13", "ATtiny12", "ATtiny11"
+        "ATmega1280", "ATmega1281", "ATmega1284", "ATmega1284P", "ATmega1284PA", "ATmega2560", "ATmega2561", "ATmega8", "ATmega8A", "ATmega8U2",
+        "ATmega48", "ATmega48P", "ATmega48PA", "ATmega88", "ATmega88P", "ATmega88PA", "ATmega168", "ATmega168P", "ATmega168PA", "ATmega328", "ATmega328P",
+        "ATmega328PA", "ATmega161", "ATmega8535","ATmega8515", "ATmega6490", "ATmega164P", "ATmega164A", "ATmega324P", "ATmega324PA", "ATmega644",
+        "ATmega644PA", "ATmega644P", "ATmega16","ATmega16A", "ATmega32", "ATmega32A", "ATmega32U2", "ATmega32U4", "ATmega64", "ATmega128", "ATmega128A", "ATmega325",
+        "ATmega3250", "ATmega645", "ATmega6450", "ATmega103", "ATmega163", "ATmega162", "ATmega169","ATmega329", "ATmega329P", "ATmega649", "ATmega3290",
+        "ATmega3290P", "ATtiny84", "ATtiny44", "ATtiny24", "ATtiny85", "ATtiny45", "ATtiny25", "ATtiny88", "ATtiny2313", "ATtiny861", "ATtiny461",
+        "ATtiny261", "ATtiny26", "ATtiny15", "ATtiny13", "ATtiny12", "ATtiny11"
     };
 
-    QString prog_names[PROG_AMOUNT] =   //List of programmers (to extended)
+    QString prog_names[PROG_AMOUNT] =   //List of programmers (to extend)
     {
         "USBasp", "USBtiny"
     };
@@ -164,6 +164,7 @@ MainWindow::MainWindow(QWidget *parent) :   //In construktor I initialize tables
     Auto_Slow_SCK = true;
     CheckFuses = true;
 
+    Set_ui_jtag_fuse(0, 1);
     Set_ui_fuses(0, 0, 1);
 }
 
@@ -175,6 +176,13 @@ MainWindow::~MainWindow()
 //
 //  Slots
 //
+
+void CheckRadioButton(QRadioButton* butt, bool state)
+{
+    butt->setAutoExclusive(false);
+    butt->setChecked(state);
+    butt->setAutoExclusive(true);
+}
 
 void MainWindow::checkPorts()
 {
@@ -202,6 +210,7 @@ void MainWindow::checkPorts()
 
 void MainWindow::on_uC_list_activated(const QString &arg1)
 {
+    Set_ui_jtag_fuse(0, 1);
     Set_ui_fuses(0, 0, 1);
     Set_ui_lock(0, 1);
 }
@@ -217,7 +226,7 @@ void MainWindow::on_Prog_list_activated(const QString &arg1)
         ui->SCK_list->setVisible(false);
     }
 
-    Set_ui_fuses(0, 0, 1);
+    //Set_ui_fuses(0, 0, 1);
 }
 
 void MainWindow::on_Main_button_clicked()
@@ -232,13 +241,13 @@ void MainWindow::on_Main_button_clicked()
         ui->Lock_bits->setChecked(true);
         ui->EEPROM->setChecked(false);
         ui->Flash->setChecked(false);
-        ui->Read->setChecked(true);
+        CheckRadioButton(ui->Read, true);
 
         emit on_Command_exec_clicked();
 
         ui->Fuse_bits->setChecked(false);
         ui->Lock_bits->setChecked(false);
-        ui->Read->setChecked(false);
+        CheckRadioButton(ui->Read, false);
     }
     else
     {
@@ -423,7 +432,9 @@ void MainWindow::on_Command_exec_clicked()
                 ui->efuse_lbl->setText(efuse_Qstr);
             }
 
+            Set_ui_jtag_fuse(0, 1);
             Set_ui_fuses(0, 0, 1);
+            Set_ui_jtag_fuse(hfuse, 0);
             Set_ui_fuses(lfuse, hfuse, 0);
         }
     }
@@ -657,6 +668,11 @@ void MainWindow::Clear_fuses(bool visible)
     ui->OSC_3->setText("");
     ui->OSC_4->setText("");
 
+//    ui->EXT_OSC_1->setText("0.4 MHz - 0.9 MHz - Tylko rezonator ceramiczny");
+//    ui->EXT_OSC_1->setText("0.9 MHz - 3.0 MHz");
+//    ui->EXT_OSC_1->setText("3.0 MHz - 8.0 MHz");
+//    ui->EXT_OSC_1->setText("> 8.0 MHz");
+
     ui->CKDIV8->setVisible(visible);
     ui->CKOPT->setVisible(visible);
     Set_enabled_INT_fuses(visible);
@@ -682,18 +698,19 @@ void MainWindow::Set_enabled_INT_fuses(bool visible)
 
 void MainWindow::Clear_int_osc_fuses()
 {
-    ui->OSC_1->setChecked(false);
-    ui->OSC_2->setChecked(false);
-    ui->OSC_3->setChecked(false);
-    ui->OSC_4->setChecked(false);
+    CheckRadioButton(ui->OSC_1, false);
+    CheckRadioButton(ui->OSC_2, false);
+    CheckRadioButton(ui->OSC_3, false);
+    CheckRadioButton(ui->OSC_4, false);
 }
 
 void MainWindow::Clear_ext_osc_fuses()
 {
-    ui->EXT_OSC_1->setChecked(false);
-    ui->EXT_OSC_2->setChecked(false);
-    ui->EXT_OSC_3->setChecked(false);
-    ui->EXT_OSC_4->setChecked(false);
+    CheckRadioButton(ui->EXT_OSC_1, false);
+    CheckRadioButton(ui->EXT_OSC_2, false);
+    CheckRadioButton(ui->EXT_OSC_3, false);
+    CheckRadioButton(ui->EXT_OSC_4, false);
+
 }
 
 
@@ -804,12 +821,16 @@ void MainWindow::Set_ui_lock(uint8_t lock_byte, uint8_t mode)
         case AT90CAN32:
         case AT90CAN64:
         case AT90CAN128:
-        case ATmega32u4:
+        case ATmega32U4:
+        case ATmega32U2:
         case ATmega6490:
-        case ATmega164p:
-        case ATmega324p:
+        case ATmega164P:
+        case ATmega164A:
+        case ATmega324P:
+        case ATmega324PA:
         case ATmega644:
-        case ATmega644p:
+        case ATmega644P:
+        case ATmega644PA:
         case ATmega3250:
         case ATmega325:
         case ATmega645:
@@ -817,15 +838,20 @@ void MainWindow::Set_ui_lock(uint8_t lock_byte, uint8_t mode)
         case ATmega169:
         case ATmega162:
         case ATmega329:
-        case ATmega329p:
+        case ATmega329P:
         case ATmega649:
         case ATmega3290:
-        case ATmega3290p:
+        case ATmega3290P:
         case ATmega8:
+        case ATmega8A:
+        case ATmega8U2:
         case ATmega16:
+        case ATmega16A:
         case ATmega32:
+        case ATmega32A:
         case ATmega64:
         case ATmega128:
+        case ATmega128A:
         case ATmega8535:
         case ATmega8515:
         case ATmega640:
@@ -833,10 +859,18 @@ void MainWindow::Set_ui_lock(uint8_t lock_byte, uint8_t mode)
         case ATmega1281:
         case ATmega2560:
         case ATmega2561:
-        case ATmega1284p:
+        case ATmega1284:
+        case ATmega1284P:
+        case ATmega1284PA:
         case ATmega88:
+        case ATmega88P:
+        case ATmega88PA:
         case ATmega168:
-        case ATmega328p:
+        case ATmega168P:
+        case ATmega168PA:
+        case ATmega328:
+        case ATmega328P:
+        case ATmega328PA:
         case ATmega161:
         case ATmega163:
         {
@@ -877,10 +911,10 @@ void MainWindow::Set_ui_lock(uint8_t lock_byte, uint8_t mode)
     }
 }
 
-void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uint8_t mode)
+void MainWindow::Set_ui_fuses(uint8_t lfuse_byte, uint8_t hfuse_byte, uint8_t mode)
 {
-    //uC's without CKSEL fusebits: AT90S8535 AT90S8515 AT90S4434 AT90S4433 AT90S2343 AT90S2333 AT90S2313
-    //                             AT90S4414 AT90S1200 ATmega161 ATmega163 ATmega103 ATtiny11 ATtiny12 ATtiny15
+    //uC's without CKSEL fusebits: AT90S8535// AT90S8515// AT90S4434// AT90S4433// AT90S2343// AT90S2333// AT90S2313//
+    //                             AT90S4414// AT90S1200// ATmega161(ma) ATmega163(ma) ATmega103// ATtiny11(ma) ATtiny12(ma) ATtiny15(ma)
 
     if(mode)
     {
@@ -889,42 +923,33 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
 
     switch(ui->uC_list->currentIndex())
     {
-        case AT90USB82:
-        case AT90USB162:
-        case AT90USB1287:
-        case AT90USB1286:
-        case AT90USB646:
-        case AT90USB647:
-        case AT90PWM2:
-        case AT90PWM3:
-        case AT90PWM2B:
-        case AT90PWM3B:
-        case AT90CAN32:
-        case AT90CAN64:
-        case AT90CAN128:
-        case ATmega32u4:
-        case ATmega6490:
-        case ATmega164p:
-        case ATmega324p:
-        case ATmega644:
-        case ATmega644p:
-        case ATmega3250:
-        case ATmega325:
-        case ATmega645:
-        case ATmega6450:
-        case ATmega169:
-        case ATmega162:
-        case ATmega329:
-        case ATmega329p:
-        case ATmega649:
-        case ATmega3290:
-        case ATmega3290p:
-        case ATtiny84:
-        case ATtiny44:
-        case ATtiny24:
-        case ATtiny861:
-        case ATtiny461:
-        case ATtiny261:
+        case AT90USB82://
+        case AT90USB162://
+        case AT90USB1287://
+        case AT90USB1286://
+        case AT90USB646://
+        case AT90USB647://
+        case AT90PWM2://
+        case AT90PWM3://
+        case AT90PWM2B://
+        case AT90PWM3B://
+        case AT90CAN32://
+        case AT90CAN64://
+        case AT90CAN128://
+        case ATmega8U2://
+        case ATmega32U4://
+        case ATmega6490://
+        case ATmega3250://
+        case ATmega325://
+        case ATmega645://
+        case ATmega6450://
+        case ATmega169://
+        case ATmega162://
+        case ATmega329://
+        case ATmega329P://
+        case ATmega649://
+        case ATmega3290://
+        case ATmega3290P://
         {
             if(mode)
             {
@@ -937,32 +962,36 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             }
             else
             {
-                if(~low_fuse_byte & 0x80)
+                if(~lfuse_byte & 0x80)
                     ui->CKDIV8->setChecked(true);
 
-                switch(low_fuse_byte & 0x0F)
+                switch(lfuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: ui->EXT_OSC_4->setChecked(true);   break;
+                    case 0x0E: CheckRadioButton(ui->EXT_OSC_4, true);   break;
                     case 0x0D:
-                    case 0x0C: ui->EXT_OSC_3->setChecked(true);   break;
+                    case 0x0C: CheckRadioButton(ui->EXT_OSC_3, true);   break;
                     case 0x0A:
-                    case 0x0B: ui->EXT_OSC_2->setChecked(true);   break;
+                    case 0x0B: CheckRadioButton(ui->EXT_OSC_2, true);   break;
                     case 0x08:
-                    case 0x09: ui->EXT_OSC_1->setChecked(true);   break;
-                    case 0x02: ui->OSC_1->setChecked(true);       break;
+                    case 0x09: CheckRadioButton(ui->EXT_OSC_1, true);   break;
+                    case 0x02: CheckRadioButton(ui->OSC_1, true);       break;
                 }
                 break;
             }
         }
-        case ATmega8:
-        case ATmega16:
-        case ATmega32:
-        case ATmega64:
-        case ATmega128:
-        case ATmega8535:
-        case ATmega8515:
-        case ATtiny26:
+        case ATmega8://
+        case ATmega8A://
+        case ATmega16://
+        case ATmega16A://
+        case ATmega32://
+        case ATmega32A://
+        case ATmega64://
+        case ATmega128://
+        case ATmega128A://
+        case ATmega8535://
+        case ATmega8515://
+        case ATtiny26://
         {
             if(mode)
             {
@@ -978,6 +1007,7 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
                 ui->OSC_3->setText("4 MHz");
                 ui->OSC_4->setText("8 MHz");
                 Set_enabled_EXT_fuses(true);
+                ui->EXT_OSC_4->setVisible(false);
 
                 break;
             }
@@ -985,44 +1015,65 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             {
                 if(ui->uC_list->currentIndex() == ATtiny26)
                 {
-                    if(~low_fuse_byte & 0x40)
+                    if(~lfuse_byte & 0x40)
                         ui->CKOPT->setChecked(true);
                 }
                 else
                 {
-                    if(~high_fuse_byte & 0x10)
+                    if(~hfuse_byte & 0x10)
                         ui->CKOPT->setChecked(true);
                 }
 
-                switch(low_fuse_byte & 0x0F)
+                switch(lfuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
+                    case 0x0E: CheckRadioButton(ui->EXT_OSC_3, true);  break;
                     case 0x0D:
-                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
+                    case 0x0C: CheckRadioButton(ui->EXT_OSC_2, true);  break;
                     case 0x0B:
-                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
-                    case 0x09:
-                    case 0x08: ui->EXT_OSC_1->setChecked(true); break;
-                    case 0x01: ui->OSC_1->setChecked(true);      break;
-                    case 0x02: ui->OSC_2->setChecked(true);      break;
-                    case 0x03: ui->OSC_3->setChecked(true);      break;
-                    case 0x04: ui->OSC_4->setChecked(true);      break;
+                    case 0x0A: CheckRadioButton(ui->EXT_OSC_1, true); break;
+                    case 0x01: CheckRadioButton(ui->OSC_1, true);     break;
+                    case 0x02: CheckRadioButton(ui->OSC_2, true);     break;
+                    case 0x03: CheckRadioButton(ui->OSC_3, true);     break;
+                    case 0x04: CheckRadioButton(ui->OSC_4, true);     break;
                 }
                 break;
             }
         }
-        case ATmega640:
-        case ATmega1280:
-        case ATmega1281:
-        case ATmega2560:
-        case ATmega2561:
-        case ATmega1284p:
-        case ATmega48:
-        case ATmega88:
-        case ATmega168:
-        case ATmega328p:
-        case ATtiny88:
+        case ATmega640://
+        case ATmega1280://
+        case ATmega1281://
+        case ATmega2560://
+        case ATmega2561://
+        case ATmega1284://
+        case ATmega644://
+        case ATmega644P://
+        case ATmega644PA://
+        case ATmega1284P://
+        case ATmega1284PA://
+        case ATmega164A://
+        case ATmega164P://
+        case ATmega324P://
+        case ATmega324PA://
+        case ATmega48://
+        case ATmega48P://
+        case ATmega48PA://
+        case ATmega88://
+        case ATmega88P://
+        case ATmega88PA://
+        case ATmega168://
+        case ATmega168P://
+        case ATmega168PA://
+        case ATmega328://
+        case ATmega328P://
+        case ATmega328PA://
+        case ATtiny88://
+        case ATtiny84://
+        case ATtiny44://
+        case ATtiny24://
+        case ATtiny861://
+        case ATtiny461://
+        case ATtiny261://
         {
             if(mode)
             {
@@ -1033,7 +1084,7 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
 
                 ui->OSC_1->setText("128 kHz");
                 ui->OSC_2->setText("8 MHz");
-                if(!(ui->uC_list->currentIndex() == ATtiny88))
+                if(ui->uC_list->currentIndex() != ATtiny88)
                 {
                     Set_enabled_EXT_fuses(true);
                 }
@@ -1041,26 +1092,43 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             }
             else
             {
-                if(~low_fuse_byte & 0x80)
+                if(~lfuse_byte & 0x80)
                     ui->CKDIV8->setChecked(true);
 
-                switch(low_fuse_byte & 0x0F)
+                if(ui->uC_list->currentIndex() != ATtiny88)
                 {
-                    case 0x0F:
-                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
-                    case 0x0D:
-                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
-                    case 0x0B:
-                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
-                    case 0x09:
-                    case 0x08: ui->EXT_OSC_1->setChecked(true);  break;
-                    case 0x03: ui->OSC_1->setChecked(true);      break;
-                    case 0x02: ui->OSC_2->setChecked(true);      break;
+                    switch(lfuse_byte & 0x0F)
+                    {
+                        case 0x0F:
+                        case 0x0E: CheckRadioButton(ui->EXT_OSC_4, true);  break;
+                        case 0x0D:
+                        case 0x0C: CheckRadioButton(ui->EXT_OSC_3, true);  break;
+                        case 0x0B:
+                        case 0x0A: CheckRadioButton(ui->EXT_OSC_2, true);  break;
+                        case 0x09:
+                        case 0x08: CheckRadioButton(ui->EXT_OSC_1, true);  break;
+                        case 0x03: CheckRadioButton(ui->OSC_1, true);      break;
+                        case 0x02: CheckRadioButton(ui->OSC_2, true);      break;
+                    }
+                    if((ui->uC_list->currentIndex() != ATtiny84 ||
+                       ui->uC_list->currentIndex() != ATtiny44 ||
+                       ui->uC_list->currentIndex() != ATtiny24) && (lfuse_byte & 0x0F == 0x04))
+                    {
+                        CheckRadioButton(ui->OSC_1, true);
+                    }
+                }
+                else
+                {
+                    switch(lfuse_byte & 0x0F)
+                    {
+                        case 0x03: CheckRadioButton(ui->OSC_1, true);      break;
+                        case 0x02: CheckRadioButton(ui->OSC_2, true);      break;
+                    }
                 }
                 break;
             }
         }
-        case ATtiny13:
+        case ATtiny13://
         {
             if(mode)
             {
@@ -1078,19 +1146,19 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             }
             else
             {
-                if(~low_fuse_byte & 0x80)
+                if(~lfuse_byte & 0x80)
                     ui->CKDIV8->setChecked(true);
 
-                switch(low_fuse_byte & 0x03)
+                switch(lfuse_byte & 0x03)
                 {
-                    case 0x03: ui->OSC_3->setChecked(true);  break;
-                    case 0x02: ui->OSC_2->setChecked(true);  break;
-                    case 0x01: ui->OSC_1->setChecked(true);  break;
+                    case 0x03: CheckRadioButton(ui->OSC_1, true);  break;
+                    case 0x02: CheckRadioButton(ui->OSC_3, true);  break;
+                    case 0x01: CheckRadioButton(ui->OSC_2, true);  break;
                 }
                 break;
             }
         }
-        case ATtiny2313:
+        case ATtiny2313://
         {
             if(mode)
             {
@@ -1109,29 +1177,31 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
             }
             else
             {
-                if(~low_fuse_byte & 0x80)
+                if(~lfuse_byte & 0x80)
                     ui->CKDIV8->setChecked(true);
 
-                switch(low_fuse_byte & 0x0F)
+                switch(lfuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
+                    case 0x0E: CheckRadioButton(ui->EXT_OSC_4, true);  break;
                     case 0x0D:
-                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
+                    case 0x0C: CheckRadioButton(ui->EXT_OSC_3, true);  break;
                     case 0x0B:
-                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
+                    case 0x0A: CheckRadioButton(ui->EXT_OSC_2, true);  break;
                     case 0x09:
-                    case 0x08: ui->EXT_OSC_1->setChecked(true);  break;
-                    case 0x06: ui->OSC_1->setChecked(true);      break;
-                    case 0x02: ui->OSC_2->setChecked(true);      break;
-                    case 0x04: ui->OSC_3->setChecked(true);      break;
+                    case 0x08: CheckRadioButton(ui->EXT_OSC_1, true);  break;
+                    case 0x06: CheckRadioButton(ui->OSC_1, true);      break;
+                    case 0x03:
+                    case 0x02: CheckRadioButton(ui->OSC_2, true);     break;
+                    case 0x05:
+                    case 0x04: CheckRadioButton(ui->OSC_3, true);      break;
                 }
                 break;
             }
         }
-        case ATtiny25:
-        case ATtiny45:
-        case ATtiny85:
+        case ATtiny25://
+        case ATtiny45://
+        case ATtiny85://
         {
             if(mode)
             {
@@ -1140,33 +1210,127 @@ void MainWindow::Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uin
                 ui->OSC_1->setVisible(true);
                 ui->OSC_2->setVisible(true);
 
-                ui->OSC_1->setText("6.4 MHz");
-                ui->OSC_2->setText("8 MHz");
+                ui->OSC_1->setText("128 kHz");
+                ui->OSC_2->setText("6.4 MHz");
+                ui->OSC_3->setText("8 MHz");
 
                 Set_enabled_EXT_fuses(true);
                 break;
             }
             else
             {
-                if(~low_fuse_byte & 0x80)
+                if(~lfuse_byte & 0x80)
                     ui->CKDIV8->setChecked(true);
 
-                switch(low_fuse_byte & 0x0F)
+                switch(lfuse_byte & 0x0F)
                 {
                     case 0x0F:
-                    case 0x0E: ui->EXT_OSC_4->setChecked(true);  break;
+                    case 0x0E: CheckRadioButton(ui->EXT_OSC_4, true);  break;
                     case 0x0D:
-                    case 0x0C: ui->EXT_OSC_3->setChecked(true);  break;
+                    case 0x0C: CheckRadioButton(ui->EXT_OSC_3, true);  break;
                     case 0x0B:
-                    case 0x0A: ui->EXT_OSC_2->setChecked(true);  break;
+                    case 0x0A: CheckRadioButton(ui->EXT_OSC_2, true);  break;
                     case 0x09:
-                    case 0x08: ui->EXT_OSC_1->setChecked(true);  break;
-                    case 0x04: ui->OSC_1->setChecked(true);      break;
-                    case 0x03: ui->OSC_2->setChecked(true);      break;
-                    case 0x02: ui->OSC_3->setChecked(true);      break;
+                    case 0x08: CheckRadioButton(ui->EXT_OSC_1, true);  break;
+                    case 0x04: CheckRadioButton(ui->OSC_1, true);     break;
+                    case 0x03: CheckRadioButton(ui->OSC_2, true);      break;
+                    case 0x02: CheckRadioButton(ui->OSC_3, true);      break;
                 }
                 break;
             }
+        }
+        case ATtiny11:
+        {
+            if(mode)
+            {
+                ui->OSC_1->setVisible(true);
+                ui->OSC_2->setVisible(true);
+
+                ui->OSC_1->setText("1 MHz (Wew. oscylator");
+                ui->OSC_2->setText("Zew. rezonator kwarcowy");
+            }
+            else
+            {
+                switch(lfuse_byte & 0x07)
+                {
+                    case 0x04:  CheckRadioButton(ui->OSC_1, true);    break;
+                    case 0x07:  CheckRadioButton(ui->OSC_2, true);    break;
+                }
+            }
+            break;
+        }
+    }
+}
+
+void MainWindow::Set_ui_jtag_fuse(uint8_t hfuse_byte, uint8_t mode)
+{
+    if(mode)
+    {
+        CheckRadioButton(ui->JTAG_on, false);
+        CheckRadioButton(ui->JTAG_off, false);
+
+        ui->JTAG_box->setVisible(false);
+        ui->JTAG_off->setVisible(false);
+        ui->JTAG_on->setVisible(false);
+    }
+
+    switch(ui->uC_list->currentIndex())
+    {
+        case AT90USB646:
+        case AT90USB647:
+        case AT90USB1286:
+        case AT90USB1287:
+        case AT90CAN32:
+        case AT90CAN64:
+        case AT90CAN128:
+        case ATmega640:
+        case ATmega1280:
+        case ATmega1281:
+        case ATmega2560:
+        case ATmega2561:
+        case ATmega16:
+        case ATmega32:
+        case ATmega32A:
+        case ATmega644:
+        case ATmega644P:
+        case ATmega64:
+        case ATmega128:
+        case ATmega325:
+        case ATmega3250:
+        case ATmega645:
+        case ATmega6450:
+        case ATmega164P:
+        case ATmega324P:
+        case ATmega329:
+        case ATmega329P:
+        case ATmega3290:
+        case ATmega3290P:
+        case ATmega649:
+        case ATmega6490:
+        case ATmega162:
+        case ATmega169:
+        case ATmega1284P:
+        case ATmega1284PA:
+        case ATmega32U4:
+        {
+            if(mode)
+            {
+                ui->JTAG_box->setVisible(true);
+                ui->JTAG_off->setVisible(true);
+                ui->JTAG_on->setVisible(true);
+            }
+            else
+            {
+                if(hfuse_byte & 0x40)
+                {
+                    CheckRadioButton(ui->JTAG_off, true);
+                }
+                else
+                {
+                    CheckRadioButton(ui->JTAG_on, true);
+                }
+            }
+            break;
         }
     }
 }

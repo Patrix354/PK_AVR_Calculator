@@ -12,88 +12,7 @@
 #include "ubrr_calculator.h"
 #include "gamma_corection.h"
 
-#define AT90USB82 0
-#define AT90USB162 1
-#define AT90USB1287 2
-#define AT90USB1286 3
-#define AT90USB647 4
-#define AT90USB646 5
-
-#define AT90PWM3B 6
-#define AT90PWM3 7
-#define AT90PWM2B 8
-#define AT90PWM2 9
-
-#define AT90CAN32 10
-#define AT90CAN64 11
-#define AT90CAN128 12
-
-#define AT90S8535 13
-#define AT90S8515 14
-#define AT90S4434 15
-#define AT90S4433 16
-#define AT90S2343 17
-#define AT90S2333 18
-#define AT90S2313 19
-#define AT90S4414 20
-#define AT90S1200 21
-
-#define ATmega640 22
-#define ATmega1280 23
-#define ATmega1281 24
-#define ATmega1284p 25
-#define ATmega2560 26
-#define ATmega2561 27
-#define ATmega8 28
-#define ATmega48 29
-#define ATmega88 30
-#define ATmega168 31
-#define ATmega328p 32
-#define ATmega161 33
-#define ATmega8535 34
-#define ATmega8515 35
-#define ATmega6490 36
-#define ATmega164p 37
-#define ATmega324p 38
-#define ATmega644 39
-#define ATmega644p 40
-#define ATmega16 41
-#define ATmega32 42
-#define ATmega32u4 43
-#define ATmega64 44
-#define ATmega128 45
-#define ATmega325 46
-#define ATmega3250 47
-#define ATmega645 48
-#define ATmega6450 49
-#define ATmega103 50
-#define ATmega163 51
-#define ATmega162 52
-#define ATmega169 53
-#define ATmega329 54
-#define ATmega329p 55
-#define ATmega649 56
-#define ATmega3290 57
-#define ATmega3290p 58
-
-#define ATtiny84 59
-#define ATtiny44 60
-#define ATtiny24 61
-#define ATtiny85 62
-#define ATtiny45 63
-#define ATtiny25 64
-#define ATtiny88 65
-#define ATtiny2313 66
-#define ATtiny861 67
-#define ATtiny461 68
-#define ATtiny261 69
-#define ATtiny26 70
-#define ATtiny15 71
-#define ATtiny13 72
-#define ATtiny12 73
-#define ATtiny11 74
-
-#define uC_AMOUNT 75
+#define uC_AMOUNT 95
 #define PROG_AMOUNT 2
 #define SCK_AMOUNT 13
 #define LOCK_LB_AMOUNT 3
@@ -162,6 +81,20 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    enum uc_names_enu
+    {
+        AT90USB82, AT90USB162, AT90USB1287, AT90USB1286, AT90USB647, AT90USB646, AT90PWM3B,
+        AT90PWM3, AT90PWM2B, AT90PWM2, AT90CAN32, AT90CAN64, AT90CAN128, AT90S8535, AT90S8515,
+        AT90S4434, AT90S4433, AT90S2343, AT90S2333, AT90S2313, AT90S4414, AT90S1200, ATmega640,
+        ATmega1280, ATmega1281, ATmega1284, ATmega1284P, ATmega1284PA, ATmega2560, ATmega2561, ATmega8, ATmega8A, ATmega8U2,
+        ATmega48, ATmega48P, ATmega48PA, ATmega88, ATmega88P, ATmega88PA, ATmega168, ATmega168P, ATmega168PA,
+        ATmega328, ATmega328P, ATmega328PA, ATmega161, ATmega8535, ATmega8515, ATmega6490, ATmega164P, ATmega164A, ATmega324P, ATmega324PA,
+        ATmega644, ATmega644P, ATmega644PA, ATmega16, ATmega16A, ATmega32, ATmega32A, ATmega32U2, ATmega32U4, ATmega64, ATmega128, ATmega128A,
+        ATmega325, ATmega3250, ATmega645, ATmega6450, ATmega103, ATmega163, ATmega162, ATmega169, ATmega329, ATmega329P,
+        ATmega649, ATmega3290, ATmega3290P,ATtiny84, ATtiny44, ATtiny24, ATtiny85, ATtiny45, ATtiny25, ATtiny88, ATtiny2313,
+        ATtiny861, ATtiny461, ATtiny261, ATtiny26, ATtiny15, ATtiny13, ATtiny12, ATtiny11
+    };
+
     bool Auto_Slow_SCK;
     bool CheckFuses;
     uint8_t lfuse;
@@ -189,7 +122,8 @@ private:
     void Safe_output_to_file(QString exec, QStringList params, string path_to_file, int mode);
     void Print_ERR(string path_to_file);
     void Set_ui_lock(uint8_t lock_byte, uint8_t mode);
-    void Set_ui_fuses(uint8_t low_fuse_byte, uint8_t high_fuse_byte, uint8_t mode);
+    void Set_ui_fuses(uint8_t lfuse_byte, uint8_t hfuse_byte, uint8_t mode);
+    void Set_ui_jtag_fuse(uint8_t hfuse_byte, uint8_t mode);
     void Set_enabled_EXT_fuses(bool visible);
     void Set_enabled_INT_fuses(bool visible);
     void Clear_int_osc_fuses();

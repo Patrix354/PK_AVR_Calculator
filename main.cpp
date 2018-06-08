@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    //Splash screen
     QSplashScreen* splash = new QSplashScreen;
     splash->setPixmap(QPixmap(":/FOTO/FOTO/splash.png"));
     splash->show();
